@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="רקמה אנושית אחת חיה — אתר הנצחה אישי עם שמות, תמונות וסיפורי חיים בממשק הנצחה עם בחירה גלויה בין עיצוב אריג חם לעיצוב קודם, עם מסגרות תמונה עגולות ונגישות." />
-  <meta name="theme-color" content="#F9F5F0" />
+  <meta name="description" content="רקמה אנושית אחת חיה — אתר הנצחה אישי, חם ושקט עם דיוקנאות וסיפורי חיים." />
+  <meta name="theme-color" content="#f6f1e8" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -13,22 +13,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=v16-mobile-bigger-round-20260624-1648" />
+  <link rel="stylesheet" href="styles.css?v=v11-warm-tapestry-20260624-1655" />
 </head>
 
-<body class="theme-warm">
+<body>
   <a class="skip-link" href="#memory-stage">דילוג לרקמת הזיכרון</a>
   <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-  <nav class="design-dock" aria-label="בחירת עיצוב לתצוגה">
-    <span class="design-dock-title">בחירת עיצוב</span>
-    <div class="design-switch" role="group" aria-label="בחירת עיצוב">
-      <button class="design-btn is-active" type="button" data-design="warm" aria-pressed="true">אריג חם</button>
-      <button class="design-btn" type="button" data-design="previous" aria-pressed="false">עיצוב קודם</button>
-    </div>
-  </nav>
-
-  <main id="memory-stage" class="memory-stage" aria-label="רקמת זיכרון" tabindex="-1">
+  <main id="memory-stage" class="memory-stage" aria-label="רקמת הזיכרון" tabindex="-1">
     <div class="mist" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
 
@@ -40,7 +32,6 @@
         </button>
         <button id="next-btn" class="ghost-btn" type="button" aria-label="השם הבא">הבא →</button>
       </div>
-
 
       <label class="search-box">
         <span aria-hidden="true">⌕</span>
@@ -60,9 +51,7 @@
       </div>
     </section>
 
-    <section class="timeline-stage" aria-label="רקמת שמות וזיכרונות">
-      <div class="fabric-field" aria-hidden="true"></div>
-
+    <section class="timeline-stage" aria-label="רקמת הזיכרון">
       <div id="timeline-layer" class="timeline-layer"></div>
     </section>
   </main>
@@ -73,7 +62,7 @@
     <div class="noscript-message">האתר דורש JavaScript כדי להציג את רקמת הזיכרון והחיפוש.</div>
   </noscript>
   <script>
-    window.MEMORIAL_BUILD_VERSION = "v16-mobile-bigger-round-20260624-1648";
+    window.MEMORIAL_BUILD_VERSION = "v11-warm-tapestry-20260624-1655";
     try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (_) {}
 
     // Helps when an older PWA/service-worker version was opened in the same browser.
@@ -96,7 +85,7 @@
       }).catch(function() {});
     }
   </script>
-  <script src="data.js?v=v16-mobile-bigger-round-20260624-1648"></script>
-  <script src="app.js?v=v16-mobile-bigger-round-20260624-1648"></script>
+  <script src="data.js?v=v11-warm-tapestry-20260624-1655"></script>
+  <script src="app.js?v=v11-warm-tapestry-20260624-1655"></script>
 </body>
 </html>
