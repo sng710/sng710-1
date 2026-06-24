@@ -1,4 +1,4 @@
-// CACHE_BUILD_VERSION: v15-photo-like-screenshot-20260624-1908
+// CACHE_BUILD_VERSION: v23-blue-fabric-pattern-20260624-2335
 "use strict";
 
 const PAGE_SIZE = 8;

@@ -8977,3 +8977,644 @@ body {
     margin: 10.2rem auto 11.8rem !important;
   }
 }
+
+
+/* V21 — return to cool blue memorial mood, but replace heartbeat with a woven/fabric atmosphere. */
+:root {
+  --v21-bg-1: #07111d;
+  --v21-bg-2: #0b1b2e;
+  --v21-bg-3: #10263d;
+  --v21-ink: #ecf7ff;
+  --v21-ink-soft: #b7d3ea;
+  --v21-border: rgba(137, 205, 255, .18);
+  --v21-border-strong: rgba(171, 223, 255, .34);
+  --v21-fabric-line-v: rgba(129, 190, 236, .050);
+  --v21-fabric-line-h: rgba(95, 156, 206, .036);
+  --v21-glow: rgba(74, 173, 255, .22);
+  --v21-panel: rgba(8, 22, 37, .62);
+  --v21-panel-2: rgba(10, 28, 46, .76);
+}
+
+html, body {
+  background: #07111d !important;
+}
+
+body {
+  color: var(--v21-ink) !important;
+  background-color: var(--v21-bg-1) !important;
+  background-image:
+    radial-gradient(ellipse at 50% 8%, rgba(116, 190, 255, .12), transparent 28rem),
+    radial-gradient(circle at 50% 46%, rgba(57, 138, 208, .16), transparent 24rem),
+    radial-gradient(circle at 16% 18%, rgba(36, 86, 132, .24), transparent 22rem),
+    radial-gradient(circle at 84% 78%, rgba(24, 62, 103, .28), transparent 26rem),
+    repeating-linear-gradient(0deg, var(--v21-fabric-line-h) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(90deg, var(--v21-fabric-line-v) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #07111d 0%, #0b1b2e 52%, #091522 100%) !important;
+}
+
+.memory-stage {
+  background:
+    radial-gradient(ellipse at 50% 39%, rgba(93, 181, 255, .13), transparent 22rem),
+    radial-gradient(ellipse at 50% 62%, rgba(48, 108, 167, .18), transparent 36rem) !important;
+}
+
+.grain {
+  opacity: .20 !important;
+  mix-blend-mode: screen !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(180,225,255,.018) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(180,225,255,.015) 0 1px, transparent 1px 6px),
+    radial-gradient(circle at 22% 28%, rgba(205,235,255,.028), transparent .08rem),
+    radial-gradient(circle at 68% 72%, rgba(127,194,255,.024), transparent .08rem) !important;
+  background-size: auto, auto, 5rem 5rem, 6rem 6rem !important;
+}
+
+.mist {
+  opacity: .42 !important;
+  filter: blur(34px) !important;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(121, 197, 255, .18), transparent 22rem),
+    radial-gradient(circle at 50% 72%, rgba(36, 91, 146, .18), transparent 38rem) !important;
+}
+
+.skip-link {
+  background: rgba(233, 248, 255, .94) !important;
+  color: #0a1d2e !important;
+}
+
+.top-bar {
+  background: linear-gradient(180deg, rgba(6, 18, 32, .20), rgba(6, 18, 32, 0)) !important;
+}
+
+.top-bar .controls,
+.top-bar .search-box,
+.ghost-btn,
+.search-box {
+  background: rgba(8, 22, 37, .62) !important;
+  color: var(--v21-ink-soft) !important;
+  border: 1px solid rgba(130, 198, 246, .16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 10px 24px rgba(2, 8, 16, .26) !important;
+  backdrop-filter: blur(16px) saturate(112%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(112%) !important;
+}
+
+.ghost-btn:hover,
+.ghost-btn:focus-visible,
+.ghost-btn[aria-pressed="true"] {
+  color: #f3fbff !important;
+  border-color: rgba(173, 225, 255, .30) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    0 0 0 1px rgba(116, 191, 255, .10),
+    0 12px 26px rgba(2, 8, 16, .30),
+    0 0 18px rgba(72, 170, 255, .12) !important;
+}
+
+.search-box input,
+.search-box input::placeholder {
+  color: var(--v21-ink-soft) !important;
+}
+
+.hero-poem .poem-panel {
+  background: linear-gradient(180deg, rgba(8, 22, 37, .58), rgba(10, 28, 46, .72)) !important;
+  border: 1px solid rgba(130, 198, 246, .14) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 14px 34px rgba(2, 8, 16, .24),
+    0 0 0 1px rgba(78, 160, 233, .06) !important;
+}
+
+.hero-poem .poem-panel p,
+.hero-poem .poem-panel span {
+  color: var(--v21-ink) !important;
+}
+
+@media (min-width: 901px) {
+  .timeline-layer {
+    width: min(78rem, calc(100vw - 6rem)) !important;
+    inset-block-start: clamp(5.4rem, 10.2vh, 6.8rem) !important;
+    inset-block-end: clamp(7.8rem, 14vh, 9.2rem) !important;
+    gap: clamp(.55rem, 1.2vh, .95rem) clamp(2.6rem, 5.3vw, 6.2rem) !important;
+    grid-template-columns: repeat(4, minmax(8.6rem, 1fr)) !important;
+  }
+
+  .person-node {
+    width: clamp(8.4rem, 9.6vw, 10.0rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(7.25rem, 8.3vw, 8.7rem) !important;
+    aspect-ratio: .92 / 1 !important;
+    padding: .24rem !important;
+    border-radius: 2.55rem !important;
+    border: 1px solid rgba(177, 226, 255, .22) !important;
+    background:
+      linear-gradient(180deg, rgba(9, 23, 38, .78), rgba(12, 31, 50, .70) 56%, rgba(8, 20, 33, .84)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.08),
+      inset 0 -8px 18px rgba(5, 11, 20, .26),
+      0 0 0 .08rem rgba(87, 170, 241, .16),
+      0 10px 24px rgba(2, 8, 16, .30),
+      0 0 24px rgba(66, 165, 255, .11) !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    object-fit: contain !important;
+    object-position: center center !important;
+    border-radius: 2.24rem !important;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(243,250,255,.18), rgba(36,68,101,.06) 56%, rgba(12,24,38,.12) 100%) !important;
+    filter: none !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 5.05rem !important;
+    max-width: 8rem !important;
+    padding: .38rem .62rem .34rem !important;
+    background: linear-gradient(180deg, rgba(9, 23, 38, .88), rgba(8, 20, 33, .96)) !important;
+    border: 1px solid rgba(136, 204, 252, .16) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.05),
+      0 6px 16px rgba(2, 8, 16, .26),
+      0 0 14px rgba(66, 165, 255, .06) !important;
+    color: #f0f9ff !important;
+    font-size: clamp(.75rem, .82vw, .92rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .person-button:hover .portrait-frame,
+  .person-button:focus-visible .portrait-frame {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.10),
+      inset 0 -8px 18px rgba(5, 11, 20, .22),
+      0 0 0 .08rem rgba(123, 202, 255, .22),
+      0 12px 26px rgba(2, 8, 16, .34),
+      0 0 28px rgba(80, 175, 255, .16) !important;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 820px) {
+  .timeline-layer {
+    width: min(74rem, calc(100vw - 7rem)) !important;
+    inset-block-start: clamp(4.95rem, 9.4vh, 6rem) !important;
+    inset-block-end: clamp(7.2rem, 13.5vh, 8.2rem) !important;
+    gap: clamp(.24rem, .72vh, .50rem) clamp(2.3rem, 4.9vw, 5.6rem) !important;
+  }
+
+  .person-node {
+    width: clamp(7.7rem, 8.5vw, 9rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.55rem, 7.3vw, 7.6rem) !important;
+    border-radius: 2.28rem !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    border-radius: 1.98rem !important;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    background-image:
+      radial-gradient(ellipse at 50% 10%, rgba(116, 190, 255, .14), transparent 18rem),
+      radial-gradient(circle at 50% 48%, rgba(57, 138, 208, .12), transparent 18rem),
+      repeating-linear-gradient(0deg, rgba(129,190,236,.045) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(90deg, rgba(95,156,206,.032) 0 1px, transparent 1px 8px),
+      linear-gradient(180deg, #07111d 0%, #0b1b2e 52%, #091522 100%) !important;
+  }
+
+  .hero-poem .poem-panel {
+    background: linear-gradient(180deg, rgba(8, 22, 37, .66), rgba(10, 28, 46, .82)) !important;
+  }
+
+  .timeline-layer .portrait-frame,
+  .portrait-frame {
+    border-color: rgba(177, 226, 255, .22) !important;
+    background: linear-gradient(180deg, rgba(9, 23, 38, .80), rgba(8, 20, 33, .88)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.08),
+      0 0 0 .06rem rgba(87, 170, 241, .14),
+      0 8px 20px rgba(2, 8, 16, .28),
+      0 0 20px rgba(66, 165, 255, .08) !important;
+  }
+
+  .timeline-layer .person-name,
+  .person-name {
+    background: linear-gradient(180deg, rgba(9, 23, 38, .90), rgba(8, 20, 33, .96)) !important;
+    border-color: rgba(136, 204, 252, .16) !important;
+    color: #f0f9ff !important;
+  }
+}
+
+
+/* V22 — best soft blue fabric design: lighter than the dark version, still calm and memorial-like.
+   No heartbeat line. The background uses blue woven threads instead of cream/brown fabric. */
+:root {
+  --v22-bg-top: #eaf5fa;
+  --v22-bg-mid: #d8eaf3;
+  --v22-bg-deep: #bfd9e8;
+  --v22-ink: #173144;
+  --v22-ink-soft: #345d73;
+  --v22-ink-muted: #5f8092;
+  --v22-blue: #2f7fa7;
+  --v22-blue-soft: #8cc5dd;
+  --v22-blue-glow: rgba(54, 145, 191, .20);
+  --v22-panel: rgba(244, 250, 253, .74);
+  --v22-panel-blue: rgba(215, 235, 245, .64);
+  --v22-border: rgba(42, 105, 138, .16);
+  --v22-border-soft: rgba(255,255,255,.60);
+}
+
+html, body {
+  background: var(--v22-bg-mid) !important;
+  color: var(--v22-ink) !important;
+}
+
+body {
+  background-color: var(--v22-bg-mid) !important;
+  background-image:
+    radial-gradient(ellipse at 50% 5%, rgba(255,255,255,.88), transparent 30rem),
+    radial-gradient(circle at 18% 22%, rgba(111, 176, 210, .24), transparent 26rem),
+    radial-gradient(circle at 82% 80%, rgba(67, 139, 180, .18), transparent 30rem),
+    linear-gradient(115deg, rgba(255,255,255,.18), transparent 34%, rgba(255,255,255,.11) 58%, transparent),
+    repeating-linear-gradient(0deg, rgba(39, 104, 140, .032) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(90deg, rgba(40, 116, 158, .030) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(35deg, rgba(255,255,255,.040) 0 1px, transparent 1px 13px),
+    linear-gradient(180deg, var(--v22-bg-top) 0%, var(--v22-bg-mid) 50%, var(--v22-bg-deep) 100%) !important;
+  background-size: auto, auto, auto, auto, auto, auto, auto, auto !important;
+}
+
+.memory-stage {
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(255,255,255,.36), transparent 24rem),
+    radial-gradient(ellipse at 50% 62%, rgba(92, 164, 202, .14), transparent 42rem) !important;
+}
+
+.mist {
+  opacity: .54 !important;
+  filter: blur(36px) !important;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255,255,255,.66), transparent 24rem),
+    radial-gradient(circle at 50% 70%, rgba(81, 158, 199, .16), transparent 42rem) !important;
+}
+
+.grain {
+  opacity: .30 !important;
+  mix-blend-mode: multiply !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(31, 82, 112, .020) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(31, 82, 112, .018) 0 1px, transparent 1px 6px),
+    radial-gradient(circle at 22% 28%, rgba(255,255,255,.14), transparent .075rem),
+    radial-gradient(circle at 68% 72%, rgba(44, 111, 148,.038), transparent .075rem) !important;
+  background-size: auto, auto, 5rem 5rem, 6rem 6rem !important;
+}
+
+.skip-link {
+  background: #fff !important;
+  color: var(--v22-ink) !important;
+}
+
+/* Bottom controls: soft glass, not dark, and compact so people stay the focus. */
+.top-bar {
+  background: linear-gradient(180deg, rgba(219, 238, 247, .18), rgba(219, 238, 247, 0)) !important;
+}
+
+.top-bar .controls,
+.top-bar .search-box,
+.ghost-btn,
+.search-box {
+  background: rgba(246, 251, 254, .74) !important;
+  color: var(--v22-ink-soft) !important;
+  border: 1px solid rgba(43, 109, 145, .13) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.80),
+    0 10px 24px rgba(38, 87, 118, .12) !important;
+  backdrop-filter: blur(18px) saturate(116%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(116%) !important;
+}
+
+.ghost-btn:hover,
+.ghost-btn:focus-visible,
+.ghost-btn[aria-pressed="true"] {
+  color: var(--v22-ink) !important;
+  border-color: rgba(43, 109, 145, .28) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.88),
+    0 0 0 1px rgba(91, 160, 196, .08),
+    0 12px 26px rgba(38, 87, 118, .15),
+    0 0 18px rgba(54, 145, 191, .10) !important;
+}
+
+.search-box input {
+  color: var(--v22-ink) !important;
+}
+
+.search-box input::placeholder {
+  color: rgba(52, 93, 115, .66) !important;
+}
+
+/* Title: a little bigger, airy, and elevated. */
+.hero-title {
+  top: clamp(.70rem, 1.8vh, 1.35rem) !important;
+}
+
+.hero-poem .poem-panel {
+  width: min(31rem, 68vw) !important;
+  padding: .56rem 1.14rem .62rem !important;
+  border-radius: 999px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.74), rgba(235, 247, 252, .62)) !important;
+  border: 1px solid rgba(255,255,255,.72) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.88),
+    0 12px 28px rgba(41, 91, 119, .11),
+    0 0 0 1px rgba(57, 135, 176, .045) !important;
+  backdrop-filter: blur(18px) saturate(110%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(110%) !important;
+}
+
+.hero-poem .poem-panel p {
+  color: var(--v22-ink) !important;
+  font-size: clamp(.76rem, .86vw, 1.02rem) !important;
+  line-height: 1.20 !important;
+  gap: .025rem !important;
+  text-shadow: none !important;
+}
+
+.hero-poem .poem-panel span {
+  color: var(--v22-ink) !important;
+}
+
+.hero-poem .poem-panel .single-line {
+  color: #294e63 !important;
+  font-weight: 850 !important;
+}
+
+.heartbeat-svg,
+.person-node::before,
+.person-node::after {
+  display: none !important;
+}
+
+/* People become the visual center: larger portraits, gentle blue glass frames, readable tags. */
+@media (min-width: 901px) {
+  .timeline-layer {
+    width: min(80rem, calc(100vw - 5.5rem)) !important;
+    inset-block-start: clamp(5.6rem, 10.5vh, 7.0rem) !important;
+    inset-block-end: clamp(7.7rem, 13.6vh, 9.0rem) !important;
+    grid-template-columns: repeat(4, minmax(9rem, 1fr)) !important;
+    gap: clamp(.55rem, 1.25vh, 1rem) clamp(2.8rem, 5.5vw, 6.4rem) !important;
+    align-content: center !important;
+    justify-content: center !important;
+    justify-items: center !important;
+  }
+
+  .person-node {
+    width: clamp(8.8rem, 9.9vw, 10.6rem) !important;
+  }
+
+  .person-button {
+    gap: .42rem !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(7.65rem, 8.8vw, 9.35rem) !important;
+    aspect-ratio: .92 / 1 !important;
+    padding: .26rem !important;
+    border-radius: 2.7rem !important;
+    border: 1px solid rgba(255,255,255,.68) !important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.78), rgba(229, 244, 251, .72) 52%, rgba(196, 224, 238, .62)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.90),
+      inset 0 -10px 20px rgba(61, 127, 163, .040),
+      0 0 0 .08rem rgba(47, 127, 167, .08),
+      0 14px 28px rgba(42, 92, 121, .12),
+      0 0 28px rgba(54, 145, 191, .09) !important;
+    overflow: hidden !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    border-radius: 2.40rem !important;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(255,255,255,.96), rgba(232, 245, 251,.72) 56%, rgba(197, 224, 238,.44) 100%) !important;
+    filter: none !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 5.25rem !important;
+    max-width: 8.45rem !important;
+    padding: .42rem .66rem .38rem !important;
+    border-radius: 999px !important;
+    background:
+      linear-gradient(180deg, rgba(247, 252, 254, .83), rgba(221, 239, 248, .76)) !important;
+    border: 1px solid rgba(43, 109, 145, .14) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.72),
+      0 7px 16px rgba(42, 92, 121, .09) !important;
+    color: var(--v22-ink) !important;
+    font-size: clamp(.80rem, .88vw, .98rem) !important;
+    font-weight: 850 !important;
+    line-height: 1.06 !important;
+  }
+
+  .person-button:hover .portrait-frame,
+  .person-button:focus-visible .portrait-frame {
+    transform: translateY(-2px) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.94),
+      inset 0 -10px 20px rgba(61, 127, 163, .050),
+      0 0 0 .09rem rgba(47, 127, 167, .12),
+      0 17px 32px rgba(42, 92, 121, .15),
+      0 0 32px rgba(54, 145, 191, .13) !important;
+  }
+}
+
+/* Laptop/100% view: slightly compact but still bigger and safe from the bottom controls. */
+@media (min-width: 901px) and (max-height: 820px) {
+  .hero-title {
+    top: clamp(.55rem, 1.4vh, 1rem) !important;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(29.5rem, 64vw) !important;
+    padding: .48rem 1rem .52rem !important;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: clamp(.72rem, .80vw, .93rem) !important;
+    line-height: 1.16 !important;
+  }
+
+  .timeline-layer {
+    width: min(76rem, calc(100vw - 6rem)) !important;
+    inset-block-start: clamp(5.10rem, 9.9vh, 6.25rem) !important;
+    inset-block-end: clamp(7.2rem, 13.5vh, 8.35rem) !important;
+    gap: clamp(.28rem, .78vh, .62rem) clamp(2.5rem, 5vw, 5.8rem) !important;
+  }
+
+  .person-node {
+    width: clamp(8.0rem, 8.9vw, 9.35rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.85rem, 7.7vw, 8.0rem) !important;
+    border-radius: 2.38rem !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    border-radius: 2.10rem !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 4.95rem !important;
+    max-width: 7.55rem !important;
+    padding: .35rem .56rem .31rem !important;
+    font-size: clamp(.72rem, .78vw, .86rem) !important;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  .timeline-layer {
+    width: min(68rem, calc(100vw - 4rem)) !important;
+    gap: .42rem 1.35rem !important;
+    grid-template-columns: repeat(4, minmax(7.7rem, 1fr)) !important;
+  }
+
+  .person-node {
+    width: clamp(7.5rem, 9.4vw, 8.75rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.25rem, 7.9vw, 7.35rem) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    background-image:
+      radial-gradient(ellipse at 50% 5%, rgba(255,255,255,.82), transparent 20rem),
+      radial-gradient(circle at 50% 45%, rgba(111, 176, 210, .18), transparent 18rem),
+      repeating-linear-gradient(0deg, rgba(39,104,140,.028) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(90deg, rgba(40,116,158,.026) 0 1px, transparent 1px 8px),
+      linear-gradient(180deg, #eaf5fa 0%, #d8eaf3 52%, #bfd9e8 100%) !important;
+  }
+
+  .hero-poem .poem-panel {
+    background: linear-gradient(180deg, rgba(255,255,255,.76), rgba(235, 247, 252, .68)) !important;
+  }
+
+  .timeline-layer .portrait-frame,
+  .portrait-frame {
+    border-color: rgba(255,255,255,.68) !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(221,239,248,.72)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.88),
+      0 0 0 .06rem rgba(47,127,167,.08),
+      0 10px 22px rgba(42,92,121,.12) !important;
+  }
+
+  .timeline-layer .person-name,
+  .person-name {
+    background: linear-gradient(180deg, rgba(247,252,254,.86), rgba(221,239,248,.80)) !important;
+    border-color: rgba(43,109,145,.14) !important;
+    color: var(--v22-ink) !important;
+  }
+}
+
+
+/* V23 — stronger woven fabric pattern, keeping the soft blue memorial palette. */
+:root {
+  --v23-thread-light: rgba(255,255,255,.12);
+  --v23-thread-mid: rgba(74, 142, 179, .08);
+  --v23-thread-deep: rgba(30, 90, 122, .055);
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse at 50% 4%, rgba(255,255,255,.88), transparent 30rem),
+    radial-gradient(circle at 18% 22%, rgba(111, 176, 210, .24), transparent 26rem),
+    radial-gradient(circle at 82% 80%, rgba(67, 139, 180, .18), transparent 30rem),
+    linear-gradient(115deg, rgba(255,255,255,.16), transparent 34%, rgba(255,255,255,.10) 58%, transparent),
+    repeating-linear-gradient(0deg, var(--v23-thread-deep) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, var(--v23-thread-mid) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 2px, transparent 2px 12px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.022) 0 2px, transparent 2px 14px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.016) 0 1px, transparent 1px 18px),
+    linear-gradient(180deg, var(--v22-bg-top) 0%, var(--v22-bg-mid) 50%, var(--v22-bg-deep) 100%) !important;
+  background-size: auto, auto, auto, auto, auto, auto, auto, auto, auto, auto !important;
+}
+
+.memory-stage {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(255,255,255,.30), transparent 24rem),
+    radial-gradient(ellipse at 50% 62%, rgba(92, 164, 202, .12), transparent 42rem) !important;
+}
+
+.memory-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .42;
+  mix-blend-mode: multiply;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.022) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(0deg, rgba(36,97,132,.022) 0 2px, transparent 2px 11px),
+    repeating-linear-gradient(90deg, rgba(36,97,132,.018) 0 2px, transparent 2px 12px);
+  z-index: -1;
+}
+
+.grain {
+  opacity: .36 !important;
+  mix-blend-mode: multiply !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(31, 82, 112, .028) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(31, 82, 112, .024) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 22% 28%, rgba(255,255,255,.12), transparent .085rem),
+    radial-gradient(circle at 68% 72%, rgba(44, 111, 148,.045), transparent .085rem) !important;
+  background-size: auto, auto, 4.5rem 4.5rem, 5.5rem 5.5rem !important;
+}
+
+.mist {
+  opacity: .44 !important;
+}
+
+@media (max-width: 900px) {
+  body {
+    background-image:
+      radial-gradient(ellipse at 50% 5%, rgba(255,255,255,.84), transparent 20rem),
+      radial-gradient(circle at 50% 45%, rgba(111, 176, 210, .18), transparent 18rem),
+      repeating-linear-gradient(0deg, rgba(39,104,140,.034) 0 1px, transparent 1px 6px),
+      repeating-linear-gradient(90deg, rgba(40,116,158,.030) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.024) 0 2px, transparent 2px 11px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.020) 0 2px, transparent 2px 12px),
+      linear-gradient(180deg, #eaf5fa 0%, #d8eaf3 52%, #bfd9e8 100%) !important;
+  }
+
+  .memory-stage::before {
+    opacity: .32;
+  }
+}
