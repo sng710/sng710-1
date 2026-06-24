@@ -8275,3 +8275,425 @@ body {
     margin-top: 11.9rem !important;
   }
 }
+
+
+/* v18-soft-fabric-safe-bottom-20260624-2055
+   Fixes from preview QA:
+   1) Bottom row names stay safely above search/next/back controls.
+   2) Softer woven-fabric background.
+   3) Softer frosted people-card frames.
+   4) Desktop portraits are large, but fitted so the full image remains visible.
+*/
+
+:root {
+  --fabric-base: #f8f2ea;
+  --fabric-warm: #efe4d6;
+  --fabric-thread: 105, 80, 68;
+  --soft-frame: rgba(255,255,255,.56);
+  --soft-frame-border: rgba(255,255,255,.72);
+  --soft-shadow: rgba(89, 68, 55, .105);
+}
+
+html,
+body {
+  background-color: var(--fabric-base) !important;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse at 50% 12%, rgba(255,255,255,.62), transparent 27rem),
+    radial-gradient(circle at 18% 16%, rgba(156,114,94,.060), transparent 23rem),
+    radial-gradient(circle at 82% 78%, rgba(156,114,94,.050), transparent 30rem),
+    repeating-linear-gradient(0deg, rgba(var(--fabric-thread), .014) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(90deg, rgba(var(--fabric-thread), .012) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #fbf8f2 0%, #f8f2ea 48%, #f0e6d9 100%) !important;
+}
+
+.memory-stage {
+  background:
+    radial-gradient(ellipse at 50% 47%, rgba(255,255,255,.28), transparent 22rem),
+    radial-gradient(ellipse at 50% 68%, rgba(226,213,195,.38), transparent 36rem) !important;
+}
+
+.grain {
+  opacity: .30 !important;
+  mix-blend-mode: multiply !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(92,70,58,.013) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(92,70,58,.011) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 24% 30%, rgba(105,80,68,.018), transparent .08rem),
+    radial-gradient(circle at 68% 74%, rgba(156,114,94,.016), transparent .08rem) !important;
+  background-size: auto, auto, 5rem 5rem, 6rem 6rem !important;
+}
+
+.mist {
+  opacity: .64 !important;
+  filter: blur(28px) !important;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255,255,255,.48), transparent 24rem),
+    radial-gradient(circle at 50% 68%, rgba(226,213,195,.28), transparent 39rem) !important;
+}
+
+/* Keep the bottom controls visible but give the portrait grid enough safe space above them. */
+.top-bar {
+  bottom: clamp(.68rem, 1.8vh, 1.05rem) !important;
+  z-index: 180 !important;
+}
+
+.top-bar .controls,
+.top-bar .search-box,
+.ghost-btn,
+.search-box {
+  background: rgba(255, 252, 247, .74) !important;
+  border-color: rgba(111,82,71,.145) !important;
+  box-shadow: 0 10px 28px rgba(86,65,54,.090) !important;
+  backdrop-filter: blur(16px) saturate(106%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(106%) !important;
+}
+
+@media (min-width: 901px) {
+  .hero-title {
+    top: clamp(1.05rem, 2.55vh, 1.85rem) !important;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(29rem, 70vw) !important;
+    padding: .54rem 1.04rem .58rem !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.46), rgba(247,242,234,.58)) !important;
+    border-color: rgba(255,255,255,.68) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.80),
+      0 11px 28px rgba(86,65,54,.065) !important;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: clamp(.74rem, .82vw, .88rem) !important;
+    line-height: 1.20 !important;
+  }
+
+  .timeline-layer {
+    inset-block-start: clamp(7.45rem, 16.5vh, 9.4rem) !important;
+    inset-block-end: clamp(8.05rem, 15vh, 9.65rem) !important;
+    width: min(82rem, calc(100vw - 5.6rem)) !important;
+    grid-template-columns: repeat(4, minmax(10.1rem, 1fr)) !important;
+    align-content: center !important;
+    gap: clamp(.58rem, 1.55vh, 1.05rem) clamp(2.35rem, 4.8vw, 5.4rem) !important;
+  }
+
+  .person-node {
+    width: clamp(9.85rem, 10.65vw, 11.15rem) !important;
+    filter: blur(4px) drop-shadow(0 16px 28px rgba(86,65,54,.10)) !important;
+  }
+
+  .person-button {
+    gap: .46rem !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(8.15rem, 8.85vw, 9.25rem) !important;
+    aspect-ratio: .94 / 1 !important;
+    padding: .26rem !important;
+    border-radius: 2.65rem !important;
+    border: 1px solid rgba(255,255,255,.74) !important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.66), rgba(247,242,234,.52) 46%, rgba(232,223,209,.70)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.85),
+      inset 0 -10px 22px rgba(142,115,94,.045),
+      0 0 0 .10rem rgba(226,216,202,.34),
+      0 16px 31px rgba(86,65,54,.105) !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    object-fit: contain !important;
+    object-position: center center !important;
+    border-radius: 2.36rem !important;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(255,255,255,.96), rgba(245,239,229,.74) 44%, rgba(228,217,202,.54) 100%) !important;
+    filter: none !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 5.55rem !important;
+    max-width: 8.75rem !important;
+    padding: .46rem .72rem .42rem !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, rgba(238,229,215,.88), rgba(224,213,195,.78)) !important;
+    border: 1px solid rgba(191,176,156,.46) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.62),
+      0 6px 14px rgba(86,65,54,.055) !important;
+    color: #4a3a32 !important;
+    font-size: clamp(.84rem, .95vw, 1.02rem) !important;
+  }
+
+  .person-button:hover .portrait-frame,
+  .person-button:focus-visible .portrait-frame {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.88),
+      inset 0 -10px 22px rgba(142,115,94,.055),
+      0 0 0 .12rem rgba(226,216,202,.42),
+      0 18px 34px rgba(86,65,54,.13) !important;
+  }
+}
+
+/* Short browser windows: keep every bottom name clear of the fixed controls. */
+@media (min-width: 901px) and (max-height: 760px) {
+  .timeline-layer {
+    inset-block-start: clamp(6.9rem, 14.8vh, 8.2rem) !important;
+    inset-block-end: clamp(7.7rem, 14.5vh, 8.55rem) !important;
+    gap: .46rem clamp(2rem, 4.2vw, 4.8rem) !important;
+  }
+
+  .person-node {
+    width: clamp(9.15rem, 9.7vw, 10.2rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(7.45rem, 8.05vw, 8.45rem) !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    padding: .40rem .62rem .36rem !important;
+    font-size: clamp(.78rem, .86vw, .94rem) !important;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  .timeline-layer {
+    inset-block-start: 8.1rem !important;
+    inset-block-end: 8.1rem !important;
+    width: min(70rem, calc(100vw - 2.2rem)) !important;
+    gap: .7rem 1.35rem !important;
+    grid-template-columns: repeat(4, minmax(8.5rem, 1fr)) !important;
+  }
+
+  .person-node {
+    width: clamp(8.45rem, 11.2vw, 9.75rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.95rem, 9.45vw, 8.05rem) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .timeline-layer {
+    margin: 11.5rem auto 9.8rem !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    border-color: rgba(255,255,255,.72) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.80),
+      0 12px 24px rgba(86,65,54,.09) !important;
+  }
+}
+
+
+/* v19-safe-bottom-soft-frames-20260624-2135
+   Final QA fix:
+   - bottom row sits clearly above the fixed search/navigation controls
+   - people cards remain large and central
+   - image frames are softer / less hard outlined
+   - woven fabric background is visible but gentle
+*/
+
+:root {
+  --v19-fabric-a: #fbf6ee;
+  --v19-fabric-b: #f2e7d9;
+  --v19-ink: #44352e;
+}
+
+body {
+  background-color: var(--v19-fabric-a) !important;
+  background-image:
+    radial-gradient(ellipse at 50% 8%, rgba(255,255,255,.70), transparent 27rem),
+    radial-gradient(circle at 14% 20%, rgba(156,114,94,.050), transparent 24rem),
+    radial-gradient(circle at 86% 82%, rgba(156,114,94,.045), transparent 30rem),
+    repeating-linear-gradient(0deg, rgba(105,80,68,.010) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, rgba(105,80,68,.010) 0 1px, transparent 1px 10px),
+    linear-gradient(180deg, #fbf7f1 0%, #f8f1e8 50%, #f1e7da 100%) !important;
+}
+
+.memory-stage {
+  background:
+    radial-gradient(ellipse at 50% 43%, rgba(255,255,255,.24), transparent 22rem),
+    radial-gradient(ellipse at 50% 62%, rgba(226,213,195,.32), transparent 36rem) !important;
+}
+
+.grain {
+  opacity: .24 !important;
+  mix-blend-mode: multiply !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(92,70,58,.011) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(92,70,58,.010) 0 1px, transparent 1px 6px),
+    radial-gradient(circle at 24% 30%, rgba(105,80,68,.012), transparent .08rem),
+    radial-gradient(circle at 68% 74%, rgba(156,114,94,.010), transparent .08rem) !important;
+  background-size: auto, auto, 5rem 5rem, 6rem 6rem !important;
+}
+
+.mist {
+  opacity: .52 !important;
+  filter: blur(30px) !important;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,.42), transparent 24rem),
+    radial-gradient(circle at 50% 64%, rgba(226,213,195,.22), transparent 40rem) !important;
+}
+
+/* Keep controls at the very bottom and avoid stretching from old top rules. */
+.top-bar {
+  top: auto !important;
+  bottom: .7rem !important;
+  padding-block: 0 !important;
+  z-index: 170 !important;
+}
+
+.top-bar .controls,
+.top-bar .search-box,
+.ghost-btn,
+.search-box {
+  background: rgba(255, 252, 247, .70) !important;
+  border-color: rgba(111,82,71,.11) !important;
+  box-shadow: 0 8px 22px rgba(86,65,54,.075) !important;
+  backdrop-filter: blur(15px) saturate(104%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(104%) !important;
+}
+
+@media (min-width: 901px) {
+  .hero-title {
+    top: clamp(.85rem, 2.1vh, 1.45rem) !important;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(28rem, 68vw) !important;
+    padding: .48rem .95rem .52rem !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(247,242,234,.54)) !important;
+    border-color: rgba(255,255,255,.62) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.72),
+      0 9px 23px rgba(86,65,54,.052) !important;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: clamp(.70rem, .78vw, .84rem) !important;
+    line-height: 1.17 !important;
+  }
+
+  /* Main fix: raise the whole people grid and reserve a larger clear zone above bottom controls. */
+  .timeline-layer {
+    inset-block-start: clamp(6.6rem, 14.8vh, 8.4rem) !important;
+    inset-block-end: clamp(10.9rem, 20vh, 12.9rem) !important;
+    width: min(80rem, calc(100vw - 5rem)) !important;
+    grid-template-columns: repeat(4, minmax(9.7rem, 1fr)) !important;
+    align-content: center !important;
+    justify-content: center !important;
+    gap: clamp(.38rem, 1vh, .68rem) clamp(2.1rem, 4.5vw, 5.1rem) !important;
+  }
+
+  .person-node {
+    width: clamp(9.45rem, 10.2vw, 10.85rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(7.95rem, 8.75vw, 9.2rem) !important;
+    aspect-ratio: .90 / 1 !important;
+    padding: .30rem !important;
+    border-radius: 2.8rem !important;
+    border: 1px solid rgba(255,255,255,.58) !important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.50), rgba(250,246,239,.50) 46%, rgba(232,223,209,.56)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.72),
+      inset 0 -8px 18px rgba(142,115,94,.026),
+      0 0 0 .08rem rgba(226,216,202,.22),
+      0 12px 24px rgba(86,65,54,.075) !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    object-fit: contain !important;
+    object-position: center center !important;
+    border-radius: 2.48rem !important;
+    background:
+      radial-gradient(circle at 50% 22%, rgba(255,255,255,.94), rgba(246,240,230,.70) 48%, rgba(226,216,202,.38) 100%) !important;
+    filter: none !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 5.25rem !important;
+    max-width: 8.4rem !important;
+    padding: .42rem .68rem .38rem !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, rgba(239,231,218,.80), rgba(225,214,196,.68)) !important;
+    border: 1px solid rgba(191,176,156,.34) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.52),
+      0 5px 12px rgba(86,65,54,.045) !important;
+    color: var(--v19-ink) !important;
+    font-size: clamp(.80rem, .90vw, .98rem) !important;
+    line-height: 1.05 !important;
+  }
+}
+
+/* Very common laptop height: even more bottom clearance, still keeping portraits big. */
+@media (min-width: 901px) and (max-height: 820px) {
+  .timeline-layer {
+    inset-block-start: clamp(6.1rem, 13vh, 7.4rem) !important;
+    inset-block-end: clamp(11.9rem, 23vh, 13.8rem) !important;
+    gap: .26rem clamp(1.9rem, 4.2vw, 4.6rem) !important;
+  }
+
+  .person-node {
+    width: clamp(8.85rem, 9.55vw, 10.05rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(7.35rem, 7.95vw, 8.35rem) !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    padding: .37rem .58rem .34rem !important;
+    font-size: clamp(.76rem, .82vw, .90rem) !important;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  .timeline-layer {
+    inset-block-start: 6.7rem !important;
+    inset-block-end: 12.2rem !important;
+    width: min(68rem, calc(100vw - 2rem)) !important;
+    gap: .32rem 1.25rem !important;
+  }
+
+  .person-node {
+    width: clamp(8.15rem, 10.7vw, 9.25rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.75rem, 8.8vw, 7.6rem) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .top-bar {
+    bottom: .55rem !important;
+  }
+
+  .timeline-layer {
+    margin: 11rem auto 11.4rem !important;
+  }
+}
