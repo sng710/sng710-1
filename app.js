@@ -22,13 +22,11 @@ const DESKTOP_POINTS = [
 ];
 
 const MOBILE_POINTS = [
-  // V13: clear warm-loom mobile grid with room for names and controls.
-  { x: 28, y: 39, side: "top", size: .62 },
-  { x: 72, y: 39, side: "top", size: .62 },
-  { x: 28, y: 55, side: "bottom", size: .60 },
-  { x: 72, y: 55, side: "bottom", size: .60 },
-  { x: 28, y: 71, side: "top", size: .58 },
-  { x: 72, y: 71, side: "top", size: .58 },
+  // V16: improved mobile layout — fewer portraits at once, larger cards and clearer spacing.
+  { x: 30, y: 47, side: "top", size: .98 },
+  { x: 70, y: 47, side: "top", size: .98 },
+  { x: 30, y: 72, side: "bottom", size: .96 },
+  { x: 70, y: 72, side: "bottom", size: .96 },
 ];
 
 const state = {
@@ -1393,8 +1391,8 @@ function renderPersonNode(person, index) {
       right: `${point.x}%`,
       left: "auto",
       top: `${point.y}%`,
-      "--node-w": `${7.7 * scale}rem`,
-      "--photo-w": `${6.25 * scale}rem`,
+      "--node-w": `${8.65 * scale}rem`,
+      "--photo-w": `${7.1 * scale}rem`,
       "--from-y": isTop ? "1rem" : "-1rem",
       "--to-y": isTop ? "1.1rem" : "-1.1rem",
       "--stem": `${2.15 * scale}rem`,
