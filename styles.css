@@ -7361,354 +7361,296 @@ body {
 }
 
 
-/* v12 FINAL OVERRIDES — warm tapestry palette + combined rounded image/name card */
-:root {
-  --bg: #f6f1e8;
-  --bg-2: #efe6d7;
-  --ink: #3d312a;
-  --ink-soft: #5d4b43;
-  --muted: #857267;
-  --line: #a67c65;
-  --line-core: #ffffff;
-  --panel: rgba(249, 244, 235, .88);
-  --panel-2: rgba(234, 226, 213, .78);
-  --border: rgba(111, 82, 71, .18);
-  --border-soft: rgba(111, 82, 71, .10);
-  --shadow: 0 24px 60px rgba(72, 54, 44, .14);
-  --card-bg: rgba(234, 226, 213, .94);
-  --card-bg-strong: rgba(223, 213, 196, .98);
-  --card-border: rgba(111, 82, 71, .15);
-  color-scheme: light;
-}
+/* v14-grid-no-overlap-contain-20260624-1835
+   Final layout fix:
+   1) Cards are placed in a real grid, not absolute top/bottom slots, so they cannot sit one on top of another.
+   2) Each person preview is one soft rounded/frosted frame containing BOTH image + name.
+   3) Preview images use object-fit: contain so the full image is visible and not zoomed/cropped.
+   4) Heartbeat/stems/old visual connector elements remain fully hidden.
+*/
 
-body {
-  color: var(--ink);
-  background:
-    linear-gradient(rgba(140, 106, 92, .04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(140, 106, 92, .04) 1px, transparent 1px),
-    radial-gradient(circle at 20% 15%, rgba(166, 124, 101, .10), transparent 22rem),
-    radial-gradient(circle at 80% 18%, rgba(223, 213, 196, .40), transparent 26rem),
-    radial-gradient(circle at 50% 85%, rgba(166, 124, 101, .08), transparent 28rem),
-    linear-gradient(180deg, #f8f3eb 0%, #f6f1e8 52%, #efe7da 100%);
-  background-size: 12px 12px, 12px 12px, auto, auto, auto, auto;
-}
-
-.mist {
-  z-index: -2;
-  background:
-    radial-gradient(circle at 48% 48%, rgba(255,255,255,.36), transparent 18rem),
-    radial-gradient(circle at 55% 62%, rgba(223, 213, 196, .44), transparent 28rem);
-  filter: blur(22px);
-  opacity: .9;
-}
-
-.grain {
-  z-index: -1;
-  opacity: .18;
-  background-image:
-    radial-gradient(circle at 18% 24%, rgba(111,82,71,.08), transparent .07rem),
-    radial-gradient(circle at 64% 72%, rgba(166,124,101,.06), transparent .06rem);
-}
-
-.top-bar {
-  background: linear-gradient(180deg, rgba(246, 241, 232, .95), rgba(246, 241, 232, .55), rgba(246, 241, 232, 0));
-}
-
-.ghost-btn, .search-box {
-  border: 1px solid rgba(111, 82, 71, .14);
-  background: rgba(255,255,255,.56);
-  color: var(--ink-soft);
-  box-shadow: 0 10px 26px rgba(94, 73, 60, .10);
-}
-
-.ghost-btn:hover,
-.ghost-btn:focus-visible,
-.ghost-btn[aria-pressed="true"] {
-  color: var(--ink);
-  border-color: rgba(111, 82, 71, .28);
-  box-shadow: 0 12px 28px rgba(94, 73, 60, .14);
-}
-
-.search-box input { color: var(--ink); }
-.search-box input::placeholder { color: rgba(93, 75, 67, .72); }
-
-.hero-poem .poem-panel {
-  background: rgba(250, 246, 239, .84);
-  border: 1px solid rgba(111, 82, 71, .10);
-  box-shadow: 0 14px 34px rgba(94, 73, 60, .10);
-}
-
-.hero-poem .poem-panel p {
-  color: var(--ink);
-  text-shadow: none;
-}
-
-/* Hide any residual heartbeat drawing completely */
-.heartbeat-svg { display: none !important; }
+.heartbeat-svg,
 .person-node::before,
-.person-node::after { display: none !important; }
+.person-node::after {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.timeline-stage {
+  position: relative !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100svh !important;
+}
 
 .timeline-layer {
-  z-index: 8;
-}
-
-.person-node {
-  width: var(--node-w, 10rem);
-}
-
-.person-button {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .5rem;
-  padding: .7rem .7rem .85rem;
-  background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(234,226,213,.96));
-  border: 1px solid var(--card-border);
-  border-radius: 999px;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.8),
-    0 14px 34px rgba(94, 73, 60, .12);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-
-.portrait-frame {
-  width: min(100%, 8rem);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  padding: .2rem;
-  background: #fff;
-  border: 1px solid rgba(111, 82, 71, .12);
-  box-shadow: 0 8px 18px rgba(94, 73, 60, .10);
-}
-
-.portrait-frame img,
-.portrait-placeholder {
-  border-radius: 50%;
-}
-
-.portrait-frame img {
-  object-fit: cover;
-  object-position: center 14%;
-  filter: none;
-}
-
-.portrait-placeholder {
-  color: #7a6052;
-  background: linear-gradient(180deg, #f8f3eb, #e8ddcd);
-}
-
-.person-name {
-  width: 100%;
-  max-width: none;
-  margin-top: 0;
-  padding: .06rem .2rem 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
-  color: var(--ink);
-  font-weight: 760;
-  font-size: clamp(.84rem, 1vw, 1rem);
-  line-height: 1.14;
-}
-
-.person-name span {
-  display: block;
-  white-space: normal;
-}
-
-.person-button:hover,
-.person-button:focus-visible {
-  transform: translateY(-3px);
-  border-color: rgba(111, 82, 71, .26);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.92),
-    0 18px 38px rgba(94, 73, 60, .16);
-}
-
-.person-button:hover .portrait-frame,
-.person-button:focus-visible .portrait-frame {
-  transform: none;
-  border-color: rgba(111, 82, 71, .18);
-  box-shadow: 0 10px 20px rgba(94, 73, 60, .12);
-}
-
-.story-overlay {
-  background: rgba(76, 58, 48, .26);
-}
-
-.story-panel {
-  background: rgba(250, 246, 239, .98);
-  color: #3d312a;
-}
-
-.story-photo img {
-  filter: none;
-}
-
-.story-copy p,
-.detail span {
-  color: #5d4b43;
-}
-
-.empty-state { color: var(--muted); }
-.empty-state h2 { color: var(--ink-soft); }
-
-@media (max-width: 760px) {
-  .person-node {
-    width: var(--node-w, 8.8rem);
-  }
-
-  .person-button {
-    padding: .58rem .58rem .75rem;
-  }
-
-  .portrait-frame {
-    width: min(100%, 7rem);
-  }
-
-  .person-name {
-    font-size: .76rem;
-    line-height: 1.12;
-  }
-}
-
-
-/* v13 FINAL OVERRIDES — frosted mirror cards + no overlap */
-.hero-title {
-  top: clamp(4.5rem, 6vh, 5rem);
-}
-
-.hero-poem .poem-panel {
-  width: min(31rem, 78vw);
-  padding: .9rem 1.35rem;
-  border-radius: 2.7rem;
-  background: linear-gradient(180deg, rgba(255,255,255,.48), rgba(247,242,234,.68));
-  border: 1px solid rgba(255,255,255,.6);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.75),
-    0 18px 38px rgba(95, 73, 60, .10);
-  backdrop-filter: blur(18px);
-}
-
-.person-node {
-  width: var(--node-w, 7.6rem);
-}
-
-.person-button {
-  width: 100%;
-  gap: .36rem;
-  padding: .42rem .42rem .5rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.55), rgba(247,242,234,.78) 56%, rgba(231,221,207,.92));
-  border: 1px solid rgba(255,255,255,.72);
-  border-radius: 2.2rem;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.92),
-    inset 0 0 0 1px rgba(255,255,255,.34),
-    0 16px 34px rgba(95, 73, 60, .11);
-  backdrop-filter: blur(20px) saturate(110%);
-  position: relative;
-  overflow: hidden;
-}
-
-.person-button::before {
-  content: "";
-  position: absolute;
-  inset: .2rem .24rem auto .24rem;
-  height: 48%;
-  border-radius: 2rem;
-  background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,0));
+  position: absolute !important;
+  z-index: 12 !important;
+  inset-block-start: clamp(14.2rem, 28vh, 19rem) !important;
+  inset-block-end: clamp(5.8rem, 12vh, 7.5rem) !important;
+  inset-inline: clamp(1.25rem, 5vw, 5.8rem) !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(6.8rem, 1fr)) !important;
+  grid-auto-rows: max-content !important;
+  justify-items: center !important;
+  align-content: center !important;
+  gap: clamp(1.05rem, 2.7vh, 2rem) clamp(1.2rem, 4vw, 4.8rem) !important;
   pointer-events: none;
 }
 
-.portrait-frame {
-  width: min(100%, 5.7rem);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  padding: .18rem;
-  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(238,231,219,.98));
-  border: 1px solid rgba(207, 196, 184, .95);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.9),
-    0 8px 18px rgba(95, 73, 60, .09);
+.person-node {
+  position: relative !important;
+  inset: auto !important;
+  right: auto !important;
+  left: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  width: clamp(7.15rem, 8.4vw, 8.7rem) !important;
+  max-width: 100% !important;
+  translate: none !important;
+  transform: translateY(.6rem) scale(.94) !important;
+  opacity: 0;
+  filter: blur(4px);
+  pointer-events: auto;
 }
 
-.portrait-frame img,
+.person-node.is-visible {
+  transform: translateY(0) scale(1) !important;
+  opacity: 1 !important;
+  filter: blur(0) !important;
+}
+
+.person-node.is-leaving {
+  transform: translateY(.55rem) scale(.94) !important;
+  opacity: 0 !important;
+  filter: blur(5px) !important;
+}
+
+.person-button {
+  width: 100% !important;
+  min-height: clamp(8.8rem, 10.3vw, 10.7rem) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: .42rem !important;
+  padding: .5rem .5rem .62rem !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,.78) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.58), rgba(255,255,255,.30) 38%, rgba(234,226,213,.80) 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -14px 28px rgba(143,116,96,.08),
+    0 18px 38px rgba(86, 64, 51, .12) !important;
+  backdrop-filter: blur(20px) saturate(112%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(112%) !important;
+  overflow: hidden !important;
+  color: var(--ink) !important;
+}
+
+.person-button::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: .22rem .26rem auto .26rem !important;
+  height: 48% !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.48), rgba(255,255,255,0)) !important;
+  pointer-events: none !important;
+}
+
+.person-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+.portrait-frame {
+  width: clamp(5.05rem, 5.9vw, 6.25rem) !important;
+  aspect-ratio: 1 / 1 !important;
+  flex: 0 0 auto !important;
+  padding: .22rem !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(207, 196, 184, .92) !important;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,255,255,.92), rgba(239,232,220,.98) 68%, rgba(225,214,198,.98)) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.82),
+    0 8px 20px rgba(86,64,51,.12) !important;
+  overflow: hidden !important;
+}
+
+.portrait-frame img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  border-radius: 50% !important;
+  background: #efe7da !important;
+  filter: none !important;
+}
+
 .portrait-placeholder {
-  border-radius: 50%;
+  border-radius: 50% !important;
+  background: linear-gradient(180deg, #f8f3eb, #e8ddcd) !important;
+  color: #7a6052 !important;
 }
 
 .person-name {
-  width: calc(100% - .5rem);
-  max-width: 6.4rem;
-  padding: .38rem .45rem .32rem;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(231,221,207,.96), rgba(221,210,192,.92));
-  border: 1px solid rgba(193,179,162,.78);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
-  color: #4a3a32;
-  font-weight: 800;
-  font-size: clamp(.78rem, .9vw, .92rem);
-  line-height: 1.03;
+  width: calc(100% - .55rem) !important;
+  max-width: 6.6rem !important;
+  min-height: 2.15rem !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: .34rem .42rem .3rem !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, rgba(232,223,209,.96), rgba(218,207,189,.93)) !important;
+  border: 1px solid rgba(192,177,158,.74) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.62) !important;
+  color: #4a3a32 !important;
+  font-weight: 800 !important;
+  font-size: clamp(.75rem, .85vw, .9rem) !important;
+  line-height: 1.03 !important;
+  text-align: center !important;
+  text-shadow: none !important;
+  backdrop-filter: none !important;
 }
 
 .person-name span {
-  white-space: normal;
+  display: block !important;
+  white-space: normal !important;
 }
 
 .person-button:hover,
 .person-button:focus-visible {
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(-3px) scale(1.018) !important;
+  border-color: rgba(255,255,255,.94) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.96),
-    inset 0 0 0 1px rgba(255,255,255,.42),
-    0 20px 38px rgba(95, 73, 60, .14);
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -14px 28px rgba(143,116,96,.09),
+    0 22px 42px rgba(86, 64, 51, .16) !important;
 }
 
 .person-button:hover .portrait-frame,
 .person-button:focus-visible .portrait-frame {
+  transform: none !important;
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.94),
-    0 10px 20px rgba(95, 73, 60, .12);
+    inset 0 0 0 1px rgba(255,255,255,.9),
+    0 10px 22px rgba(86,64,51,.14) !important;
 }
 
-/* Safety: keep only the image and name inside the round card */
-.person-button > :not(.portrait-frame):not(.person-name) {
-  display: none !important;
+/* Keep top poem in a frosted mirror capsule without stealing card space. */
+.hero-title {
+  top: clamp(4.55rem, 6.2vh, 5.35rem) !important;
 }
 
-@media (max-width: 760px) {
-  .hero-title {
-    top: 6.7rem;
-  }
+.hero-poem .poem-panel {
+  width: min(33rem, 82vw) !important;
+  padding: .82rem 1.3rem !important;
+  border-radius: 999px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.50), rgba(247,242,234,.70)) !important;
+  border: 1px solid rgba(255,255,255,.68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.78),
+    0 16px 36px rgba(95,73,60,.10) !important;
+  backdrop-filter: blur(18px) saturate(105%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(105%) !important;
+}
 
-  .hero-poem .poem-panel {
-    width: min(92vw, 24rem);
-    padding: .78rem 1rem;
-    border-radius: 2rem;
+.hero-poem .poem-panel p {
+  color: #3d312a !important;
+  text-shadow: none !important;
+}
+
+@media (max-width: 980px) {
+  .timeline-layer {
+    inset-block-start: clamp(13.2rem, 25vh, 17rem) !important;
+    inset-block-end: 6.6rem !important;
+    inset-inline: 1rem !important;
+    grid-template-columns: repeat(3, minmax(5.8rem, 1fr)) !important;
+    gap: 1rem .85rem !important;
   }
 
   .person-node {
-    width: var(--node-w, 6.8rem);
+    width: clamp(6.35rem, 16vw, 7.3rem) !important;
   }
 
   .person-button {
-    padding: .34rem .34rem .42rem;
-    border-radius: 1.8rem;
+    min-height: 8.4rem !important;
   }
 
   .portrait-frame {
-    width: min(100%, 5rem);
+    width: clamp(4.75rem, 12vw, 5.45rem) !important;
   }
 
   .person-name {
-    width: calc(100% - .35rem);
-    max-width: 5.7rem;
-    font-size: .72rem;
-    line-height: 1.02;
-    padding: .33rem .35rem .28rem;
+    max-width: 5.85rem !important;
+    font-size: .72rem !important;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    overflow-y: auto !important;
+  }
+
+  .memory-stage {
+    min-height: 100svh !important;
+    overflow: visible !important;
+  }
+
+  .timeline-stage {
+    min-height: 42rem !important;
+    height: auto !important;
+  }
+
+  .timeline-layer {
+    position: relative !important;
+    inset: auto !important;
+    margin: 12.6rem auto 8rem !important;
+    width: min(100% - 1rem, 25rem) !important;
+    grid-template-columns: repeat(2, minmax(6.2rem, 1fr)) !important;
+    gap: .95rem .8rem !important;
+  }
+
+  .person-node {
+    width: min(7.1rem, 100%) !important;
+  }
+
+  .person-button {
+    min-height: 8.25rem !important;
+    padding: .4rem .38rem .48rem !important;
+  }
+
+  .portrait-frame {
+    width: 4.85rem !important;
+  }
+
+  .person-name {
+    max-width: 5.7rem !important;
+    min-height: 1.95rem !important;
+    font-size: .69rem !important;
+    padding: .28rem .3rem .24rem !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .timeline-layer {
+    width: min(100% - .7rem, 21rem) !important;
+    gap: .8rem .6rem !important;
+  }
+
+  .person-node {
+    width: 6.45rem !important;
+  }
+
+  .person-button {
+    min-height: 7.7rem !important;
+  }
+
+  .portrait-frame {
+    width: 4.35rem !important;
   }
 }
