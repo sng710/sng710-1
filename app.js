@@ -10,25 +10,25 @@ const CANDLE_KEY = "memorial-final-candles-v1";
 const PHOTO_OVERRIDES = {};
 
 const DESKTOP_POINTS = [
-  // v19: keep the second row safely above the fixed search/navigation bar.
-  { x: 16, y: 45.5, side: "top", size: .72 },
-  { x: 28, y: 67.5, side: "bottom", size: .66 },
-  { x: 40, y: 45.5, side: "top", size: .72 },
-  { x: 52, y: 67.5, side: "bottom", size: .66 },
-  { x: 64, y: 45.5, side: "top", size: .72 },
-  { x: 76, y: 67.5, side: "bottom", size: .66 },
-  { x: 88, y: 45.5, side: "top", size: .72 },
-  { x: 8,  y: 67.5, side: "bottom", size: .66 },
+  // v20 fallback positions: compact, centered, and safely above bottom controls.
+  { x: 18, y: 40.5, side: "top", size: .62 },
+  { x: 30, y: 61.5, side: "bottom", size: .58 },
+  { x: 42, y: 40.5, side: "top", size: .62 },
+  { x: 54, y: 61.5, side: "bottom", size: .58 },
+  { x: 66, y: 40.5, side: "top", size: .62 },
+  { x: 78, y: 61.5, side: "bottom", size: .58 },
+  { x: 90, y: 40.5, side: "top", size: .62 },
+  { x: 10, y: 61.5, side: "bottom", size: .58 },
 ];
 
 const MOBILE_POINTS = [
-  // v19: safe mobile slots kept clear of bottom controls.
-  { x: 18, y: 49.0, side: "top", size: .55 },
-  { x: 18, y: 68.5, side: "bottom", size: .50 },
-  { x: 50, y: 49.0, side: "top", size: .55 },
-  { x: 50, y: 68.5, side: "bottom", size: .50 },
-  { x: 82, y: 49.0, side: "top", size: .55 },
-  { x: 82, y: 68.5, side: "bottom", size: .50 },
+  // v20 compact mobile fallback.
+  { x: 18, y: 45.0, side: "top", size: .50 },
+  { x: 18, y: 63.0, side: "bottom", size: .46 },
+  { x: 50, y: 45.0, side: "top", size: .50 },
+  { x: 50, y: 63.0, side: "bottom", size: .46 },
+  { x: 82, y: 45.0, side: "top", size: .50 },
+  { x: 82, y: 63.0, side: "bottom", size: .46 },
 ];
 
 const state = {

@@ -8697,3 +8697,283 @@ body {
     margin: 11rem auto 11.4rem !important;
   }
 }
+
+
+/* v20-like-67-soft-fabric-20260624-2215
+   Goal: make 100% browser zoom feel like the previous comfortable 67% view.
+   - More vertical breathing room above the bottom controls.
+   - Softer fabric background.
+   - Softer portrait frames.
+   - Compact but still central people cards so names are never hidden.
+*/
+:root {
+  --v20-fabric-base: #fbf7f0;
+  --v20-fabric-warm: #efe3d3;
+  --v20-ink: #43352e;
+}
+
+html, body {
+  overflow: hidden !important;
+}
+
+body {
+  background-color: var(--v20-fabric-base) !important;
+  background-image:
+    radial-gradient(ellipse at 50% 4%, rgba(255,255,255,.78), transparent 26rem),
+    radial-gradient(circle at 18% 24%, rgba(149,110,90,.036), transparent 22rem),
+    radial-gradient(circle at 84% 80%, rgba(149,110,90,.030), transparent 28rem),
+    repeating-linear-gradient(0deg, rgba(93,72,61,.009) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgba(93,72,61,.008) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #fbf8f2 0%, #f8f1e8 54%, #efe4d6 100%) !important;
+}
+
+.memory-stage {
+  background:
+    radial-gradient(ellipse at 50% 37%, rgba(255,255,255,.30), transparent 24rem),
+    radial-gradient(ellipse at 50% 66%, rgba(225,213,196,.24), transparent 38rem) !important;
+}
+
+.grain {
+  opacity: .18 !important;
+  mix-blend-mode: multiply !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(91,70,58,.009) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(91,70,58,.008) 0 1px, transparent 1px 6px),
+    radial-gradient(circle at 26% 30%, rgba(105,80,68,.010), transparent .075rem),
+    radial-gradient(circle at 70% 72%, rgba(156,114,94,.008), transparent .075rem) !important;
+  background-size: auto, auto, 5rem 5rem, 6rem 6rem !important;
+}
+
+.mist {
+  opacity: .38 !important;
+  filter: blur(34px) !important;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,.42), transparent 23rem),
+    radial-gradient(circle at 50% 68%, rgba(226,213,195,.18), transparent 42rem) !important;
+}
+
+/* Keep the fixed controls visually light and as low/compact as possible. */
+.top-bar {
+  top: auto !important;
+  bottom: .35rem !important;
+  padding-block: 0 !important;
+  z-index: 160 !important;
+  transform: scale(.92) !important;
+  transform-origin: bottom center !important;
+}
+
+.top-bar .controls,
+.top-bar .search-box,
+.ghost-btn,
+.search-box {
+  background: rgba(255, 252, 247, .68) !important;
+  border-color: rgba(111,82,71,.10) !important;
+  box-shadow: 0 7px 18px rgba(86,65,54,.060) !important;
+  backdrop-filter: blur(14px) saturate(102%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(102%) !important;
+}
+
+@media (min-width: 901px) {
+  .hero-title {
+    top: clamp(.65rem, 1.6vh, 1.15rem) !important;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(27rem, 62vw) !important;
+    padding: .40rem .9rem .44rem !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.40), rgba(248,243,236,.50)) !important;
+    border: 1px solid rgba(255,255,255,.58) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.70),
+      0 8px 20px rgba(86,65,54,.046) !important;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: clamp(.64rem, .70vw, .78rem) !important;
+    line-height: 1.13 !important;
+    gap: .02rem !important;
+  }
+
+  /* v20: true compact center grid; leaves a large safe zone above search/navigation. */
+  .timeline-layer {
+    position: absolute !important;
+    inset-block-start: clamp(5.5rem, 10.8vh, 6.9rem) !important;
+    inset-block-end: clamp(8.1rem, 15vh, 9.5rem) !important;
+    inset-inline: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    width: min(74rem, calc(100vw - 8rem)) !important;
+    transform: translateX(-50%) !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(8.2rem, 1fr)) !important;
+    grid-auto-rows: max-content !important;
+    justify-items: center !important;
+    align-content: center !important;
+    justify-content: center !important;
+    gap: clamp(.44rem, 1.1vh, .80rem) clamp(2.4rem, 5.2vw, 6rem) !important;
+    pointer-events: none !important;
+  }
+
+  .person-node {
+    position: relative !important;
+    inset: auto !important;
+    right: auto !important;
+    left: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: clamp(8.05rem, 8.9vw, 9.5rem) !important;
+    max-width: 100% !important;
+    translate: none !important;
+    pointer-events: auto !important;
+  }
+
+  .person-button {
+    width: 100% !important;
+    gap: .36rem !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: visible !important;
+  }
+
+  .person-button::before,
+  .person-button::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.85rem, 7.55vw, 8.1rem) !important;
+    aspect-ratio: .92 / 1 !important;
+    padding: .24rem !important;
+    border-radius: 2.35rem !important;
+    border: 1px solid rgba(255,255,255,.54) !important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.54), rgba(250,246,239,.48) 48%, rgba(232,223,209,.50)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.72),
+      inset 0 -8px 17px rgba(142,115,94,.020),
+      0 0 0 .06rem rgba(226,216,202,.18),
+      0 10px 20px rgba(86,65,54,.058) !important;
+    overflow: hidden !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    border-radius: 2.08rem !important;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(255,255,255,.92), rgba(246,240,230,.66) 48%, rgba(226,216,202,.32) 100%) !important;
+    filter: none !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 4.95rem !important;
+    max-width: 7.7rem !important;
+    padding: .34rem .58rem .31rem !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, rgba(239,231,218,.74), rgba(225,214,196,.62)) !important;
+    border: 1px solid rgba(191,176,156,.28) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.50),
+      0 4px 10px rgba(86,65,54,.036) !important;
+    color: var(--v20-ink) !important;
+    font-size: clamp(.72rem, .80vw, .90rem) !important;
+    font-weight: 850 !important;
+    line-height: 1.04 !important;
+  }
+
+  .person-button:hover .portrait-frame,
+  .person-button:focus-visible .portrait-frame {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.78),
+      inset 0 -8px 18px rgba(142,115,94,.026),
+      0 0 0 .08rem rgba(226,216,202,.22),
+      0 13px 24px rgba(86,65,54,.076) !important;
+  }
+}
+
+/* Common 100% laptop viewport: this is the key "67% zoom feeling" fix. */
+@media (min-width: 901px) and (max-height: 820px) {
+  .top-bar {
+    transform: scale(.88) !important;
+    bottom: .20rem !important;
+  }
+
+  .timeline-layer {
+    inset-block-start: clamp(4.95rem, 9.6vh, 6.0rem) !important;
+    inset-block-end: clamp(7.4rem, 14.2vh, 8.7rem) !important;
+    width: min(70rem, calc(100vw - 9rem)) !important;
+    gap: clamp(.18rem, .65vh, .44rem) clamp(2.2rem, 4.8vw, 5.4rem) !important;
+  }
+
+  .person-node {
+    width: clamp(7.45rem, 8.15vw, 8.65rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.25rem, 6.88vw, 7.25rem) !important;
+    padding: .22rem !important;
+    border-radius: 2.15rem !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    border-radius: 1.90rem !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 4.65rem !important;
+    max-width: 7.05rem !important;
+    padding: .30rem .50rem .27rem !important;
+    font-size: clamp(.66rem, .74vw, .82rem) !important;
+    line-height: 1.02 !important;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  .timeline-layer {
+    inset-block-start: 5.35rem !important;
+    inset-block-end: 8.6rem !important;
+    width: min(66rem, calc(100vw - 4.2rem)) !important;
+    gap: .30rem 1.15rem !important;
+    grid-template-columns: repeat(4, minmax(7.6rem, 1fr)) !important;
+  }
+
+  .person-node {
+    width: clamp(7.05rem, 9.3vw, 8.15rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(5.9rem, 7.8vw, 6.8rem) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html, body {
+    overflow-y: auto !important;
+  }
+
+  .top-bar {
+    transform: none !important;
+    bottom: .45rem !important;
+  }
+
+  .timeline-layer {
+    margin: 10.2rem auto 11.8rem !important;
+  }
+}
