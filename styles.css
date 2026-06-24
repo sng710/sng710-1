@@ -8107,3 +8107,171 @@ body {
     width: 6.25rem !important;
   }
 }
+
+
+/* v17-soft-fabric-big-people-20260624-2010
+   Softer warm fabric background + larger centered desktop portraits.
+   Keeps full-image preview, no grayscale, and stronger cache-busted version in index.html.
+*/
+:root {
+  --bg-warm-canvas: #f7f1e8;
+  --card-bg-linen: #eee4d7;
+  --tag-bg-accent: #e2d5c3;
+  --text-primary: #3c302a;
+  --accent-terracotta: #9c725e;
+  --accent-walnut: #695044;
+}
+
+html,
+body {
+  background-color: var(--bg-warm-canvas) !important;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse at 50% 18%, rgba(255,255,255,.52), transparent 28rem),
+    radial-gradient(circle at 20% 16%, rgba(156, 114, 94, .075), transparent 25rem),
+    radial-gradient(circle at 78% 78%, rgba(105, 80, 68, .055), transparent 29rem),
+    repeating-linear-gradient(0deg, rgba(105, 80, 68, .020) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(90deg, rgba(105, 80, 68, .018) 0 1px, transparent 1px 11px),
+    linear-gradient(180deg, #fbf7f0 0%, #f6efe5 52%, #efe4d4 100%) !important;
+  background-size: auto, auto, auto, auto, auto, auto !important;
+}
+
+.memory-stage {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.34), transparent 23rem),
+    radial-gradient(ellipse at 50% 65%, rgba(226, 213, 195, .48), transparent 35rem),
+    linear-gradient(90deg, rgba(255,255,255,.18), transparent 30%, rgba(255,255,255,.14) 70%, transparent) !important;
+}
+
+/* Soft visible fabric, not a hard grid */
+.grain {
+  opacity: .42 !important;
+  mix-blend-mode: multiply !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(92, 70, 58, .018) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(92, 70, 58, .015) 0 1px, transparent 1px 6px),
+    radial-gradient(circle at 20% 25%, rgba(105,80,68,.026), transparent .08rem),
+    radial-gradient(circle at 68% 72%, rgba(156,114,94,.022), transparent .08rem) !important;
+  background-size: auto, auto, 4.5rem 4.5rem, 5.5rem 5.5rem !important;
+}
+
+.mist {
+  opacity: .78 !important;
+  filter: blur(24px) !important;
+  background:
+    radial-gradient(circle at 48% 35%, rgba(255,255,255,.44), transparent 24rem),
+    radial-gradient(circle at 52% 66%, rgba(226,213,195,.36), transparent 38rem) !important;
+}
+
+.hero-title {
+  top: clamp(1.35rem, 3.3vh, 2.15rem) !important;
+}
+
+.hero-poem .poem-panel {
+  width: min(30rem, 76vw) !important;
+  padding: .58rem 1.12rem .62rem !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.50), rgba(247,242,234,.64)) !important;
+  border: 1px solid rgba(255,255,255,.76) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.88),
+    0 13px 30px rgba(86,65,54,.075) !important;
+}
+
+.hero-poem .poem-panel p {
+  color: #40332c !important;
+  font-size: clamp(.76rem, .86vw, .92rem) !important;
+  line-height: 1.22 !important;
+}
+
+@media (min-width: 901px) {
+  .timeline-layer {
+    inset-block-start: clamp(10.8rem, 23.5vh, 13.2rem) !important;
+    inset-block-end: clamp(4.7rem, 8.5vh, 5.9rem) !important;
+    width: min(78rem, calc(100vw - 4.5rem)) !important;
+    grid-template-columns: repeat(4, minmax(11rem, 1fr)) !important;
+    gap: clamp(.82rem, 1.8vh, 1.2rem) clamp(1.9rem, 4vw, 4.5rem) !important;
+    align-content: center !important;
+  }
+
+  .person-node {
+    width: clamp(10.7rem, 11.9vw, 12.35rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(9.15rem, 10.45vw, 10.85rem) !important;
+    aspect-ratio: .86 / 1 !important;
+    border-radius: 2.6rem !important;
+    padding: .30rem !important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.78), rgba(238,231,220,.96)) !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.88),
+      inset 0 1px 12px rgba(255,255,255,.46),
+      0 0 0 .16rem rgba(213, 201, 184, .34),
+      0 20px 40px rgba(88, 66, 52, .15) !important;
+  }
+
+  .portrait-frame img,
+  .timeline-layer .portrait-frame img {
+    object-fit: contain !important;
+    object-position: center center !important;
+    border-radius: 2.28rem !important;
+    background:
+      radial-gradient(circle at 50% 22%, rgba(255,255,255,.96), rgba(241,235,225,.78) 48%, rgba(224,214,199,.52) 100%) !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 5.8rem !important;
+    max-width: 9.1rem !important;
+    padding: .52rem .86rem .48rem !important;
+    font-size: clamp(.92rem, 1.05vw, 1.12rem) !important;
+    border-radius: 1rem !important;
+  }
+}
+
+@media (min-width: 1181px) and (max-height: 760px) {
+  .timeline-layer {
+    inset-block-start: clamp(9.9rem, 21.5vh, 11.4rem) !important;
+    inset-block-end: 4.35rem !important;
+    gap: .72rem clamp(1.8rem, 3.8vw, 4rem) !important;
+  }
+
+  .person-node {
+    width: clamp(10.1rem, 11.2vw, 11.45rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(8.65rem, 9.75vw, 10.05rem) !important;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  .timeline-layer {
+    width: min(68rem, calc(100vw - 2rem)) !important;
+    grid-template-columns: repeat(4, minmax(8.8rem, 1fr)) !important;
+    gap: .9rem 1.2rem !important;
+  }
+
+  .person-node {
+    width: clamp(8.9rem, 12.6vw, 10.2rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(7.4rem, 10.6vw, 8.45rem) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .grain { opacity: .34 !important; }
+  .hero-title { top: 6.05rem !important; }
+  .timeline-layer {
+    margin-top: 11.9rem !important;
+  }
+}
