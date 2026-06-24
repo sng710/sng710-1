@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="רקמה אנושית אחת חיה — אתר הנצחה אישי עם שמות, תמונות וסיפורי חיים על רקע אריג עדין." />
+  <meta name="theme-color" content="#e7dcc9" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>רקמה אנושית אחת חיה</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=v11-woven-color-20260624-1300" />
+</head>
+
+<body>
+  <a class="skip-link" href="#memory-stage">דילוג לרקמת הזיכרון</a>
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="memory-stage" class="memory-stage" aria-label="רקמת זיכרון" tabindex="-1">
+    <div class="mist" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="top-bar" aria-label="חיפוש ושליטה">
+      <div class="controls" aria-label="שליטה ברקמת הזיכרון">
+        <button id="prev-btn" class="ghost-btn" type="button" aria-label="השם הקודם">← הקודם</button>
+        <button id="pause-btn" class="ghost-btn" type="button" aria-pressed="false">
+          <span class="icon" aria-hidden="true">Ⅱ</span>השהיה
+        </button>
+        <button id="next-btn" class="ghost-btn" type="button" aria-label="השם הבא">הבא →</button>
+      </div>
+
+      <label class="search-box">
+        <span aria-hidden="true">⌕</span>
+        <span class="sr-only">חיפוש לפי שם, יישוב, גיל או סיפור</span>
+        <input id="search-input" type="search" placeholder="חיפוש שם…" autocomplete="off" aria-label="חיפוש לפי שם, יישוב, גיל או סיפור" />
+      </label>
+    </header>
+
+    <section class="hero-title hero-poem" aria-label="שיר הזיכרון">
+      <div class="poem-panel">
+        <p>
+          <span>כולנו רקמה אנושית אחת חיה</span>
+          <span class="single-line">ואם אחד מאיתנו הולך מעמנו</span>
+          <span>משהו מת בנו -</span>
+          <span>ומשהו, נשאר איתו</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="timeline-stage" aria-label="רקמת שמות וזיכרונות">
+      <div class="fabric-field" aria-hidden="true"></div>
+
+      <div id="timeline-layer" class="timeline-layer"></div>
+    </section>
+  </main>
+
+  <div id="story-root"></div>
+
+  <noscript>
+    <div class="noscript-message">האתר דורש JavaScript כדי להציג את רקמת הזיכרון והחיפוש.</div>
+  </noscript>
+  <script>
+    window.MEMORIAL_BUILD_VERSION = "v11-woven-color-20260624-1300";
+    try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (_) {}
+
+    // Helps when an older PWA/service-worker version was opened in the same browser.
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        var basePath = location.pathname.replace(/\/[^/]*$/, "/");
+        registrations.forEach(function(registration) {
+          try {
+            var scopePath = new URL(registration.scope).pathname;
+            if (basePath.indexOf(scopePath) === 0 || scopePath.indexOf(basePath) === 0) registration.unregister();
+          } catch (_) {}
+        });
+      }).catch(function() {});
+    }
+    if ("caches" in window) {
+      caches.keys().then(function(keys) {
+        keys.forEach(function(key) {
+          if (/fallen|memorial|sng710|memory/i.test(key)) caches.delete(key);
+        });
+      }).catch(function() {});
+    }
+  </script>
+  <script src="data.js?v=v11-woven-color-20260624-1300"></script>
+  <script src="app.js?v=v11-woven-color-20260624-1300"></script>
+</body>
+</html>

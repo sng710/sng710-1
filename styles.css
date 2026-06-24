@@ -1,0 +1,7245 @@
+:root {
+  --bg: #06131f;
+  --bg-2: #0b2235;
+  --ink: #effbff;
+  --ink-soft: #bdddea;
+  --muted: #86aebf;
+  --line: #9beaff;
+  --line-core: #f2fcff;
+  --panel: rgba(6, 18, 32, .72);
+  --panel-2: rgba(6, 18, 32, .54);
+  --border: rgba(144, 223, 255, .18);
+  --border-soft: rgba(144, 223, 255, .10);
+  --shadow: 0 30px 90px rgba(0, 6, 14, .50);
+  font-family: "Assistant", system-ui, sans-serif;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(91, 185, 230, .18), transparent 25rem),
+    radial-gradient(circle at 17% 28%, rgba(49, 107, 159, .20), transparent 28rem),
+    radial-gradient(circle at 82% 77%, rgba(33, 68, 106, .24), transparent 30rem),
+    linear-gradient(180deg, #06131f 0%, #071a2b 56%, #04101d 100%);
+  overflow: hidden;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+img, svg { display: block; max-width: 100%; }
+
+.skip-link {
+  position: fixed;
+  z-index: 9999;
+  inset-inline-start: 1rem;
+  top: 1rem;
+  transform: translateY(-150%);
+  padding: .7rem 1rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #06131f;
+  text-decoration: none;
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.memory-stage {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mist, .grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mist {
+  z-index: -2;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(120, 219, 255, .12), transparent 23rem),
+    radial-gradient(circle at 50% 60%, rgba(42, 102, 160, .18), transparent 38rem);
+  filter: blur(18px);
+  animation: mist-breathe 10s ease-in-out infinite;
+}
+
+.grain {
+  z-index: -1;
+  opacity: .10;
+  background-image:
+    radial-gradient(circle at 18% 24%, rgba(255,255,255,.05), transparent .07rem),
+    radial-gradient(circle at 64% 72%, rgba(120,219,255,.05), transparent .06rem);
+  background-size: 4.5rem 4.5rem, 6rem 6rem;
+}
+
+@keyframes mist-breathe {
+  0%,100% { opacity: .74; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.018); }
+}
+
+/* Top controls */
+.top-bar {
+  position: fixed;
+  z-index: 120;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  background: linear-gradient(180deg, rgba(5,16,29,.92), rgba(5,16,29,0));
+  pointer-events: none;
+}
+
+.top-bar > * { pointer-events: auto; }
+
+.controls {
+  display: flex;
+  gap: .55rem;
+  align-items: center;
+}
+
+.ghost-btn, .search-box {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(6, 18, 32, .52);
+  color: var(--ink-soft);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 5, 14, .22);
+}
+
+.ghost-btn {
+  min-width: 5.3rem;
+  padding: .62rem .98rem;
+  font-weight: 750;
+  transition: .25s ease;
+}
+
+.ghost-btn:hover,
+.ghost-btn:focus-visible,
+.ghost-btn[aria-pressed="true"] {
+  color: #fff;
+  border-color: rgba(176, 235, 255, .36);
+  box-shadow: 0 0 22px rgba(100, 213, 255, .14);
+  transform: translateY(-1px);
+}
+
+.search-box {
+  width: min(22rem, 44vw);
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .62rem .95rem;
+}
+
+.search-box input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+.search-box input::placeholder { color: rgba(189, 221, 234, .72); }
+
+/* Hero title */
+.hero-title {
+  position: fixed;
+  z-index: 80;
+  inset-inline: 1rem;
+  top: clamp(5.3rem, 8vh, 6.6rem);
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-title h1 {
+  margin: 0;
+  color: #f3fbff;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1;
+  font-weight: 300;
+  letter-spacing: .03em;
+  text-shadow:
+    0 0 8px rgba(220, 248, 255, .22),
+    0 0 28px rgba(110, 218, 255, .18),
+    0 12px 35px rgba(0, 5, 14, .42);
+}
+
+.hero-title p {
+  margin: .6rem 0 0;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  letter-spacing: .08em;
+}
+
+.title-ornament {
+  width: min(30rem, 44vw);
+  height: 1px;
+  margin-bottom: .72rem;
+  background:
+    linear-gradient(90deg, transparent, rgba(170,235,255,.34), rgba(255,255,255,.72), rgba(170,235,255,.34), transparent);
+  position: relative;
+}
+
+.title-ornament::after {
+  content: "";
+  position: absolute;
+  inset-inline: 50%;
+  top: 50%;
+  width: .52rem;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #f3fcff;
+  box-shadow: 0 0 18px rgba(140, 230, 255, .78);
+  transform: translate(50%, -50%);
+}
+
+/* Timeline */
+.timeline-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.heartbeat-svg {
+  position: absolute;
+  z-index: 3;
+  inset-inline: 0;
+  top: 62%;
+  width: 100vw;
+  height: min(28vh, 18rem);
+  transform: translateY(-50%);
+  overflow: visible;
+}
+
+.heartbeat-svg path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.line-shadow {
+  stroke: rgba(0, 12, 28, .72);
+  stroke-width: 18;
+  filter: blur(13px);
+}
+
+.line-base {
+  stroke: rgba(139, 226, 255, .28);
+  stroke-width: 2.4;
+}
+
+.line-fill {
+  stroke: url(#lineGradient);
+  stroke-width: 4.9;
+  filter:
+    url(#lineGlow)
+    drop-shadow(0 0 5px rgba(220, 248, 255, .80))
+    drop-shadow(0 0 16px rgba(80, 205, 255, .55))
+    drop-shadow(0 0 30px rgba(50, 175, 255, .28));
+  opacity: .95;
+  animation: line-breathe 5.8s ease-in-out infinite;
+}
+
+.line-runner,
+.line-runner-glow {
+  pointer-events: none;
+}
+
+.line-runner-glow {
+  stroke: rgba(94, 215, 255, .75);
+  stroke-width: 15;
+  stroke-dasharray: 95 1500;
+  filter: blur(5px) drop-shadow(0 0 22px rgba(75, 200, 255, .58));
+  opacity: .52;
+  animation: beat-run 5.6s linear infinite;
+}
+
+.line-runner {
+  stroke: #fbfeff;
+  stroke-width: 6.6;
+  stroke-dasharray: 135 1460;
+  filter:
+    drop-shadow(0 0 5px rgba(255,255,255,.96))
+    drop-shadow(0 0 15px rgba(130, 228, 255, .90))
+    drop-shadow(0 0 28px rgba(68, 190, 255, .62));
+  opacity: 1;
+  animation: beat-run 5.6s linear infinite;
+}
+
+@keyframes beat-run {
+  0% { stroke-dashoffset: 1580; opacity: 0; }
+  5% { opacity: .95; }
+  88% { opacity: .95; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes line-breathe {
+  0%,100% { opacity: .84; }
+  50% { opacity: 1; }
+}
+
+.broken-heart {
+  opacity: .28;
+  filter: url(#heartGlow);
+  animation: heart-breathe 8s ease-in-out infinite;
+}
+
+.heart-outline {
+  stroke: url(#heartGradient);
+  stroke-width: 5.3;
+  opacity: .38;
+}
+
+.heart-crack {
+  stroke: rgba(227, 249, 255, .48);
+  stroke-width: 3.5;
+  opacity: .34;
+}
+
+@keyframes heart-breathe {
+  0%,100% { opacity: .20; transform: translateY(.15rem) scale(.96); }
+  50% { opacity: .30; transform: translateY(.15rem) scale(1); }
+}
+
+.timeline-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+}
+
+/* Person cards */
+.person-node {
+  position: absolute;
+  width: var(--node-w, 8rem);
+  translate: 50% -50%;
+  opacity: 0;
+  transform: translateY(var(--from-y, .7rem)) scale(.82);
+  transition:
+    opacity 1.05s ease,
+    transform 1.35s cubic-bezier(.16,.92,.22,1),
+    filter 1.1s ease;
+  filter: blur(5px);
+  will-change: transform, opacity, filter;
+}
+
+.person-node.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(var(--to-y, .7rem)) scale(.86);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+.person-node::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 1.5px;
+  height: var(--stem, 3.4rem);
+  background: linear-gradient(var(--stem-dir), rgba(180, 237, 255, .66), rgba(180, 237, 255, .18), transparent);
+  transform: translateX(-50%) scaleY(.25);
+  transform-origin: var(--stem-origin);
+  opacity: 0;
+  transition: 1s ease;
+  pointer-events: none;
+}
+
+.person-node.is-top::before { top: calc(100% + .45rem); }
+.person-node.is-bottom::before { bottom: calc(100% + .45rem); }
+
+.person-node.is-visible::before {
+  opacity: .72;
+  transform: translateX(-50%) scaleY(1);
+}
+
+.person-node::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 3rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(150, 229, 255, .45), rgba(150, 229, 255, .10), transparent 72%);
+  filter: blur(8px);
+  transform: translateX(-50%) scale(.35);
+  opacity: 0;
+  transition: 1s ease;
+  pointer-events: none;
+}
+
+.person-node.is-top::after { top: calc(100% + .25rem); }
+.person-node.is-bottom::after { bottom: calc(100% + .25rem); }
+
+.person-node.is-visible::after {
+  opacity: .82;
+  transform: translateX(-50%) scale(1);
+}
+
+.person-button {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: .78rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.portrait-frame {
+  width: var(--photo-w, 6.8rem);
+  aspect-ratio: .86;
+  border-radius: 46% 46% 38% 38% / 30% 30% 52% 52%;
+  padding: .24rem;
+  background:
+    linear-gradient(180deg, rgba(240, 252, 255, .38), rgba(105, 188, 225, .10)),
+    rgba(7, 22, 35, .60);
+  border: 1px solid rgba(198, 240, 255, .22);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.12),
+    0 0 0 .16rem rgba(130, 224, 255, .13),
+    0 0 20px rgba(82, 197, 255, .16),
+    0 18px 36px rgba(0, 5, 14, .36);
+  overflow: hidden;
+  transition: .25s ease;
+}
+
+.portrait-frame img,
+.portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.portrait-frame img {
+  object-fit: cover;
+  object-position: center 14%;
+  filter: grayscale(100%) contrast(1.12) brightness(1.04);
+}
+
+.portrait-placeholder {
+  display: grid;
+  place-items: center;
+  color: rgba(238, 249, 255, .90);
+  font-size: 1.45rem;
+  font-weight: 800;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.75), transparent 22%),
+    linear-gradient(180deg, rgba(65, 98, 118, .86), rgba(14, 44, 66, .90));
+}
+
+.person-name {
+  max-width: 9rem;
+  padding: .35rem .72rem;
+  border-radius: 999px;
+  background: rgba(5, 18, 32, .74);
+  border: 1px solid rgba(138, 224, 255, .14);
+  color: #f0fbff;
+  font-weight: 760;
+  font-size: clamp(.82rem, 1vw, 1rem);
+  line-height: 1.08;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 5, 12, .20);
+  backdrop-filter: blur(10px);
+}
+
+.person-name span {
+  display: block;
+  white-space: nowrap;
+}
+
+.person-button:hover .portrait-frame,
+.person-button:focus-visible .portrait-frame {
+  transform: translateY(-2px);
+  border-color: rgba(210, 246, 255, .40);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.18),
+    0 0 0 .18rem rgba(130, 224, 255, .18),
+    0 0 28px rgba(82, 197, 255, .24),
+    0 20px 42px rgba(0, 5, 14, .42);
+}
+
+/* Story modal */
+.story-overlay {
+  position: fixed;
+  z-index: 500;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 6, 14, .66);
+  backdrop-filter: blur(18px);
+}
+
+.story-panel {
+  position: relative;
+  width: min(58rem, 96vw);
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 1.6rem;
+  background: rgba(238, 249, 255, .96);
+  color: #0a1d2e;
+  box-shadow: var(--shadow);
+}
+
+.close-story {
+  position: absolute;
+  top: .85rem;
+  inset-inline-end: .85rem;
+  width: 2.55rem;
+  height: 2.55rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  color: #0a1d2e;
+  font-size: 1.6rem;
+}
+
+.story-grid-head {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  gap: 1.2rem;
+  padding: 1.2rem;
+}
+
+.story-photo {
+  aspect-ratio: 4 / 5;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background: rgba(6, 18, 32, .08);
+}
+
+.story-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 14%;
+  filter: grayscale(100%) contrast(1.08) brightness(1.04);
+}
+
+.story-copy h2 {
+  margin: .4rem 0 .6rem;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.story-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-bottom: 1rem;
+}
+
+.story-meta span,
+.story-actions button {
+  border-radius: 999px;
+  padding: .35rem .72rem;
+  border: 1px solid rgba(10, 29, 46, .10);
+  background: rgba(10, 29, 46, .06);
+  color: #375368;
+  font-weight: 800;
+}
+
+.story-copy p {
+  line-height: 1.85;
+  color: #46677c;
+}
+
+.story-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.story-actions button {
+  cursor: pointer;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: .75rem;
+  padding: 0 1.2rem 1.2rem;
+}
+
+.detail {
+  border-radius: 1rem;
+  padding: .85rem;
+  background: rgba(10, 29, 46, .055);
+  border: 1px solid rgba(10, 29, 46, .07);
+}
+
+.detail strong {
+  display: block;
+  color: #0a1d2e;
+  margin-bottom: .2rem;
+}
+
+.detail span { color: #46677c; }
+
+.empty-state {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--muted);
+  padding: 1rem;
+}
+
+.empty-state h2 { color: var(--ink-soft); }
+
+@media (max-width: 760px) {
+  body { overflow-y: auto; }
+
+  .top-bar {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    padding: .8rem;
+  }
+
+  .controls {
+    justify-content: center;
+  }
+
+  .ghost-btn {
+    min-width: 0;
+    flex: 1;
+    padding-inline: .65rem;
+  }
+
+  .search-box { width: 100%; }
+
+  .hero-title {
+    top: 8.7rem;
+  }
+
+  .hero-title h1 {
+    font-size: clamp(2.3rem, 14vw, 4rem);
+  }
+
+  .hero-title p {
+    font-size: .9rem;
+  }
+
+  .heartbeat-svg {
+    top: 65%;
+    height: 13rem;
+  }
+
+  .person-name {
+    font-size: .73rem;
+    max-width: 6.7rem;
+  }
+
+  .story-grid-head {
+    grid-template-columns: 1fr;
+  }
+
+  .story-photo {
+    max-width: 13rem;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+
+/* v10.4 maintenance: the final rules below rely on source order and scoped selectors, not priority flags.
+   The only remaining priority flags are inside prefers-reduced-motion for accessibility. */
+
+/* v3: smaller poem-only header and clearer separation from portrait cards */
+.hero-title {
+  top: clamp(4.9rem, 7vh, 5.65rem);
+  inset-inline: 1rem;
+  z-index: 86;
+}
+
+.hero-poem .poem-panel {
+  width: min(30rem, 82vw);
+  padding: .78rem 1.15rem;
+  border-radius: 1.25rem;
+  background: rgba(6, 18, 32, .34);
+  border: 1px solid rgba(144, 223, 255, .10);
+  box-shadow: 0 12px 34px rgba(0, 5, 14, .18);
+  backdrop-filter: blur(10px);
+}
+
+.hero-poem p {
+  margin: 0;
+  color: #f3fbff;
+  font-weight: 380;
+  font-size: clamp(.88rem, 1.15vw, 1.08rem);
+  line-height: 1.38;
+  letter-spacing: .01em;
+  text-shadow: 0 0 12px rgba(120, 220, 255, .10);
+}
+
+/* Put the top row below the poem and avoid any text/image collision */
+.heartbeat-svg {
+  top: 68%;
+  height: min(23vh, 14rem);
+}
+
+.person-node {
+  z-index: 10;
+}
+
+.person-name {
+  margin-top: .18rem;
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    top: 7.35rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 24rem);
+    padding: .72rem .88rem;
+  }
+
+  .hero-poem p {
+    font-size: .82rem;
+    line-height: 1.32;
+  }
+
+  .heartbeat-svg {
+    top: 70%;
+    height: 11.5rem;
+  }
+}
+
+
+/* v4: visible top area is ONLY the selected song text */
+.hero-title {
+  top: clamp(4.85rem, 6.8vh, 5.55rem);
+  inset-inline: 1rem;
+  z-index: 86;
+}
+
+.hero-title h1,
+.hero-title > p:not(.force-visible),
+.title-ornament {
+  display: none;
+}
+
+.hero-poem .poem-panel {
+  width: min(27rem, 78vw);
+  padding: .72rem 1.05rem;
+  border-radius: 1.15rem;
+  background: rgba(6, 18, 32, .30);
+  border: 1px solid rgba(144, 223, 255, .09);
+  box-shadow: 0 12px 32px rgba(0, 5, 14, .14);
+  backdrop-filter: blur(9px);
+}
+
+.hero-poem .poem-panel p {
+  display: grid;
+  gap: .07rem;
+  margin: 0;
+  color: #f3fbff;
+  font-weight: 370;
+  font-size: clamp(.82rem, 1.02vw, 1rem);
+  line-height: 1.32;
+  letter-spacing: .01em;
+  text-shadow: 0 0 12px rgba(120, 220, 255, .10);
+}
+
+.hero-poem .poem-panel span {
+  display: block;
+}
+
+/* Keep portrait cards visually separate from the song. */
+.heartbeat-svg {
+  top: 70%;
+  height: min(21vh, 13rem);
+}
+
+.person-node {
+  z-index: 12;
+}
+
+.person-name {
+  margin-top: .18rem;
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    top: 7.2rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 23rem);
+    padding: .68rem .85rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .76rem;
+    line-height: 1.25;
+  }
+
+  .heartbeat-svg {
+    top: 72%;
+    height: 11rem;
+  }
+}
+
+
+/* FINAL: top area is ONLY the selected song text */
+.hero-title {
+  top: clamp(4.8rem, 6.7vh, 5.45rem);
+  inset-inline: 1rem;
+  z-index: 86;
+  pointer-events: none;
+}
+
+.hero-title h1,
+.hero-title > p:not(.force-visible),
+.title-ornament {
+  display: none;
+}
+
+.hero-poem .poem-panel {
+  width: min(26rem, 76vw);
+  padding: .68rem 1rem;
+  border-radius: 1.1rem;
+  background: rgba(6, 18, 32, .26);
+  border: 1px solid rgba(144, 223, 255, .08);
+  box-shadow: 0 10px 28px rgba(0, 5, 14, .12);
+  backdrop-filter: blur(8px);
+}
+
+.hero-poem .poem-panel p {
+  display: grid;
+  gap: .05rem;
+  margin: 0;
+  color: #f3fbff;
+  font-weight: 370;
+  font-size: clamp(.78rem, .95vw, .94rem);
+  line-height: 1.28;
+  letter-spacing: .01em;
+  text-shadow: 0 0 10px rgba(120, 220, 255, .08);
+}
+
+.hero-poem .poem-panel span {
+  display: block;
+}
+
+/* Push the whole memory line lower so cards do not collide with the song. */
+.heartbeat-svg {
+  top: 72%;
+  height: min(20vh, 12.4rem);
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    top: 7rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 22rem);
+    padding: .62rem .78rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .72rem;
+    line-height: 1.22;
+  }
+
+  .heartbeat-svg {
+    top: 73%;
+    height: 10.5rem;
+  }
+}
+
+
+/* V5: original data restored + song slightly bigger */
+.hero-title {
+  top: clamp(4.75rem, 6.6vh, 5.35rem);
+}
+
+.hero-poem .poem-panel {
+  width: min(31rem, 82vw);
+  padding: .86rem 1.18rem;
+  border-radius: 1.18rem;
+  background: rgba(6, 18, 32, .28);
+}
+
+.hero-poem .poem-panel p {
+  font-size: clamp(.95rem, 1.18vw, 1.13rem);
+  line-height: 1.38;
+  gap: .07rem;
+}
+
+/* Keep cards away from the enlarged song. */
+.heartbeat-svg {
+  top: 73%;
+  height: min(19vh, 12rem);
+}
+
+/* Original names can be longer; keep labels readable. */
+.person-name {
+  max-width: 10.5rem;
+  padding-inline: .68rem;
+  font-size: clamp(.76rem, .9vw, .94rem);
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    top: 7rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 25rem);
+    padding: .72rem .88rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .82rem;
+    line-height: 1.28;
+  }
+
+  .heartbeat-svg {
+    top: 74%;
+    height: 10.2rem;
+  }
+
+  .person-name {
+    max-width: 7.5rem;
+    font-size: .69rem;
+  }
+}
+
+
+/* V6: no overlap between song text and portrait cards */
+.hero-title {
+  top: clamp(4.65rem, 6.2vh, 5.15rem);
+  z-index: 120;
+}
+
+.hero-poem .poem-panel {
+  width: min(30rem, 82vw);
+  padding: .78rem 1.1rem;
+  border-radius: 1.12rem;
+  background: rgba(6, 18, 32, .34);
+  border: 1px solid rgba(144, 223, 255, .10);
+}
+
+.hero-poem .poem-panel p {
+  font-size: clamp(.95rem, 1.14vw, 1.08rem);
+  line-height: 1.34;
+}
+
+/* Put the heartbeat line lower and keep the upper portraits below the poem. */
+.heartbeat-svg {
+  top: 77%;
+  height: min(17vh, 10.8rem);
+}
+
+/* Slightly smaller portraits so the top row has breathing room. */
+.portrait-frame {
+  width: var(--photo-w, 6.05rem);
+}
+
+.person-node {
+  z-index: 20;
+}
+
+.person-name {
+  margin-top: .2rem;
+  max-width: 10.8rem;
+}
+
+/* The song is decorative/non-clickable and visually above everything, without cards crossing it. */
+.timeline-stage {
+  margin-top: 0;
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    top: 7rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 24.5rem);
+    padding: .7rem .85rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .8rem;
+    line-height: 1.25;
+  }
+
+  .heartbeat-svg {
+    top: 78%;
+    height: 9.5rem;
+  }
+
+  .portrait-frame {
+    width: var(--photo-w, 4.65rem);
+  }
+}
+
+
+/* V7: bigger poem, cards moved up, smoother fade in/out, first-name labels */
+.hero-title {
+  top: clamp(4.55rem, 6.1vh, 5.05rem);
+  z-index: 120;
+}
+
+.hero-poem .poem-panel {
+  width: min(34rem, 84vw);
+  padding: .9rem 1.22rem;
+  border-radius: 1.18rem;
+  background: rgba(6, 18, 32, .32);
+  border: 1px solid rgba(144, 223, 255, .10);
+}
+
+.hero-poem .poem-panel p {
+  font-size: clamp(1.08rem, 1.35vw, 1.26rem);
+  line-height: 1.42;
+  gap: .08rem;
+}
+
+/* Move the line/cards up a bit from the previous version so bottom row is not cut. */
+.heartbeat-svg {
+  top: 70.5%;
+  height: min(18vh, 11.3rem);
+}
+
+.person-node {
+  z-index: 20;
+}
+
+/* Fade the image and the name/data together, in and out. */
+.person-node .portrait-frame,
+.person-node .person-name {
+  opacity: 0;
+  transform: translateY(.42rem) scale(.97);
+  transition:
+    opacity 1.05s ease,
+    transform 1.15s cubic-bezier(.16,.92,.22,1),
+    filter 1.05s ease;
+}
+
+.person-node.is-visible .portrait-frame,
+.person-node.is-visible .person-name {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.person-node.is-leaving .portrait-frame,
+.person-node.is-leaving .person-name {
+  opacity: 0;
+  transform: translateY(-.42rem) scale(.96);
+  filter: blur(4px);
+}
+
+.person-name {
+  margin-top: .18rem;
+  max-width: 11rem;
+  padding-inline: .7rem;
+  font-size: clamp(.74rem, .88vw, .92rem);
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    top: 6.9rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 26rem);
+    padding: .78rem .9rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .88rem;
+    line-height: 1.32;
+  }
+
+  .heartbeat-svg {
+    top: 71.5%;
+    height: 10rem;
+  }
+
+  .person-name {
+    max-width: 7.7rem;
+    font-size: .68rem;
+  }
+}
+
+
+/* V8: Assistant everywhere, one-line poem row, special poem frame, no overlap */
+html, body, button, input, textarea, select, .memory-stage, .ghost-btn, .search-box, .person-name, .poem-panel, .poem-panel * {
+  font-family: "Assistant", system-ui, sans-serif;
+}
+
+.hero-title.hero-poem {
+  top: clamp(4.05rem, 5vh, 4.7rem);
+  z-index: 125;
+}
+
+.hero-poem .poem-panel {
+  position: relative;
+  width: min(40rem, 86vw);
+  padding: 1rem 1.4rem 1.02rem;
+  border-radius: 1.55rem;
+  background:
+    linear-gradient(180deg, rgba(11, 31, 49, .78), rgba(8, 24, 38, .58));
+  border: 1px solid rgba(178, 235, 255, .16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    0 0 0 1px rgba(120,210,255,.08),
+    0 12px 38px rgba(0, 8, 20, .24),
+    0 0 42px rgba(96, 198, 255, .10);
+  overflow: visible;
+}
+
+.hero-poem .poem-panel::before,
+.hero-poem .poem-panel::after {
+  content: "";
+  position: absolute;
+  inset-inline: 1.2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(190,240,255,.45), rgba(255,255,255,.85), rgba(190,240,255,.45), transparent);
+  opacity: .7;
+}
+.hero-poem .poem-panel::before { top: .82rem; }
+.hero-poem .poem-panel::after { bottom: .82rem; opacity: .45; }
+
+.hero-poem .poem-panel p {
+  display: grid;
+  justify-items: center;
+  gap: .18rem;
+  font-size: clamp(1.18rem, 1.55vw, 1.42rem);
+  line-height: 1.36;
+  letter-spacing: .004em;
+  text-align: center;
+}
+
+.hero-poem .poem-panel span {
+  display: block;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 rgba(255,255,255,.05), 0 0 18px rgba(125, 217, 255, .06);
+}
+
+.hero-poem .poem-panel span.single-line {
+  font-weight: 600;
+}
+
+/* keep cards safely away from poem area */
+.heartbeat-svg {
+  top: 71.2%;
+}
+
+.person-node.is-top {
+  margin-top: 1rem;
+}
+
+.timeline-layer {
+  z-index: 6;
+}
+
+@media (max-width: 760px) {
+  .hero-title.hero-poem {
+    top: 5.7rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 27rem);
+    padding: .95rem .95rem 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .hero-poem .poem-panel::before,
+  .hero-poem .poem-panel::after {
+    inset-inline: .85rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .97rem;
+    line-height: 1.30;
+    gap: .14rem;
+  }
+
+  .hero-poem .poem-panel span {
+    white-space: normal;
+  }
+
+  .hero-poem .poem-panel span.single-line {
+    white-space: nowrap;
+    font-size: .96rem;
+  }
+
+  .heartbeat-svg {
+    top: 72.2%;
+  }
+}
+
+
+/* CSS-only portrait filter: keep original images, add clearer sketch-like card treatment */
+
+.portrait-frame {
+  position: relative;
+}
+
+.portrait-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 28%, rgba(255,255,255,.06) 70%, rgba(0,0,0,.12)),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.028) 0 1px, transparent 1px 5px);
+  mix-blend-mode: soft-light;
+  opacity: .78;
+}
+
+.portrait-frame img {
+  object-fit: cover;
+  object-position: center 14%;
+  image-rendering: auto;
+  opacity: .98;
+  transform: scale(1.012);
+  filter: grayscale(1) contrast(1.22) brightness(1.09) sepia(.08) saturate(.18);
+  transition: filter .35s ease, transform .35s ease, opacity .35s ease;
+}
+
+.person-button:hover .portrait-frame img,
+.person-button:focus-visible .portrait-frame img {
+  filter: grayscale(1) contrast(1.26) brightness(1.12) sepia(.08) saturate(.18);
+  transform: scale(1.02);
+}
+
+.story-photo img {
+  object-fit: cover;
+  object-position: center 14%;
+  filter: grayscale(1) contrast(1.16) brightness(1.08) sepia(.06) saturate(.25);
+}
+
+
+/* New portrait frame: quiet memorial cameo */
+.portrait-frame {
+  width: var(--photo-w, 6.15rem);
+  aspect-ratio: 1 / 1.12;
+  border-radius: 50% 50% 43% 43% / 38% 38% 52% 52%;
+  padding: .28rem;
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,.44), transparent 23%),
+    conic-gradient(from 210deg, rgba(120, 220, 255, .10), rgba(235, 252, 255, .42), rgba(120, 220, 255, .12), rgba(235, 252, 255, .30), rgba(120, 220, 255, .10)),
+    rgba(8, 26, 41, .84);
+  border: 1px solid rgba(214, 248, 255, .24);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.16),
+    inset 0 -14px 30px rgba(0, 10, 22, .24),
+    0 0 0 .12rem rgba(128, 223, 255, .10),
+    0 0 24px rgba(102, 210, 255, .16),
+    0 18px 38px rgba(0, 5, 14, .36);
+}
+
+.portrait-frame::before {
+  content: "";
+  position: absolute;
+  inset: .52rem .48rem .46rem;
+  border-radius: inherit;
+  border: 1px solid rgba(255,255,255,.26);
+  box-shadow: inset 0 0 18px rgba(255,255,255,.08);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.portrait-frame::after {
+  content: "";
+  position: absolute;
+  inset: .28rem;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,0) 30%, rgba(0,0,0,.10)),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.024) 0 1px, transparent 1px 5px);
+  mix-blend-mode: soft-light;
+  opacity: .82;
+}
+
+.portrait-frame img {
+  border-radius: calc(50% - .1rem) calc(50% - .1rem) 42% 42% / 38% 38% 52% 52%;
+  filter: grayscale(1) contrast(1.20) brightness(1.09) sepia(.06) saturate(.25);
+}
+
+.story-photo img {
+  filter: grayscale(1) contrast(1.14) brightness(1.07) sepia(.05) saturate(.25);
+}
+
+
+/* Image improvement pass: clearer portraits, cleaner frame, less heavy filter */
+.portrait-frame {
+  width: calc(var(--photo-w, 6.15rem) * 1.12);
+  aspect-ratio: .88;
+  border-radius: 44% 44% 34% 34% / 31% 31% 48% 48%;
+  padding: .18rem;
+  background:
+    linear-gradient(180deg, rgba(235, 252, 255, .42), rgba(105, 200, 240, .10)),
+    rgba(8, 26, 41, .72);
+  border: 1px solid rgba(220, 248, 255, .32);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.16),
+    0 0 0 .10rem rgba(130, 224, 255, .12),
+    0 0 20px rgba(102, 210, 255, .16),
+    0 18px 36px rgba(0, 5, 14, .32);
+}
+
+.portrait-frame::before {
+  inset: .32rem;
+  border-radius: inherit;
+  opacity: .7;
+}
+
+.portrait-frame::after {
+  opacity: .35;
+  mix-blend-mode: soft-light;
+}
+
+.portrait-frame img {
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center 16%;
+  transform: scale(1.035);
+  filter: grayscale(.92) contrast(1.10) brightness(1.06) saturate(.44);
+}
+
+.person-button:hover .portrait-frame img,
+.person-button:focus-visible .portrait-frame img {
+  filter: grayscale(.82) contrast(1.14) brightness(1.08) saturate(.55);
+  transform: scale(1.055);
+}
+
+.story-photo img {
+  object-fit: cover;
+  object-position: center 15%;
+  filter: grayscale(.86) contrast(1.08) brightness(1.06) saturate(.48);
+}
+
+/* Relatives section: person name as title, relationship lines below */
+.relatives-card {
+  margin: 0 1.2rem 1rem;
+  border-radius: 1.1rem;
+  padding: 1rem 1.1rem;
+  background:
+    linear-gradient(180deg, rgba(10, 29, 46, .055), rgba(10, 29, 46, .025));
+  border: 1px solid rgba(10, 29, 46, .08);
+}
+
+.relatives-card h3 {
+  margin: 0 0 .55rem;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: #0a1d2e;
+}
+
+.relatives-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: .34rem;
+}
+
+.relatives-card li {
+  position: relative;
+  padding-inline-start: 1.05rem;
+  color: #46677c;
+  line-height: 1.55;
+  font-weight: 650;
+}
+
+.relatives-card li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: .72em;
+  width: .38rem;
+  height: .38rem;
+  border-radius: 999px;
+  background: rgba(37, 83, 104, .45);
+}
+
+@media (max-width: 760px) {
+  .portrait-frame {
+    width: calc(var(--photo-w, 4.65rem) * 1.08);
+  }
+
+  .relatives-card {
+    margin-inline: 1rem;
+  }
+}
+
+
+/* VNext: poem starts from second line, compact family section, no duplicate family row */
+.hero-poem .poem-panel {
+  width: min(38rem, 84vw);
+  padding: .9rem 1.25rem .95rem;
+}
+
+.hero-poem .poem-panel p {
+  font-size: clamp(1.08rem, 1.42vw, 1.32rem);
+  line-height: 1.36;
+}
+
+.relatives-card {
+  margin: 0 1.2rem 1rem;
+  border-radius: 1.2rem;
+  padding: .95rem 1.05rem 1rem;
+  background:
+    linear-gradient(180deg, rgba(10, 29, 46, .06), rgba(10, 29, 46, .025));
+  border: 1px solid rgba(10, 29, 46, .08);
+}
+
+.relatives-card h3 {
+  margin: 0 0 .75rem;
+  font-size: 1.25rem;
+  line-height: 1.15;
+  color: #0a1d2e;
+}
+
+.relatives-card ul {
+  display: none;
+}
+
+.relationship-list {
+  display: grid;
+  gap: .48rem;
+}
+
+.relationship-row {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: baseline;
+  gap: .55rem;
+  border-radius: .9rem;
+  padding: .62rem .74rem;
+  background: rgba(10, 29, 46, .045);
+  border: 1px solid rgba(10, 29, 46, .055);
+}
+
+.relationship-label {
+  color: #0a1d2e;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.relationship-value {
+  color: #46677c;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.story-actions {
+  margin-top: 1rem;
+}
+
+.story-actions button:only-child {
+  min-width: 9rem;
+}
+
+@media (max-width: 760px) {
+  .hero-poem .poem-panel {
+    width: min(92vw, 28rem);
+    padding: .78rem .92rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .92rem;
+    line-height: 1.28;
+  }
+
+  .relationship-row {
+    grid-template-columns: 1fr;
+    gap: .1rem;
+  }
+}
+
+
+/* V-next: polished relatives card + remove visual heaviness */
+.relatives-card {
+  margin: 0 1.2rem 1rem;
+  padding: 1.05rem;
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(circle at 88% 0%, rgba(115, 165, 190, .12), transparent 15rem),
+    linear-gradient(180deg, rgba(245, 251, 255, .92), rgba(231, 242, 248, .86));
+  border: 1px solid rgba(37, 83, 104, .13);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.82),
+    0 14px 34px rgba(20, 45, 62, .08);
+}
+
+.relatives-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem .85rem;
+  padding: 0 .05rem .75rem;
+  border-bottom: 1px solid rgba(37, 83, 104, .10);
+  margin-bottom: .8rem;
+}
+
+.relatives-eyebrow {
+  color: #668495;
+  font-weight: 900;
+  font-size: .82rem;
+  letter-spacing: .04em;
+}
+
+.relatives-card h3 {
+  margin: 0;
+  color: #0a1d2e;
+  font-size: clamp(1.12rem, 2.4vw, 1.55rem);
+  line-height: 1.15;
+}
+
+.relationship-list {
+  display: grid;
+  gap: .55rem;
+}
+
+.relationship-row {
+  display: grid;
+  grid-template-columns: minmax(5.4rem, max-content) 1fr;
+  align-items: center;
+  gap: .65rem;
+  padding: .64rem .72rem;
+  border-radius: .9rem;
+  background: rgba(255,255,255,.56);
+  border: 1px solid rgba(37, 83, 104, .09);
+}
+
+.relationship-label {
+  color: #20394b;
+  font-weight: 900;
+  white-space: nowrap;
+  padding: .2rem .58rem;
+  border-radius: 999px;
+  background: rgba(34, 73, 96, .08);
+}
+
+.relationship-value {
+  color: #486a7f;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.details-grid {
+  padding-top: .2rem;
+}
+
+@media (max-width: 760px) {
+  .relationship-row {
+    grid-template-columns: 1fr;
+    gap: .25rem;
+  }
+
+  .relationship-label {
+    width: fit-content;
+  }
+}
+
+
+/* V-clean: no duplicate name in family section, compact relatives, improved story card */
+.story-overlay {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(88, 174, 210, .16), transparent 34rem),
+    rgba(0, 6, 14, .72);
+}
+
+.story-panel {
+  width: min(64rem, 96vw);
+  border-radius: 2rem;
+  background:
+    linear-gradient(180deg, rgba(244, 251, 255, .98), rgba(229, 241, 248, .96));
+  border: 1px solid rgba(203, 228, 239, .72);
+  box-shadow:
+    0 34px 120px rgba(0, 7, 18, .62),
+    inset 0 1px 0 rgba(255,255,255,.88);
+}
+
+.story-grid-head {
+  grid-template-columns: minmax(14rem, 18rem) 1fr;
+  gap: 1.45rem;
+  padding: 1.35rem 1.55rem 1rem;
+  align-items: start;
+}
+
+.story-photo {
+  border-radius: 1.5rem;
+  box-shadow: 0 18px 42px rgba(20, 45, 62, .16);
+  background: rgba(12, 33, 50, .08);
+}
+
+.story-photo img {
+  filter: grayscale(.78) contrast(1.10) brightness(1.06) saturate(.54);
+}
+
+.story-copy {
+  align-self: center;
+  padding-block: .45rem;
+}
+
+.story-copy h2 {
+  margin: 0 0 .55rem;
+  font-weight: 850;
+  color: #061927;
+  letter-spacing: -.02em;
+}
+
+.story-meta {
+  margin-bottom: .95rem;
+}
+
+.story-meta span,
+.story-actions button {
+  background: rgba(31, 72, 96, .07);
+  border-color: rgba(31, 72, 96, .12);
+  color: #2a5268;
+}
+
+.story-copy p {
+  max-width: 45rem;
+  margin: 0;
+  color: #405f72;
+  font-size: 1.05rem;
+  line-height: 1.95;
+}
+
+.relatives-card {
+  margin: .25rem 1.55rem 1.05rem;
+  padding: 1rem 1.15rem 1.05rem;
+  border-radius: 1.35rem;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(93, 162, 194, .13), transparent 16rem),
+    linear-gradient(180deg, rgba(255,255,255,.74), rgba(238, 247, 251, .62));
+  border: 1px solid rgba(37, 83, 104, .11);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 10px 28px rgba(20,45,62,.07);
+}
+
+.relatives-card-head {
+  display: block;
+  padding: 0 0 .45rem;
+  margin: 0;
+  border: 0;
+}
+
+.relatives-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  color: #28495e;
+  font-size: .92rem;
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+
+.relatives-eyebrow::before {
+  content: "";
+  width: .48rem;
+  height: .48rem;
+  border-radius: 999px;
+  background: rgba(42, 111, 145, .34);
+  box-shadow: 0 0 0 .22rem rgba(42, 111, 145, .08);
+}
+
+.relatives-card h3,
+.relationship-list,
+.relationship-row,
+.relatives-card ul {
+  display: none;
+}
+
+.relatives-flow {
+  margin: 0;
+  color: #3f6074;
+  font-weight: 740;
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
+  line-height: 1.75;
+}
+
+.details-grid {
+  padding: .1rem 1.55rem 1.4rem;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
+
+.detail {
+  background: rgba(255,255,255,.52);
+  border-color: rgba(37, 83, 104, .09);
+}
+
+@media (max-width: 760px) {
+  .story-grid-head {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  .story-photo {
+    max-width: 13.5rem;
+    justify-self: center;
+  }
+  .relatives-card {
+    margin-inline: 1rem;
+  }
+  .details-grid {
+    grid-template-columns: 1fr;
+    padding-inline: 1rem;
+  }
+}
+
+
+/* Final clean family card: no repeated name, compact relationships, softer popup */
+.story-panel {
+  background: linear-gradient(180deg, rgba(239, 248, 252, .98), rgba(225, 238, 246, .96));
+  border: 1px solid rgba(255,255,255,.62);
+  box-shadow: 0 34px 110px rgba(0, 8, 18, .62);
+}
+.story-grid-head {
+  align-items: start;
+  background: radial-gradient(circle at 24% 0%, rgba(255,255,255,.76), transparent 18rem), linear-gradient(180deg, rgba(255,255,255,.46), rgba(255,255,255,0));
+  border-bottom: 1px solid rgba(10, 29, 46, .07);
+}
+.story-copy h2 { margin-top: .1rem; font-size: clamp(2.4rem, 5vw, 4.2rem); letter-spacing: .01em; }
+.story-copy p { max-width: 42rem; font-size: clamp(1.02rem, 1.3vw, 1.16rem); line-height: 1.9; }
+.relatives-card.relatives-card-flow {
+  margin: 1.15rem 1.2rem 1rem;
+  padding: 1.05rem 1.2rem 1.12rem;
+  border-radius: 1.35rem;
+  background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(246,251,253,.52)), radial-gradient(circle at 100% 0%, rgba(91, 165, 194, .13), transparent 14rem);
+  border: 1px solid rgba(10, 29, 46, .075);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.74), 0 12px 32px rgba(20, 55, 78, .08);
+}
+.relatives-card-head { display: flex; justify-content: flex-start; margin-bottom: .72rem; }
+.relatives-eyebrow {
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .28rem .72rem; border-radius: 999px;
+  background: rgba(19, 53, 75, .08); color: #496a7e;
+  font-weight: 850; font-size: .82rem; letter-spacing: .02em;
+}
+.relatives-sentence {
+  display: flex; flex-wrap: wrap; gap: .45rem .55rem; align-items: center;
+  color: #1b3447; font-size: clamp(1rem, 1.25vw, 1.16rem); line-height: 1.75; font-weight: 720;
+}
+.relatives-segment { display: inline-flex; align-items: center; gap: .55rem; }
+.relatives-segment-text { white-space: normal; }
+.relatives-dot { color: rgba(48, 99, 126, .46); font-weight: 900; }
+.details-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: .15rem; }
+.detail { background: rgba(255,255,255,.44); border-color: rgba(10,29,46,.065); }
+@media (max-width: 760px) {
+  .relatives-sentence { display: grid; gap: .4rem; }
+  .relatives-dot { display: none; }
+  .details-grid { grid-template-columns: 1fr; }
+}
+
+
+/* Update: remove visible family title and make the card cleaner */
+.relatives-card-no-title {
+  padding-top: 1.05rem;
+}
+
+.relatives-card-no-title .relatives-card-head,
+.relatives-card-no-title .relatives-eyebrow {
+  display: none;
+}
+
+.relatives-card-no-title .relatives-sentence {
+  margin-top: 0;
+}
+
+/* Slightly nicer long description readability */
+.story-copy p {
+  max-width: 62ch;
+  line-height: 1.95;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+}
+
+
+/* Drawing-like portrait treatment: clearer than before, with subtle sketch texture */
+.portrait-frame,
+.story-photo {
+  position: relative;
+}
+
+.portrait-frame::after,
+.story-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255,255,255,.26), transparent 20%),
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,.16), transparent 18%),
+    repeating-linear-gradient(135deg, rgba(34,34,34,.045) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.035) 0 1px, transparent 1px 7px);
+  mix-blend-mode: multiply;
+  opacity: .42;
+}
+
+.portrait-frame img {
+  filter: grayscale(1) contrast(1.18) brightness(1.08) sepia(.10) saturate(.18);
+  transform: scale(1.02);
+}
+
+.story-photo img {
+  filter: grayscale(1) contrast(1.14) brightness(1.06) sepia(.08) saturate(.22);
+}
+
+.person-button:hover .portrait-frame img,
+.person-button:focus-visible .portrait-frame img {
+  filter: grayscale(1) contrast(1.22) brightness(1.1) sepia(.10) saturate(.18);
+}
+
+.story-copy p {
+  line-height: 2.02;
+  max-width: 68ch;
+}
+
+
+/* Final portrait option: פחם רך — CSS-only, original images unchanged */
+.portrait-frame {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255,255,255,.30), transparent 22%),
+    linear-gradient(180deg, rgba(236, 248, 250, .30), rgba(56, 79, 92, .12)),
+    rgba(6, 18, 32, .68);
+}
+
+.portrait-frame::after,
+.story-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,255,255,.16), transparent 42%),
+    repeating-linear-gradient(115deg, rgba(20, 26, 32, .035) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(25deg, rgba(255,255,255,.025) 0 1px, transparent 1px 7px);
+  mix-blend-mode: multiply;
+  opacity: .38;
+}
+
+.portrait-frame img {
+  filter: grayscale(1) contrast(1.13) brightness(1.07) sepia(.06) saturate(.12);
+}
+
+.person-button:hover .portrait-frame img,
+.person-button:focus-visible .portrait-frame img {
+  filter: grayscale(1) contrast(1.18) brightness(1.09) sepia(.06) saturate(.12);
+}
+
+.story-photo img {
+  filter: grayscale(1) contrast(1.11) brightness(1.06) sepia(.05) saturate(.14);
+}
+
+
+/* Curated summary pass + softer charcoal clarity */
+.story-copy p {
+  line-height: 1.9;
+  max-width: 62ch;
+}
+
+.portrait-frame img {
+  filter: grayscale(1) contrast(1.16) brightness(1.08) sepia(.07) saturate(.12);
+}
+
+.story-photo img {
+  filter: grayscale(1) contrast(1.14) brightness(1.07) sepia(.06) saturate(.14);
+}
+
+
+/* Final layout pass: controls/search moved down, poem and timeline moved upward */
+.top-bar {
+  top: auto;
+  bottom: clamp(.8rem, 2.2vh, 1.25rem);
+  inset-inline: 0;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  background: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+.top-bar > * { pointer-events: auto; }
+
+.top-bar .controls {
+  order: 1;
+  justify-content: flex-start;
+  padding: .35rem;
+  border-radius: 999px;
+  background: rgba(4, 14, 25, .38);
+  border: 1px solid rgba(144, 223, 255, .10);
+  backdrop-filter: blur(18px);
+}
+
+.top-bar .search-box {
+  order: 2;
+  width: min(25rem, 33vw);
+  background: rgba(4, 14, 25, .46);
+}
+
+.hero-title.hero-poem {
+  top: clamp(1.05rem, 2.35vh, 1.65rem);
+}
+
+.heartbeat-svg {
+  top: 62.5%;
+}
+
+.person-node.is-top {
+  margin-top: 0;
+}
+
+.person-name {
+  box-shadow: 0 8px 24px rgba(0, 5, 14, .18);
+}
+
+/* Larger, calmer reading area for the richer summaries */
+.story-copy p {
+  max-width: 68ch;
+  line-height: 1.98;
+  font-size: clamp(1.04rem, 1.25vw, 1.18rem);
+}
+
+@media (max-width: 760px) {
+  .top-bar {
+    bottom: 0;
+    padding: .55rem .7rem .75rem;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    background: linear-gradient(0deg, rgba(4,14,25,.92), rgba(4,14,25,.58), transparent);
+  }
+
+  .top-bar .controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .top-bar .search-box {
+    width: 100%;
+  }
+
+  .hero-title.hero-poem {
+    top: clamp(.8rem, 1.4vh, 1.15rem);
+  }
+
+  .heartbeat-svg {
+    top: 64.5%;
+    height: 9.4rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(91vw, 26rem);
+  }
+}
+
+/* ==========================================================
+   Same-functionality layer for the attached neon heartbeat design
+   - keeps the attached visual style
+   - adds focus-mode dim/illuminate interaction
+   - supports family-group cards from the latest data
+   - keeps the refined mobile 3+3 layout enlarged/clearer
+   ========================================================== */
+
+/* Focus Mode: dim unrelated profiles while keeping connected people bright */
+.memory-stage.is-focus-mode .heartbeat-svg {
+  opacity: .64;
+  transition: opacity .35s ease, filter .35s ease;
+}
+
+.memory-stage.is-focus-mode .person-node.is-visible.is-dimmed {
+  opacity: .18;
+  filter: grayscale(1) blur(.8px) saturate(.35);
+  transform: translateY(0) scale(.94);
+}
+
+.memory-stage.is-focus-mode .person-node.is-visible.is-dimmed .person-name {
+  opacity: .48;
+}
+
+.memory-stage.is-focus-mode .person-node.is-visible.is-focused,
+.memory-stage.is-focus-mode .person-node.is-visible.is-related {
+  opacity: 1;
+  filter: none;
+  z-index: 34;
+}
+
+.memory-stage.is-focus-mode .person-node.is-visible.is-focused {
+  transform: translateY(0) scale(1.08);
+}
+
+.memory-stage.is-focus-mode .person-node.is-visible.is-related {
+  transform: translateY(0) scale(1.035);
+}
+
+.memory-stage.is-focus-mode .person-node.is-focused .portrait-frame,
+.memory-stage.is-focus-mode .person-node.is-related .portrait-frame {
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.22),
+    0 0 0 .14rem rgba(123, 222, 255, .24),
+    0 0 34px rgba(141, 232, 255, .42),
+    0 18px 32px rgba(0, 6, 14, .34);
+}
+
+.memory-stage.is-focus-mode .person-node.is-focused .person-name,
+.memory-stage.is-focus-mode .person-node.is-related .person-name {
+  color: #f8fdff;
+  border-color: rgba(177, 238, 255, .36);
+  box-shadow: 0 0 24px rgba(108, 218, 255, .20), 0 8px 24px rgba(0, 5, 14, .20);
+}
+
+/* Group/family card generated by the latest app.js */
+.family-group-card {
+  display: grid;
+  grid-template-columns: minmax(12rem, 20rem) 1fr;
+  gap: clamp(1rem, 2.4vw, 1.7rem);
+  align-items: stretch;
+  margin: 1.05rem 0 1.2rem;
+  padding: clamp(1rem, 2.2vw, 1.35rem);
+  border: 1px solid rgba(144, 223, 255, .18);
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(146, 229, 255, .13), transparent 18rem),
+    linear-gradient(180deg, rgba(235, 247, 252, .74), rgba(222, 238, 246, .62));
+  box-shadow: 0 18px 50px rgba(0, 15, 28, .13), inset 0 0 0 1px rgba(255,255,255,.34);
+  color: #153044;
+}
+
+.family-group-image-wrap {
+  position: relative;
+  min-height: 13rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(6, 18, 32, .10);
+  box-shadow: inset 0 0 0 1px rgba(10, 29, 46, .08), 0 12px 28px rgba(0, 8, 18, .14);
+}
+
+.family-group-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1) brightness(1.06) sepia(.05) saturate(.15);
+}
+
+.family-group-image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255,255,255,.24), transparent 23%),
+    repeating-linear-gradient(135deg, rgba(25,35,45,.035) 0 1px, transparent 1px 5px);
+  mix-blend-mode: multiply;
+  opacity: .38;
+  pointer-events: none;
+}
+
+.family-group-copy {
+  display: grid;
+  align-content: center;
+  gap: .72rem;
+}
+
+.family-group-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: .3rem .7rem;
+  border-radius: 999px;
+  color: #32586b;
+  background: rgba(255,255,255,.46);
+  border: 1px solid rgba(10,29,46,.08);
+  font-weight: 800;
+  font-size: .88rem;
+}
+
+.family-group-copy h3 {
+  margin: 0;
+  color: #0f2535;
+  font-size: clamp(1.35rem, 3.4vw, 2.25rem);
+  line-height: 1.05;
+  font-weight: 850;
+}
+
+.family-group-copy p {
+  margin: 0;
+  color: #365d70;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.85;
+  font-weight: 560;
+}
+
+.family-group-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.family-group-members span {
+  padding: .32rem .62rem;
+  border-radius: 999px;
+  color: #163447;
+  background: rgba(255,255,255,.54);
+  border: 1px solid rgba(10,29,46,.08);
+  font-weight: 780;
+}
+
+/* Desktop design coordinates from the attached version */
+.person-node[data-slot-index="0"] { right: 16%; left: auto; top: 48.5%; }
+.person-node[data-slot-index="1"] { right: 28%; left: auto; top: 73.5%; }
+.person-node[data-slot-index="2"] { right: 40%; left: auto; top: 48.5%; }
+.person-node[data-slot-index="3"] { right: 52%; left: auto; top: 73.5%; }
+.person-node[data-slot-index="4"] { right: 64%; left: auto; top: 48.5%; }
+.person-node[data-slot-index="5"] { right: 76%; left: auto; top: 73.5%; }
+.person-node[data-slot-index="6"] { right: 88%; left: auto; top: 48.5%; }
+.person-node[data-slot-index="7"] { right: 8%;  left: auto; top: 73.5%; }
+
+/* Mobile: latest functionality/layout, but visually matching the attached neon design */
+@media (max-width: 900px) and (orientation: portrait) {
+  body { overflow: hidden; }
+
+  .memory-stage,
+  .timeline-stage {
+    min-height: 100svh;
+    height: 100svh;
+  }
+
+  .hero-title.hero-poem {
+    top: max(4.7rem, calc(env(safe-area-inset-top) + 4.25rem));
+    inset-inline: .6rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(94vw, 35rem);
+    min-height: auto;
+    padding: .92rem 1rem .84rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: clamp(.86rem, 3.15vw, 1.04rem);
+    line-height: 1.42;
+    gap: .24rem;
+  }
+
+  .top-bar {
+    top: auto;
+    bottom: max(.55rem, calc(env(safe-area-inset-bottom) + .08rem));
+    inset-inline: .65rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .52rem;
+    background: transparent;
+    align-items: stretch;
+    pointer-events: none;
+  }
+
+  .top-bar .search-box {
+    width: 100%;
+    min-height: 2.55rem;
+    padding: .48rem .78rem;
+    background: rgba(4, 14, 25, .62);
+  }
+
+  .top-bar .search-box input {
+    font-size: .92rem;
+  }
+
+  .top-bar .controls {
+    width: 100%;
+    justify-content: center;
+    padding: .38rem;
+    gap: .42rem;
+    background: rgba(4, 14, 25, .48);
+  }
+
+  .ghost-btn {
+    min-width: 4.15rem;
+    height: 2.55rem;
+    padding: .34rem .62rem;
+    font-size: .88rem;
+  }
+
+  #pause-btn { min-width: 3.2rem; }
+
+  .heartbeat-svg {
+    top: 61.8%;
+    height: 22vh;
+  }
+
+  .person-node {
+    width: 6.35rem;
+  }
+
+  .portrait-frame {
+    width: 5.05rem;
+  }
+
+  .person-name {
+    max-width: 5.95rem;
+    padding: .34rem .5rem .32rem;
+    font-size: .66rem;
+    line-height: 1.08;
+  }
+
+  .person-node[data-slot-index="0"] { right: 18%; left: auto; top: 53.8%; }
+  .person-node[data-slot-index="1"] { right: 18%; left: auto; top: 68.8%; }
+  .person-node[data-slot-index="2"] { right: 50%; left: auto; top: 53.8%; }
+  .person-node[data-slot-index="3"] { right: 50%; left: auto; top: 68.8%; }
+  .person-node[data-slot-index="4"] { right: 82%; left: auto; top: 53.8%; }
+  .person-node[data-slot-index="5"] { right: 82%; left: auto; top: 68.8%; }
+  .person-node[data-slot-index="6"] { right: 34%; left: auto; top: 74.5%; }
+  .person-node[data-slot-index="7"] { right: 66%; left: auto; top: 74.5%; }
+
+  .story-panel {
+    width: min(94vw, 40rem);
+  }
+
+  .family-group-card {
+    grid-template-columns: 1fr;
+  }
+
+  .family-group-image-wrap {
+    min-height: 13.5rem;
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) and (max-height: 740px) {
+  .hero-title.hero-poem {
+    top: 4.2rem;
+  }
+
+  .heartbeat-svg {
+    top: 61%;
+    height: 20vh;
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] { top: 52.6%; }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] { top: 67.2%; }
+}
+
+
+/* ==========================================================
+   MOBILE NAME-OVERLAP FIX + FINAL RESPONSIVE POLISH
+   Keeps functionality/layout, fixes top-row labels hiding behind lower portraits.
+   Images folder is intentionally omitted from the package; copy the existing
+   images/ folder next to these files when publishing/testing with real photos.
+   ========================================================== */
+
+@media (max-width: 900px) and (orientation: portrait) {
+  /* More stable mobile viewport behavior */
+  html,
+  body,
+  .memory-stage,
+  .timeline-stage {
+    min-height: 100svh;
+  }
+
+  @supports (height: 100dvh) {
+    html,
+    body,
+    .memory-stage,
+    .timeline-stage {
+      min-height: 100dvh;
+      height: 100dvh;
+    }
+  }
+
+  /* Top-row labels move ABOVE the portrait so they never hide behind row 2. */
+  .person-node.is-top .person-button {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: .34rem;
+  }
+
+  .person-node.is-top .person-name {
+    margin-top: 0;
+    margin-bottom: .12rem;
+    position: relative;
+    z-index: 9;
+  }
+
+  .person-node.is-top .portrait-frame {
+    position: relative;
+    z-index: 6;
+  }
+
+  .person-node.is-bottom .person-button {
+    display: grid;
+    justify-items: center;
+    gap: .34rem;
+  }
+
+  .person-node.is-bottom .person-name {
+    margin-top: .12rem;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 9;
+  }
+
+  /* Keep all labels readable over tissue/heartbeat strands. */
+  .person-name {
+    backdrop-filter: blur(8px) saturate(1.1);
+    -webkit-backdrop-filter: blur(8px) saturate(1.1);
+    text-shadow: 0 1px 2px rgba(0,0,0,.42);
+  }
+
+  /* Prevent focus mode scaling from reintroducing overlap on small screens. */
+  .memory-stage.is-focus-mode .person-node.is-visible.is-focused,
+  .memory-stage.is-focus-mode .person-node.is-visible.is-related {
+    transform: translateY(0) scale(1.01);
+  }
+
+  /* Story modal / detail card responsive safety: image and text do not overlap. */
+  .story-panel,
+  .story-card,
+  .person-detail,
+  .modal-card {
+    width: min(94vw, 42rem);
+    max-width: 94vw;
+  }
+
+  .story-hero,
+  .detail-hero,
+  .profile-hero,
+  .story-layout,
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .story-hero img,
+  .detail-hero img,
+  .profile-hero img,
+  .story-photo,
+  .detail-photo,
+  .profile-photo,
+  .story-image,
+  .detail-image {
+    width: min(82vw, 18rem);
+    max-height: 42vh;
+    object-fit: cover;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) and (max-height: 740px) {
+  .person-node.is-top .person-button,
+  .person-node.is-bottom .person-button {
+    gap: .24rem;
+  }
+
+  .person-name {
+    line-height: 1.02;
+  }
+}
+
+
+/* Neon mobile final tuning: labels remain clear while keeping the heartbeat design. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node.is-top .person-name {
+    box-shadow:
+      inset 0 0 0 1px rgba(230, 250, 255, .10),
+      0 8px 18px rgba(0,0,0,.34),
+      0 0 18px rgba(94, 207, 255, .20);
+  }
+
+  .portrait-frame {
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.14),
+      0 0 0 .16rem rgba(125, 218, 255, .14),
+      0 0 22px rgba(82, 197, 255, .18),
+      0 15px 30px rgba(0, 5, 14, .38);
+  }
+}
+
+
+/* ==========================================================
+   V2 mobile fix: top-row names stay clear + no broken-image alt text
+   Applies to no-images packages only; does not change desktop layout.
+   ========================================================== */
+
+@media (max-width: 900px) and (orientation: portrait) {
+  /* Make upper row render above lower row if their bounding boxes touch. */
+  .person-node.is-top {
+    z-index: 42;
+  }
+
+  .person-node.is-bottom {
+    z-index: 32;
+  }
+
+  /* Use explicit ordering instead of relying on column-reverse. */
+  .person-button {
+    position: relative;
+  }
+
+  .person-node.is-top .person-button,
+  .person-node.is-bottom .person-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* TOP ROW: name above portrait, with a touch more breathing room. */
+  .person-node.is-top .person-name {
+    order: 1;
+    margin-top: 0;
+    margin-bottom: .42rem;
+    position: relative;
+    z-index: 50;
+    transform: translateY(-.08rem);
+  }
+
+  .person-node.is-top .portrait-frame {
+    order: 2;
+    position: relative;
+    z-index: 40;
+  }
+
+  /* BOTTOM ROW: portrait above name. */
+  .person-node.is-bottom .portrait-frame {
+    order: 1;
+    position: relative;
+    z-index: 40;
+  }
+
+  .person-node.is-bottom .person-name {
+    order: 2;
+    margin-top: .42rem;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 50;
+  }
+
+  /* No-images fallback: show initials only, not full names/alt text. */
+  .portrait-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: clamp(.95rem, 5vw, 1.35rem);
+    line-height: 1;
+    letter-spacing: .01em;
+  }
+
+  .portrait-frame img {
+    color: transparent;
+    font-size: 0;
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) and (max-height: 740px) {
+  .person-node.is-top .person-name {
+    margin-bottom: .34rem;
+    transform: translateY(-.06rem);
+  }
+
+  .person-node.is-bottom .person-name {
+    margin-top: .34rem;
+  }
+}
+
+
+/* ==========================================================
+   V4 synced final mobile polish
+   - removes story filter UI
+   - search moves between poem and people on mobile only
+   - controls stay at bottom on mobile only
+   - 3+3 portrait grid with clear vertical spacing
+   - labels stay BELOW their own portrait, never under another card
+   ========================================================== */
+
+.filter-box,
+#story-filter {
+  display: none;
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  html,
+  body,
+  .memory-stage,
+  .timeline-stage {
+    min-height: 100svh;
+  }
+
+  @supports (height: 100dvh) {
+    html,
+    body,
+    .memory-stage,
+    .timeline-stage {
+      min-height: 100dvh;
+      height: 100dvh;
+    }
+  }
+
+  /* On mobile only, the top bar becomes two separate zones:
+     search between poem/cards, navigation controls at bottom. */
+  .top-bar {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    display: block;
+    padding: 0;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .top-bar > * {
+    pointer-events: auto;
+  }
+
+  .search-box {
+    position: fixed;
+    top: 36.5%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(84vw, 23rem);
+    height: 2.65rem;
+    margin: 0;
+    padding: .42rem .82rem;
+    z-index: 155;
+  }
+
+  .search-box input {
+    font-size: .92rem;
+    line-height: 1.1;
+  }
+
+  .controls {
+    position: fixed;
+    left: 50%;
+    right: auto;
+    bottom: max(.72rem, calc(env(safe-area-inset-bottom) + .18rem));
+    transform: translateX(-50%);
+    width: min(92vw, 28rem);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .58rem;
+    z-index: 155;
+  }
+
+  .ghost-btn {
+    width: 100%;
+    min-width: 0;
+    height: 2.78rem;
+    padding: .45rem .52rem;
+    border-radius: .82rem;
+    font-size: .92rem;
+    line-height: 1;
+  }
+
+  /* People and tissue: balanced, no stacked/overlapping cards. */
+  .human-fabric-svg {
+    top: 61.5%;
+    height: 21vh;
+    width: 112vw;
+    left: -6vw;
+    right: auto;
+  }
+
+  .gold-network-svg,
+  .heartbeat-svg {
+    top: 62%;
+    height: 17vh;
+    width: 112vw;
+    left: -6vw;
+    right: auto;
+  }
+
+  .timeline-stage::before {
+    top: 62%;
+    width: 92vw;
+    height: 21vh;
+  }
+
+  .timeline-stage::after {
+    top: 62.5%;
+    width: 84vw;
+    height: 15vh;
+  }
+
+  .timeline-layer {
+    z-index: 15;
+  }
+
+  .person-node {
+    width: 5.82rem;
+    z-index: 30;
+  }
+
+  .person-node.is-top,
+  .person-node.is-bottom {
+    z-index: 34;
+  }
+
+  .person-node[data-slot-index="0"] { right: 18%; left: auto; top: 50.8%; }
+  .person-node[data-slot-index="1"] { right: 18%; left: auto; top: 69.6%; }
+  .person-node[data-slot-index="2"] { right: 50%; left: auto; top: 50.8%; }
+  .person-node[data-slot-index="3"] { right: 50%; left: auto; top: 69.6%; }
+  .person-node[data-slot-index="4"] { right: 82%; left: auto; top: 50.8%; }
+  .person-node[data-slot-index="5"] { right: 82%; left: auto; top: 69.6%; }
+  .person-node[data-slot-index="6"] { right: 34%; left: auto; top: 77.5%; }
+  .person-node[data-slot-index="7"] { right: 66%; left: auto; top: 77.5%; }
+
+  /* All labels below the portrait; row spacing prevents overlap. */
+  .person-node.is-top .person-button,
+  .person-node.is-bottom .person-button,
+  .person-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .42rem;
+  }
+
+  .person-node.is-top .portrait-frame,
+  .person-node.is-bottom .portrait-frame,
+  .portrait-frame {
+    order: 1;
+    position: relative;
+    z-index: 3;
+    width: 4.45rem;
+    padding: .23rem;
+  }
+
+  .person-node.is-top .person-name,
+  .person-node.is-bottom .person-name,
+  .person-name {
+    order: 2;
+    position: relative;
+    z-index: 4;
+    margin: 0;
+    max-width: 5.45rem;
+    padding: .30rem .42rem .28rem;
+    font-size: .58rem;
+    line-height: 1.05;
+    border-radius: .52rem;
+    transform: none;
+    backdrop-filter: blur(8px) saturate(1.1);
+    -webkit-backdrop-filter: blur(8px) saturate(1.1);
+    text-shadow: 0 1px 2px rgba(0,0,0,.44);
+  }
+
+  /* No-images fallback: initials only, not alt text. */
+  .portrait-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: clamp(.95rem, 5vw, 1.35rem);
+    line-height: 1;
+  }
+
+  .portrait-frame img {
+    color: transparent;
+    font-size: 0;
+  }
+
+  /* Focus mode should not enlarge enough to cause overlap on mobile. */
+  .memory-stage.is-focus-mode .person-node.is-visible.is-focused,
+  .memory-stage.is-focus-mode .person-node.is-visible.is-related {
+    transform: translateY(0) scale(1.008);
+  }
+
+  /* Story/detail modal mobile spacing safeguards. */
+  .story-panel,
+  .story-card,
+  .person-detail,
+  .modal-card {
+    width: min(94vw, 42rem);
+    max-width: 94vw;
+  }
+
+  .story-hero,
+  .detail-hero,
+  .profile-hero,
+  .story-layout,
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .story-hero img,
+  .detail-hero img,
+  .profile-hero img,
+  .story-photo,
+  .detail-photo,
+  .profile-photo,
+  .story-image,
+  .detail-image {
+    width: min(82vw, 18rem);
+    max-height: 42vh;
+    object-fit: cover;
+    justify-self: center;
+  }
+}
+
+/* Very short phones: slightly smaller and tighter but still non-overlapping. */
+@media (max-width: 900px) and (orientation: portrait) and (max-height: 740px) {
+  .search-box {
+    top: 35.4%;
+    height: 2.45rem;
+  }
+
+  .human-fabric-svg {
+    top: 61%;
+    height: 20vh;
+  }
+
+  .gold-network-svg,
+  .heartbeat-svg {
+    top: 61.4%;
+    height: 15.5vh;
+  }
+
+  .person-node {
+    width: 5.45rem;
+  }
+
+  .portrait-frame {
+    width: 4.12rem;
+  }
+
+  .person-name {
+    max-width: 5.1rem;
+    font-size: .54rem;
+    padding: .25rem .34rem .24rem;
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] {
+    top: 50.3%;
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] {
+    top: 68.9%;
+  }
+
+  .controls {
+    gap: .42rem;
+  }
+
+  .ghost-btn {
+    height: 2.52rem;
+    font-size: .84rem;
+  }
+}
+
+
+/* Neon heartbeat specific final polish */
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-name {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(126, 222, 255, .16), transparent 60%),
+      linear-gradient(180deg, rgba(22, 52, 69, .94), rgba(5, 17, 28, .96));
+    border-color: rgba(122, 218, 255, .42);
+    color: rgba(238, 250, 255, .96);
+    box-shadow:
+      inset 0 0 0 1px rgba(230, 250, 255, .10),
+      0 8px 18px rgba(0,0,0,.34),
+      0 0 18px rgba(94, 207, 255, .20);
+  }
+
+  .portrait-frame {
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.14),
+      0 0 0 .16rem rgba(125, 218, 255, .14),
+      0 0 22px rgba(82, 197, 255, .18),
+      0 15px 30px rgba(0, 5, 14, .38);
+  }
+}
+
+
+/* ==========================================================
+   V5 mobile polish:
+   - search stays between poem and portraits but no longer touches the portraits
+   - portraits are slightly more balanced on small screens
+   - more vertical breathing between the two portrait rows
+   - poem decoration no longer covers the first line
+   ========================================================== */
+
+@media (max-width: 900px) and (orientation: portrait) {
+  /* Keep poem readable and prevent the heart/decorative badge from covering line 1 */
+  .hero-poem .poem-panel {
+    padding-top: 1rem;
+    padding-bottom: .8rem;
+  }
+
+  .hero-poem .poem-panel p {
+    position: relative;
+    z-index: 3;
+    gap: .25rem;
+    line-height: 1.38;
+  }
+
+  .hero-poem .poem-panel::before {
+    width: 1.68rem;
+    height: 1.68rem;
+    top: -.62rem;
+    font-size: .92rem;
+    z-index: 1;
+    opacity: .96;
+  }
+
+  /* Search is now clearly between poem and card grid */
+  .search-box {
+    top: 35.2%;
+    width: min(86vw, 22.5rem);
+    height: 2.48rem;
+    padding: .36rem .78rem;
+    border-radius: 1.15rem;
+  }
+
+  .search-box input {
+    font-size: .88rem;
+  }
+
+  /* Move people slightly down and increase row spacing */
+  .person-node[data-slot-index="0"] { right: 18%; left: auto; top: 54.2%; }
+  .person-node[data-slot-index="1"] { right: 18%; left: auto; top: 72.8%; }
+  .person-node[data-slot-index="2"] { right: 50%; left: auto; top: 54.2%; }
+  .person-node[data-slot-index="3"] { right: 50%; left: auto; top: 72.8%; }
+  .person-node[data-slot-index="4"] { right: 82%; left: auto; top: 54.2%; }
+  .person-node[data-slot-index="5"] { right: 82%; left: auto; top: 72.8%; }
+  .person-node[data-slot-index="6"] { right: 34%; left: auto; top: 78.6%; }
+  .person-node[data-slot-index="7"] { right: 66%; left: auto; top: 78.6%; }
+
+  .human-fabric-svg {
+    top: 65.2%;
+    height: 20vh;
+    opacity: .84;
+  }
+
+  .gold-network-svg,
+  .heartbeat-svg {
+    top: 65.6%;
+    height: 16vh;
+  }
+
+  .timeline-stage::before {
+    top: 65.4%;
+    height: 20vh;
+  }
+
+  .timeline-stage::after {
+    top: 65.8%;
+    height: 14vh;
+  }
+
+  /* Slightly calmer card scale so labels never collide with the second row */
+  .person-node {
+    width: 5.35rem;
+  }
+
+  .portrait-frame {
+    width: 4.08rem;
+    padding: .21rem;
+  }
+
+  .person-button {
+    gap: .34rem;
+  }
+
+  .person-name {
+    max-width: 5.05rem;
+    padding: .27rem .36rem .25rem;
+    font-size: .55rem;
+    line-height: 1.05;
+    border-radius: .50rem;
+    z-index: 8;
+  }
+
+  /* Prevent labels from wrapping too tall on very narrow screens */
+  .person-name span {
+    overflow-wrap: anywhere;
+  }
+
+  .portrait-placeholder {
+    font-size: clamp(.86rem, 4.5vw, 1.18rem);
+  }
+
+  /* Keep buttons usable but a bit more refined */
+  .controls {
+    width: min(91vw, 27rem);
+    gap: .50rem;
+  }
+
+  .ghost-btn {
+    height: 2.62rem;
+    font-size: .88rem;
+    border-radius: .78rem;
+  }
+}
+
+/* Very small / short phones */
+@media (max-width: 900px) and (orientation: portrait) and (max-height: 740px) {
+  .search-box {
+    top: 34.2%;
+    height: 2.32rem;
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] {
+    top: 53.4%;
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] {
+    top: 71.4%;
+  }
+
+  .human-fabric-svg { top: 64.4%; height: 19vh; }
+  .gold-network-svg,
+  .heartbeat-svg { top: 64.8%; height: 15vh; }
+
+  .portrait-frame {
+    width: 3.86rem;
+  }
+
+  .person-node {
+    width: 5.05rem;
+  }
+
+  .person-name {
+    font-size: .51rem;
+    max-width: 4.8rem;
+    padding: .23rem .31rem .22rem;
+  }
+
+  .ghost-btn {
+    height: 2.42rem;
+    font-size: .82rem;
+  }
+}
+
+/* Slightly wider phones get a touch more size without overlap */
+@media (min-width: 390px) and (max-width: 900px) and (orientation: portrait) {
+  .search-box {
+    top: 35.6%;
+  }
+
+  .person-node {
+    width: 5.65rem;
+  }
+
+  .portrait-frame {
+    width: 4.32rem;
+  }
+
+  .person-name {
+    max-width: 5.25rem;
+    font-size: .58rem;
+  }
+}
+
+
+/* ==========================================================
+   V6 mobile recheck:
+   - search is clearly between poem and people
+   - top-row labels do not collide with lower-row images
+   - portrait rows have enough breathing room
+   - controls remain usable at the bottom
+   ========================================================== */
+
+@media (max-width: 900px) and (orientation: portrait) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .memory-stage,
+  .timeline-stage {
+    overflow: hidden;
+  }
+
+  .hero-title {
+    top: max(4.9rem, calc(env(safe-area-inset-top) + 4.65rem));
+    inset-inline: .5rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(91vw, 35rem);
+    padding: .92rem .88rem .72rem;
+    min-height: auto;
+    border-radius: 1.05rem;
+  }
+
+  .hero-poem .poem-panel::before {
+    width: 1.58rem;
+    height: 1.58rem;
+    top: -.55rem;
+    font-size: .86rem;
+    z-index: 1;
+    opacity: .94;
+  }
+
+  .hero-poem .poem-panel p {
+    position: relative;
+    z-index: 3;
+    gap: .22rem;
+    line-height: 1.34;
+    font-size: clamp(.80rem, 3.05vw, 1rem);
+  }
+
+  .search-box {
+    top: 36.8%;
+    width: min(82vw, 22rem);
+    height: 2.35rem;
+    padding: .34rem .76rem;
+    border-radius: 1.1rem;
+    z-index: 160;
+  }
+
+  .search-box input {
+    font-size: .86rem;
+  }
+
+  .person-node {
+    width: 5.18rem;
+    z-index: 32;
+  }
+
+  .person-node[data-slot-index="0"] { right: 18%; left: auto; top: 53%; }
+  .person-node[data-slot-index="1"] { right: 18%; left: auto; top: 75%; }
+  .person-node[data-slot-index="2"] { right: 50%; left: auto; top: 53%; }
+  .person-node[data-slot-index="3"] { right: 50%; left: auto; top: 75%; }
+  .person-node[data-slot-index="4"] { right: 82%; left: auto; top: 53%; }
+  .person-node[data-slot-index="5"] { right: 82%; left: auto; top: 75%; }
+  .person-node[data-slot-index="6"] { right: 34%; left: auto; top: 81%; }
+  .person-node[data-slot-index="7"] { right: 66%; left: auto; top: 81%; }
+
+  .person-button {
+    gap: .30rem;
+  }
+
+  .portrait-frame {
+    width: 3.92rem;
+    padding: .20rem;
+  }
+
+  .person-name {
+    max-width: 4.85rem;
+    min-height: auto;
+    padding: .24rem .33rem .23rem;
+    font-size: .50rem;
+    line-height: 1.06;
+    border-radius: .47rem;
+    z-index: 10;
+  }
+
+  .person-name span {
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .human-fabric-svg {
+    top: 66.8%;
+    height: 19vh;
+    width: 112vw;
+    left: -6vw;
+    right: auto;
+    opacity: .80;
+  }
+
+  .gold-network-svg,
+  .heartbeat-svg {
+    top: 67.2%;
+    height: 15vh;
+    width: 112vw;
+    left: -6vw;
+    right: auto;
+  }
+
+  .timeline-stage::before {
+    top: 66.8%;
+    width: 90vw;
+    height: 19vh;
+  }
+
+  .timeline-stage::after {
+    top: 67.2%;
+    width: 80vw;
+    height: 13.5vh;
+  }
+
+  .controls {
+    bottom: max(.68rem, calc(env(safe-area-inset-bottom) + .16rem));
+    width: min(91vw, 27rem);
+    gap: .48rem;
+  }
+
+  .ghost-btn {
+    height: 2.55rem;
+    font-size: .84rem;
+    border-radius: .76rem;
+  }
+
+  .portrait-frame img {
+    color: transparent;
+    font-size: 0;
+  }
+
+  .portrait-placeholder {
+    font-size: clamp(.82rem, 4.3vw, 1.12rem);
+  }
+
+  .memory-stage.is-focus-mode .person-node.is-visible.is-focused,
+  .memory-stage.is-focus-mode .person-node.is-visible.is-related {
+    transform: translateY(0) scale(1);
+  }
+
+  .story-root,
+  .modal-root {
+    align-items: stretch;
+    padding: .75rem;
+  }
+
+  .story-panel,
+  .story-card,
+  .person-detail,
+  .modal-card {
+    width: min(94vw, 42rem);
+    max-width: 94vw;
+    max-height: min(88svh, 44rem);
+    overflow: auto;
+    border-radius: 1.25rem;
+  }
+
+  .story-hero,
+  .detail-hero,
+  .profile-hero,
+  .story-layout,
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .9rem;
+  }
+
+  .story-hero img,
+  .detail-hero img,
+  .profile-hero img,
+  .story-photo,
+  .detail-photo,
+  .profile-photo,
+  .story-image,
+  .detail-image {
+    width: min(78vw, 17rem);
+    max-height: 34svh;
+    object-fit: cover;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 360px) and (orientation: portrait) {
+  .hero-title {
+    top: 4.55rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: 91vw;
+    padding: .78rem .68rem .62rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .70rem;
+    gap: .12rem;
+    line-height: 1.28;
+  }
+
+  .search-box {
+    top: 35.5%;
+    width: 83vw;
+    height: 2.12rem;
+  }
+
+  .person-node {
+    width: 4.82rem;
+  }
+
+  .portrait-frame {
+    width: 3.55rem;
+    padding: .18rem;
+  }
+
+  .person-name {
+    max-width: 4.45rem;
+    font-size: .46rem;
+    padding: .21rem .28rem .20rem;
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] {
+    top: 52.5%;
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] {
+    top: 74.4%;
+  }
+
+  .human-fabric-svg { top: 66.2%; height: 18vh; }
+  .gold-network-svg,
+  .heartbeat-svg { top: 66.6%; height: 14vh; }
+
+  .controls {
+    gap: .38rem;
+  }
+
+  .ghost-btn {
+    height: 2.35rem;
+    font-size: .76rem;
+  }
+}
+
+@media (min-height: 760px) and (max-width: 900px) and (orientation: portrait) {
+  .search-box {
+    top: 35.8%;
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] {
+    top: 52.3%;
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] {
+    top: 72.8%;
+  }
+
+  .human-fabric-svg { top: 65%; }
+  .gold-network-svg,
+  .heartbeat-svg { top: 65.4%; }
+}
+
+
+/* V13 clean story text + family/search polish */
+.story-description {
+  display: grid;
+  gap: .9rem;
+  margin: 0;
+}
+
+.story-description p {
+  margin: 0;
+  line-height: 1.85;
+  color: #4f4334;
+  font-size: 1.04rem;
+}
+
+.story-description p:first-child {
+  font-weight: 650;
+}
+
+.story-copy > p {
+  white-space: pre-line;
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .story-description {
+    gap: .75rem;
+  }
+
+  .story-description p {
+    font-size: .94rem;
+    line-height: 1.72;
+  }
+}
+
+
+/* V14: candle print label */
+.candle-print-card {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(135deg, rgba(255,255,255,.60), rgba(230,239,243,.46));
+  border: 1px solid rgba(142, 165, 176, .28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 14px 30px rgba(24,38,49,.08);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.candle-print-kicker {
+  display: inline-flex;
+  width: fit-content;
+  padding: .18rem .55rem;
+  border-radius: 999px;
+  background: rgba(174, 194, 203, .30);
+  color: rgba(42, 69, 82, .82);
+  font-size: .82rem;
+  font-weight: 800;
+  margin-bottom: .45rem;
+}
+
+.candle-print-quote {
+  margin: 0;
+  font-size: clamp(.98rem, 1.2vw, 1.12rem);
+  line-height: 1.65;
+  font-weight: 700;
+  color: rgba(26, 45, 57, .90);
+}
+
+.candle-print-source {
+  display: block;
+  margin-top: .45rem;
+  font-size: .82rem;
+  color: rgba(72, 99, 113, .72);
+}
+
+.candle-print-button {
+  appearance: none;
+  border: 1px solid rgba(80, 111, 126, .25);
+  border-radius: .9rem;
+  background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(222,235,240,.82));
+  color: rgba(28, 48, 59, .94);
+  font: inherit;
+  font-weight: 850;
+  padding: .72rem .95rem;
+  cursor: pointer;
+  box-shadow: 0 9px 20px rgba(18, 39, 50, .10);
+  white-space: nowrap;
+}
+
+.candle-print-button:hover,
+.candle-print-button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(18, 39, 50, .14);
+}
+
+@media (max-width: 700px) {
+  .candle-print-card {
+    grid-template-columns: 1fr;
+    padding: .85rem .9rem;
+    gap: .75rem;
+  }
+
+  .candle-print-quote {
+    font-size: .94rem;
+    line-height: 1.55;
+  }
+
+  .candle-print-button {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+
+/* V16: slower auto movement, cleaner description, full printable candle label preview */
+.story-description {
+  gap: 1.05rem;
+  max-width: 68ch;
+}
+
+.story-description p {
+  line-height: 1.92;
+  font-size: clamp(1rem, 1.08vw, 1.1rem);
+  color: rgba(41, 66, 80, .92);
+  text-align: right;
+}
+
+.story-description p:first-child {
+  font-size: clamp(1.04rem, 1.16vw, 1.18rem);
+  color: rgba(20, 39, 51, .96);
+  font-weight: 750;
+}
+
+.candle-print-card {
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 1.05rem;
+  border-radius: 1.35rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 232, 166, .18), transparent 46%),
+    linear-gradient(135deg, rgba(255,255,255,.72), rgba(225,238,244,.50));
+}
+
+.candle-label-preview {
+  display: grid;
+  gap: .65rem;
+}
+
+.candle-print-help {
+  margin: 0;
+  font-size: .92rem;
+  line-height: 1.55;
+  color: rgba(62, 88, 102, .78);
+}
+
+.candle-label-lines {
+  display: grid;
+  gap: .34rem;
+  padding: .9rem .95rem;
+  border-radius: 1rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(238,246,249,.64));
+  border: 1px solid rgba(139, 164, 177, .28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.75);
+}
+
+.candle-label-lines strong,
+.candle-label-lines em {
+  display: block;
+  color: rgba(24, 45, 57, .94);
+}
+
+.candle-label-lines strong {
+  font-weight: 850;
+}
+
+.candle-label-lines em {
+  font-style: italic;
+  font-weight: 650;
+  line-height: 1.55;
+  color: rgba(42, 65, 78, .92);
+}
+
+.candle-print-button {
+  align-self: center;
+  min-width: 10.8rem;
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .story-description {
+    max-width: none;
+    gap: .82rem;
+  }
+  .story-description p {
+    font-size: .95rem;
+    line-height: 1.72;
+  }
+  .candle-print-card {
+    grid-template-columns: 1fr;
+    padding: .9rem;
+    gap: .85rem;
+  }
+  .candle-label-lines {
+    padding: .75rem .7rem;
+    gap: .28rem;
+  }
+  .candle-label-lines strong,
+  .candle-label-lines em {
+    font-size: .91rem;
+    line-height: 1.45;
+  }
+  .candle-print-button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+
+/* ==========================================================
+   V17 slow fade rotation:
+   Smoother, slower visual transitions for changing people/images.
+   ========================================================== */
+
+.person-node {
+  transition:
+    opacity 2.35s cubic-bezier(.22,.8,.24,1),
+    transform 2.35s cubic-bezier(.22,.8,.24,1),
+    filter 2.35s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(.35rem) scale(.965);
+  filter: blur(7px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  pointer-events: none;
+}
+
+.portrait-frame img,
+.portrait-placeholder {
+  transition:
+    opacity 2.2s cubic-bezier(.22,.8,.24,1),
+    filter 2.2s cubic-bezier(.22,.8,.24,1),
+    transform 2.2s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-leaving .portrait-frame img,
+.person-node.is-leaving .portrait-placeholder {
+  opacity: 0;
+  filter: grayscale(1) blur(3px);
+  transform: scale(.985);
+}
+
+.person-name {
+  transition:
+    opacity 2.15s cubic-bezier(.22,.8,.24,1),
+    transform 2.15s cubic-bezier(.22,.8,.24,1),
+    filter 2.15s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-leaving .person-name {
+  opacity: 0;
+  transform: translateY(.45rem);
+  filter: blur(3px);
+}
+
+/* Mobile gets a slightly shorter fade so it still feels responsive */
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node,
+  .portrait-frame img,
+  .portrait-placeholder,
+  .person-name {
+    transition-duration: 1.95s;
+  }
+}
+
+
+/* ==========================================================
+   V18 sequential empty-line reveal + smooth crossfade
+   ========================================================== */
+
+/* Enter from true invisible state; no snapping. */
+.person-node {
+  opacity: 0;
+  transform: translateY(.65rem) scale(.965);
+  filter: blur(7px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  transition:
+    opacity 2.25s cubic-bezier(.22,.8,.24,1),
+    transform 2.25s cubic-bezier(.22,.8,.24,1),
+    filter 2.25s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+.person-node.is-entering {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(-.25rem) scale(.975);
+  filter: blur(8px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  pointer-events: none;
+  z-index: 18;
+}
+
+.person-node.is-entering.is-visible {
+  pointer-events: auto;
+}
+
+/* The new node sits in the same slot while the old one fades out. */
+.person-node.is-entering,
+.person-node.is-leaving {
+  position: absolute;
+}
+
+.portrait-frame img,
+.portrait-placeholder,
+.person-name {
+  transition:
+    opacity 2.2s cubic-bezier(.22,.8,.24,1),
+    filter 2.2s cubic-bezier(.22,.8,.24,1),
+    transform 2.2s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-leaving .portrait-frame img,
+.person-node.is-leaving .portrait-placeholder,
+.person-node.is-leaving .person-name {
+  opacity: 0;
+  filter: blur(3px) grayscale(.55);
+}
+
+/* Mobile: still soft, but a bit quicker so it does not feel stuck. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node,
+  .portrait-frame img,
+  .portrait-placeholder,
+  .person-name {
+    transition-duration: 1.95s;
+  }
+}
+
+
+/* ==========================================================
+   V19 streaming equal-time sequence:
+   Empty line → Ophir → Omer → Aviv in while Ophir out → Livnat in while Omer out.
+   ========================================================== */
+
+.person-node {
+  opacity: 0;
+  transform: translateY(.55rem) scale(.965);
+  filter: blur(7px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  transition:
+    opacity 2.15s cubic-bezier(.22,.8,.24,1),
+    transform 2.15s cubic-bezier(.22,.8,.24,1),
+    filter 2.15s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+.person-node.is-entering {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(-.28rem) scale(.975);
+  filter: blur(8px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  pointer-events: none;
+  z-index: 18;
+}
+
+.portrait-frame img,
+.portrait-placeholder,
+.person-name {
+  transition:
+    opacity 2.05s cubic-bezier(.22,.8,.24,1),
+    filter 2.05s cubic-bezier(.22,.8,.24,1),
+    transform 2.05s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-leaving .portrait-frame img,
+.person-node.is-leaving .portrait-placeholder,
+.person-node.is-leaving .person-name {
+  opacity: 0;
+  filter: blur(3px) grayscale(.45);
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node,
+  .portrait-frame img,
+  .portrait-placeholder,
+  .person-name {
+    transition-duration: 1.85s;
+  }
+}
+
+
+/* ==========================================================
+   V20 fade completion fix:
+   New portraits are never dimmed while they are fading in.
+   Each streamed person now reaches full opacity before focus mode can dim others.
+   ========================================================== */
+
+.person-node.is-entering,
+.person-node.is-entering.is-dimmed,
+.person-node.is-entering.is-related,
+.person-node.is-entering.is-focused {
+  opacity: 0;
+  filter: blur(7px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+.person-node.is-visible:not(.is-leaving) {
+  opacity: 1;
+}
+
+.person-node.is-visible.is-entering {
+  opacity: 1;
+  filter: blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+/* Do not let focus/dim styling interrupt an entering fade. */
+.memory-stage.is-focus-mode .person-node.is-entering,
+.memory-stage.is-focus-mode .person-node.is-entering.is-dimmed {
+  opacity: 0;
+}
+
+/* Make focus mode gentler during the streaming display. */
+.memory-stage.is-focus-mode .person-node.is-visible.is-dimmed:not(.is-leaving):not(.is-entering) {
+  opacity: .52;
+  filter: blur(.5px) saturate(.82) brightness(.78);
+}
+
+/* Slightly slower fade so every portrait reaches full visibility clearly. */
+.person-node {
+  transition:
+    opacity 2.55s cubic-bezier(.22,.8,.24,1),
+    transform 2.55s cubic-bezier(.22,.8,.24,1),
+    filter 2.55s cubic-bezier(.22,.8,.24,1);
+}
+
+.portrait-frame img,
+.portrait-placeholder,
+.person-name {
+  transition:
+    opacity 2.45s cubic-bezier(.22,.8,.24,1),
+    filter 2.45s cubic-bezier(.22,.8,.24,1),
+    transform 2.45s cubic-bezier(.22,.8,.24,1);
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node,
+  .portrait-frame img,
+  .portrait-placeholder,
+  .person-name {
+    transition-duration: 2.15s;
+  }
+}
+
+
+/* ==========================================================
+   V21 full-line stream:
+   Empty line → fill line in order → then replace oldest slot.
+   Slightly faster than V20, with complete fade-in.
+   ========================================================== */
+
+.person-node {
+  opacity: 0;
+  transform: translateY(.52rem) scale(.97);
+  filter: blur(7px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  transition:
+    opacity 2.35s cubic-bezier(.22,.8,.24,1),
+    transform 2.35s cubic-bezier(.22,.8,.24,1),
+    filter 2.35s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-visible:not(.is-leaving),
+.person-node.is-visible.is-entering {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+.person-node.is-entering {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(-.25rem) scale(.975);
+  filter: blur(8px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  pointer-events: none;
+  z-index: 18;
+}
+
+.portrait-frame img,
+.portrait-placeholder,
+.person-name {
+  transition:
+    opacity 2.25s cubic-bezier(.22,.8,.24,1),
+    filter 2.25s cubic-bezier(.22,.8,.24,1),
+    transform 2.25s cubic-bezier(.22,.8,.24,1);
+}
+
+.person-node.is-leaving .portrait-frame img,
+.person-node.is-leaving .portrait-placeholder,
+.person-node.is-leaving .person-name {
+  opacity: 0;
+  filter: blur(3px) grayscale(.45);
+}
+
+/* Do not let focus/dim interrupt a new fade-in. */
+.memory-stage.is-focus-mode .person-node.is-entering,
+.memory-stage.is-focus-mode .person-node.is-entering.is-dimmed {
+  opacity: 0;
+}
+
+/* Keep dimming gentle so family members still feel present. */
+.memory-stage.is-focus-mode .person-node.is-visible.is-dimmed:not(.is-leaving):not(.is-entering) {
+  opacity: .58;
+  filter: blur(.35px) saturate(.86) brightness(.82);
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node,
+  .portrait-frame img,
+  .portrait-placeholder,
+  .person-name {
+    transition-duration: 2.0s;
+  }
+}
+
+
+/* ==========================================================
+   V22 transitionend fade polish:
+   Snappier, cleaner fade-in/out using synchronized transitions.
+   JS now removes leaving cards on transitionend instead of a fixed timeout.
+   ========================================================== */
+
+.person-node {
+  opacity: 0;
+  transform: translateY(.42rem) scale(.975);
+  filter: blur(6px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  transition:
+    opacity .68s ease-out,
+    transform .68s cubic-bezier(.25,.46,.45,.94),
+    filter .68s ease-out;
+  will-change: opacity, transform, filter;
+}
+
+.person-node.is-visible:not(.is-leaving),
+.person-node.is-visible.is-entering {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+.person-node.is-entering {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.person-node.is-entering.is-visible {
+  pointer-events: auto;
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(-.72rem) scale(.94);
+  filter: blur(9px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  transition:
+    opacity .72s ease-in,
+    transform .72s cubic-bezier(.55,.055,.675,.19),
+    filter .72s ease-in;
+  pointer-events: none;
+  z-index: 18;
+}
+
+.portrait-frame img,
+.portrait-placeholder,
+.person-name {
+  transition:
+    opacity .68s ease-out,
+    filter .68s ease-out,
+    transform .68s cubic-bezier(.25,.46,.45,.94);
+}
+
+.person-node.is-leaving .portrait-frame img,
+.person-node.is-leaving .portrait-placeholder,
+.person-node.is-leaving .person-name {
+  opacity: 0;
+  transform: translateY(.18rem) scale(.985);
+  filter: blur(3px) grayscale(.35);
+}
+
+/* Do not let focus/dim interrupt the new person's fade-in. */
+.memory-stage.is-focus-mode .person-node.is-entering,
+.memory-stage.is-focus-mode .person-node.is-entering.is-dimmed {
+  opacity: 0;
+}
+
+/* Keep the focus mode emotional but not too dark during the stream. */
+.memory-stage.is-focus-mode .person-node.is-visible.is-dimmed:not(.is-leaving):not(.is-entering) {
+  opacity: .60;
+  filter: blur(.25px) saturate(.88) brightness(.84);
+}
+
+/* Mobile: a tiny bit quicker so taps and smaller screens feel responsive. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node {
+    transition:
+      opacity .58s ease-out,
+      transform .58s cubic-bezier(.25,.46,.45,.94),
+      filter .58s ease-out;
+  }
+
+  .person-node.is-leaving {
+    transition:
+      opacity .62s ease-in,
+      transform .62s cubic-bezier(.55,.055,.675,.19),
+      filter .62s ease-in;
+  }
+
+  .portrait-frame img,
+  .portrait-placeholder,
+  .person-name {
+    transition-duration: .58s;
+  }
+}
+
+
+/* ==========================================================
+   V25 attached image flow:
+   Restores the simple full-line rotation from the attached version:
+   full line on load, one slot fades out, then the next person fades in.
+   ========================================================== */
+
+.person-node {
+  opacity: 0;
+  transform: translateY(.8rem) scale(.9);
+  filter: blur(4px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  transition:
+    opacity .8s ease,
+    transform 1s cubic-bezier(.2,.9,.25,1),
+    filter .8s ease;
+}
+
+.person-node.is-visible:not(.is-leaving) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(-.6rem) scale(.94);
+  filter: blur(5px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  pointer-events: none;
+}
+
+/* Cancel the experimental streaming classes from previous versions. */
+.person-node.is-entering,
+.person-node.is-entering.is-visible {
+  pointer-events: auto;
+}
+
+.memory-stage.is-focus-mode .person-node.is-visible.is-dimmed:not(.is-leaving) {
+  opacity: .42;
+  filter: blur(1px) saturate(.72) brightness(.68);
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node {
+    transition:
+      opacity .72s ease,
+      transform .86s cubic-bezier(.2,.9,.25,1),
+      filter .72s ease;
+  }
+}
+
+
+/* ==========================================================
+   V29 hover / press polish:
+   - Hover pauses rotation and highlights the person + close family.
+   - Click/tap locks the focus and opens the story cleanly.
+   - Pointer leave / blur no longer clears a clicked card.
+   ========================================================== */
+
+.person-button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.person-button:hover .portrait-frame,
+.person-button:focus-visible .portrait-frame,
+.person-button.is-pressed .portrait-frame {
+  transform: translateY(-.18rem) scale(1.035);
+}
+
+.person-button:hover .person-name,
+.person-button:focus-visible .person-name,
+.person-button.is-pressed .person-name {
+  transform: translateY(-.08rem);
+}
+
+.person-button:focus-visible {
+  outline: none;
+}
+
+.person-button:focus-visible .portrait-frame {
+  outline: 2px solid rgba(255,255,255,.72);
+  outline-offset: .28rem;
+}
+
+.memory-stage.is-focus-mode .person-node.is-focused {
+  z-index: 80;
+  opacity: 1;
+  filter: blur(0) saturate(1.08) brightness(1.04) drop-shadow(0 0 28px rgba(255, 225, 145, .24));
+}
+
+.memory-stage.is-focus-mode .person-node.is-related {
+  z-index: 74;
+  opacity: .96;
+  filter: blur(0) saturate(1.04) brightness(1.02) drop-shadow(0 0 22px rgba(255, 225, 145, .16));
+}
+
+.memory-stage.is-focus-mode .person-node.is-dimmed {
+  opacity: .34;
+  filter: blur(1.4px) saturate(.58) brightness(.58);
+}
+
+.memory-stage.is-focus-locked .person-node.is-focused .portrait-frame,
+.memory-stage.is-focus-locked .person-node.is-related .portrait-frame {
+  animation: locked-focus-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes locked-focus-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.11); }
+}
+
+@media (hover: none) {
+  .person-button:hover .portrait-frame,
+  .person-button:hover .person-name {
+    transform: none;
+  }
+
+  .person-button.is-pressed .portrait-frame {
+    transform: scale(.985);
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .memory-stage.is-focus-mode .person-node.is-dimmed {
+    opacity: .42;
+    filter: blur(.8px) saturate(.68) brightness(.68);
+  }
+
+  .memory-stage.is-focus-mode .person-node.is-focused,
+  .memory-stage.is-focus-mode .person-node.is-related {
+    opacity: 1;
+  }
+}
+
+
+/* ==========================================================
+   V30 description + family card polish
+   ========================================================== */
+
+.story-panel {
+  container-type: inline-size;
+}
+
+.story-description {
+  display: grid;
+  gap: .85rem;
+  margin-block: .8rem 1.05rem;
+}
+
+.story-description p {
+  margin: 0;
+  padding: .95rem 1.05rem;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 1.05rem;
+  background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  color: rgba(247,252,255,.94);
+  line-height: 1.72;
+  font-size: clamp(.98rem, 1.1vw, 1.08rem);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.story-description p:first-child::before {
+  content: "סיפור חיים";
+  display: inline-flex;
+  margin-inline-start: .45rem;
+  margin-block-end: .45rem;
+  padding: .18rem .58rem;
+  border-radius: 999px;
+  background: rgba(255, 224, 143, .14);
+  color: rgba(255, 238, 188, .95);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+.relatives-card-grid {
+  margin-top: 1rem;
+  padding: 1.05rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(255,255,255,.12);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 218, 136, .13), transparent 12rem),
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 50px rgba(0,0,0,.14);
+}
+
+.relatives-card-header {
+  display: grid;
+  gap: .28rem;
+  margin-bottom: .85rem;
+}
+
+.relatives-card-kicker {
+  width: fit-content;
+  padding: .22rem .62rem;
+  border-radius: 999px;
+  background: rgba(255, 224, 143, .15);
+  color: rgba(255, 238, 188, .96);
+  font-size: .76rem;
+  font-weight: 850;
+}
+
+.relatives-card-header p {
+  margin: 0;
+  color: rgba(225,238,245,.75);
+  font-size: .86rem;
+  line-height: 1.55;
+}
+
+.relatives-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .62rem;
+}
+
+.relative-pill {
+  display: grid;
+  gap: .24rem;
+  padding: .72rem .8rem;
+  border-radius: .85rem;
+  background: rgba(0,0,0,.17);
+  border: 1px solid rgba(255,255,255,.09);
+}
+
+.relative-label {
+  color: rgba(185,216,230,.82);
+  font-size: .74rem;
+  font-weight: 800;
+}
+
+.relative-value {
+  color: rgba(255,255,255,.96);
+  font-size: .96rem;
+  line-height: 1.45;
+  font-weight: 760;
+}
+
+.candle-print-card {
+  border-radius: 1.15rem;
+}
+
+.candle-label-lines {
+  gap: .42rem;
+}
+
+.candle-label-lines strong,
+.candle-label-lines em {
+  line-height: 1.48;
+}
+
+@media (max-width: 720px) {
+  .story-description p {
+    padding: .82rem .88rem;
+    line-height: 1.62;
+    font-size: .94rem;
+  }
+
+  .relatives-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .relative-pill {
+    padding: .68rem .75rem;
+  }
+}
+
+
+/* ==========================================================
+   V31 click reliability + story/card contrast fixes
+   ========================================================== */
+
+/* Make image/name click feel immediate and prevent accidental text/image drag. */
+.person-button,
+.portrait-frame,
+.portrait-frame img,
+.person-name {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.person-button {
+  touch-action: manipulation;
+}
+
+.person-button.is-pressed .portrait-frame {
+  transform: scale(.985);
+}
+
+/* Keep the story popup readable in both designs, even after previous dark/light overrides. */
+.story-panel {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255, 230, 164, .18), transparent 17rem),
+    linear-gradient(180deg, rgba(255, 252, 244, .985), rgba(242, 235, 220, .985));
+  color: #20170f;
+  border-color: rgba(150, 111, 45, .30);
+}
+
+.story-panel,
+.story-panel p,
+.story-panel span,
+.story-panel strong,
+.story-panel h2,
+.story-panel h3,
+.story-panel li {
+  text-shadow: none;
+}
+
+.story-copy h2,
+#story-title {
+  color: #16100b;
+}
+
+.story-meta span,
+.story-actions button {
+  background: rgba(111, 78, 31, .10);
+  color: #4e3415;
+  border-color: rgba(111, 78, 31, .18);
+}
+
+.story-description {
+  margin-top: .25rem;
+}
+
+.story-description p {
+  color: #241a10;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,250,239,.58));
+  border: 1px solid rgba(132, 94, 35, .14);
+  border-radius: 1rem;
+  padding: .92rem 1rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.70), 0 8px 20px rgba(64, 42, 16, .055);
+}
+
+.story-description p:first-child {
+  color: #1b130c;
+  font-weight: 760;
+}
+
+/* Family / first-degree relatives section: previous version used pale text that could disappear. */
+.relatives-card,
+.relatives-card-grid {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(196, 143, 49, .12), transparent 15rem),
+    linear-gradient(180deg, rgba(255,255,255,.78), rgba(252,247,236,.68));
+  border: 1px solid rgba(130, 90, 30, .16);
+  color: #241a10;
+}
+
+.relatives-card-header p {
+  color: #51422f;
+}
+
+.relatives-card-kicker,
+.relative-label {
+  color: #6d4b1f;
+  background: rgba(188, 135, 45, .12);
+  border-color: rgba(188, 135, 45, .18);
+}
+
+.relative-pill {
+  background: rgba(255,255,255,.66);
+  border: 1px solid rgba(128, 88, 30, .14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.70);
+}
+
+.relative-value {
+  color: #21170e;
+}
+
+.relatives-sentence,
+.relatives-segment-text,
+.detail span,
+.family-group-copy,
+.family-group-copy p,
+.family-group-members,
+.candle-print-quote,
+.candle-label-lines,
+.candle-label-lines strong,
+.candle-label-lines em {
+  color: #241a10;
+}
+
+.detail,
+.candle-print-card,
+.family-group-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.76), rgba(250,244,232,.62));
+  color: #241a10;
+  border-color: rgba(128, 88, 30, .15);
+}
+
+.detail strong,
+.family-group-copy h3,
+.family-group-kicker,
+.candle-print-kicker {
+  color: #4e3415;
+}
+
+.candle-print-button {
+  color: #241a10;
+  background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(236,223,196,.84));
+  border-color: rgba(128, 88, 30, .20);
+}
+
+/* Focus mode still clear, but not so dark that names become unreadable. */
+.memory-stage.is-focus-mode .person-node.is-dimmed {
+  opacity: .46;
+  filter: blur(.9px) saturate(.72) brightness(.68);
+}
+
+.memory-stage.is-focus-mode .person-node.is-focused,
+.memory-stage.is-focus-mode .person-node.is-related {
+  opacity: 1;
+  filter: blur(0) saturate(1.04) brightness(1.04) drop-shadow(0 0 24px rgba(255, 219, 139, .20));
+}
+
+/* Mobile popup readability */
+@media (max-width: 760px) {
+  .story-panel {
+    color: #20170f;
+  }
+
+  .story-description p {
+    font-size: .94rem;
+    line-height: 1.68;
+    padding: .82rem .88rem;
+  }
+
+  .relative-pill,
+  .candle-print-card,
+  .detail {
+    background: rgba(255,255,255,.74);
+  }
+}
+
+
+/* ==========================================================
+   V32 equal-time carousel + click reliability
+   ========================================================== */
+
+/* During opening/pressing, never let the visual fade state swallow the click target. */
+.person-node {
+  pointer-events: auto;
+}
+
+.person-node.is-leaving {
+  pointer-events: none;
+}
+
+.person-button,
+.portrait-frame,
+.portrait-frame img,
+.person-name {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.person-button {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.person-button.is-pressed .portrait-frame {
+  transform: scale(.985);
+}
+
+/* Slightly tighter transitions so replacement finishes before the next equal-time tick. */
+.person-node {
+  transition:
+    opacity .72s ease,
+    transform .86s cubic-bezier(.2,.9,.25,1),
+    filter .72s ease;
+}
+
+.person-node.is-leaving {
+  transition:
+    opacity .72s ease,
+    transform .78s cubic-bezier(.55,.055,.675,.19),
+    filter .72s ease;
+}
+
+/* Keep story text and all family/candle text readable over both themes. */
+.story-panel {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255, 230, 164, .20), transparent 17rem),
+    linear-gradient(180deg, rgba(255, 252, 244, .99), rgba(242, 235, 220, .99));
+  color: #20170f;
+}
+
+.story-copy h2,
+#story-title,
+.story-panel h3,
+.story-panel strong {
+  color: #16100b;
+}
+
+.story-meta span,
+.story-actions button {
+  color: #4b3214;
+  background: rgba(111, 78, 31, .10);
+  border-color: rgba(111, 78, 31, .18);
+}
+
+.story-description p {
+  color: #241a10;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,250,239,.64));
+  border: 1px solid rgba(132, 94, 35, .14);
+  border-radius: 1rem;
+  padding: .92rem 1rem;
+  text-shadow: none;
+}
+
+.story-description p:first-child {
+  color: #17100a;
+  font-weight: 760;
+}
+
+.relatives-card,
+.relatives-card-grid,
+.detail,
+.candle-print-card,
+.family-group-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.80), rgba(250,244,232,.68));
+  color: #241a10;
+  border-color: rgba(128, 88, 30, .16);
+  text-shadow: none;
+}
+
+.relatives-card *,
+.relatives-card-grid *,
+.detail *,
+.candle-print-card *,
+.family-group-card * {
+  text-shadow: none;
+}
+
+.relatives-card-header p,
+.relatives-sentence,
+.relative-value,
+.detail span,
+.family-group-copy,
+.family-group-copy p,
+.family-group-members,
+.candle-print-quote,
+.candle-label-lines,
+.candle-label-lines strong,
+.candle-label-lines em {
+  color: #241a10;
+}
+
+.relatives-card-kicker,
+.relative-label,
+.detail strong,
+.family-group-copy h3,
+.family-group-kicker,
+.candle-print-kicker {
+  color: #5c3d17;
+}
+
+.relative-pill {
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(128, 88, 30, .14);
+}
+
+@media (max-width: 760px) {
+  .story-description p {
+    font-size: .94rem;
+    line-height: 1.68;
+    padding: .82rem .88rem;
+  }
+}
+
+
+/* ==========================================================
+   V33 description readability polish
+   ========================================================== */
+
+.story-description {
+  display: grid;
+  gap: .72rem;
+}
+
+.story-description p {
+  font-weight: 520;
+  letter-spacing: 0;
+  line-height: 1.72;
+  color: #241a10;
+}
+
+.story-description p:first-child {
+  font-weight: 660;
+  color: #17100a;
+}
+
+.story-description p:nth-child(2) {
+  background: rgba(255,255,255,.68);
+}
+
+.story-description p:last-child {
+  font-weight: 560;
+  color: #3a2916;
+  border-inline-start: 3px solid rgba(158, 111, 35, .42);
+}
+
+@media (max-width: 760px) {
+  .story-description p {
+    font-size: .93rem;
+    line-height: 1.68;
+  }
+}
+
+
+/* ==========================================================
+   V34 equal-page carousel + family-together click fix
+   ========================================================== */
+
+.person-node {
+  pointer-events: auto;
+}
+
+.person-node.is-leaving {
+  pointer-events: none;
+}
+
+.person-button,
+.portrait-frame,
+.portrait-frame img,
+.person-name {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.person-button {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.person-button.is-pressed .portrait-frame {
+  transform: scale(.985);
+}
+
+/* Whole-page transition: all visible people receive the same exact screen interval. */
+.person-node {
+  transition:
+    opacity .58s ease,
+    transform .70s cubic-bezier(.2,.9,.25,1),
+    filter .58s ease;
+}
+
+.person-node.is-leaving {
+  opacity: 0;
+  transform: translateY(-.35rem) scale(.965);
+  filter: blur(5px) drop-shadow(0 18px 30px rgba(0,0,0,.42));
+  transition:
+    opacity .48s ease,
+    transform .52s cubic-bezier(.55,.055,.675,.19),
+    filter .48s ease;
+}
+
+/* Keep focus mode readable and consistent. */
+.memory-stage.is-focus-mode .person-node.is-dimmed {
+  opacity: .42;
+  filter: blur(.8px) saturate(.70) brightness(.68);
+}
+
+.memory-stage.is-focus-mode .person-node.is-focused,
+.memory-stage.is-focus-mode .person-node.is-related {
+  opacity: 1;
+  filter: blur(0) saturate(1.05) brightness(1.05) drop-shadow(0 0 24px rgba(255, 219, 139, .22));
+}
+
+
+/* ==========================================================
+   V35 full QA fixes: search stability + popup readability
+   ========================================================== */
+
+/* Search should feel stable: no accidental click-through while cards are fading. */
+.person-node {
+  pointer-events: auto;
+}
+
+.person-node.is-leaving {
+  pointer-events: none;
+}
+
+/* Popup layout polish */
+.story-overlay {
+  padding: clamp(.8rem, 2vw, 1.4rem);
+  background: rgba(0, 7, 14, .78);
+}
+
+.story-panel {
+  width: min(70rem, 94vw);
+  max-height: 91vh;
+  border-radius: 1.6rem;
+  background:
+    radial-gradient(circle at 98% 0%, rgba(255, 229, 164, .18), transparent 16rem),
+    linear-gradient(180deg, rgba(255, 252, 245, .992), rgba(239, 232, 216, .992));
+  color: #1f170f;
+  border: 1px solid rgba(161, 111, 35, .28);
+  box-shadow: 0 28px 80px rgba(0,0,0,.48);
+}
+
+.story-grid-head {
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 17rem);
+  gap: clamp(1rem, 2.3vw, 1.7rem);
+  align-items: start;
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.story-photo {
+  grid-column: 2;
+  grid-row: 1;
+  border-radius: 1.25rem;
+  box-shadow: 0 18px 36px rgba(35, 24, 12, .13);
+}
+
+.story-copy {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.story-copy h2,
+#story-title {
+  margin: .15rem 0 .72rem;
+  color: #17100a;
+  letter-spacing: -.04em;
+  line-height: 1.02;
+}
+
+.story-meta {
+  margin-bottom: 1rem;
+}
+
+.story-meta span,
+.story-actions button {
+  color: #4b3214;
+  background: rgba(111, 78, 31, .10);
+  border: 1px solid rgba(111, 78, 31, .18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+/* Remove old pseudo label that sometimes looked hidden on the same-color box. */
+.story-description p:first-child::before {
+  content: none;
+  display: none;
+}
+
+.story-description {
+  display: grid;
+  gap: .72rem;
+  margin: .25rem 0 0;
+}
+
+.story-description p {
+  margin: 0;
+  padding: .92rem 1rem;
+  border-radius: 1rem;
+  line-height: 1.72;
+  font-size: clamp(.98rem, 1.05vw, 1.06rem);
+  font-weight: 520;
+  color: #241a10;
+  background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,250,239,.66));
+  border: 1px solid rgba(132, 94, 35, .14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 8px 22px rgba(64,42,16,.055);
+  text-shadow: none;
+}
+
+.story-description p:first-child {
+  font-weight: 640;
+  color: #17100a;
+}
+
+.story-description p:last-child {
+  color: #3b2915;
+  border-inline-start: 3px solid rgba(158, 111, 35, .44);
+}
+
+/* Family/details/candle sections: hard contrast override for both designs. */
+.relatives-card,
+.relatives-card-grid,
+.detail,
+.candle-print-card,
+.family-group-card {
+  color: #241a10;
+  background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(250,244,232,.70));
+  border: 1px solid rgba(128, 88, 30, .16);
+  text-shadow: none;
+}
+
+.relatives-card *,
+.relatives-card-grid *,
+.detail *,
+.candle-print-card *,
+.family-group-card * {
+  text-shadow: none;
+}
+
+.relative-value,
+.relatives-card-header p,
+.relatives-sentence,
+.detail span,
+.family-group-copy,
+.family-group-copy p,
+.family-group-members,
+.candle-print-quote,
+.candle-label-lines,
+.candle-label-lines strong,
+.candle-label-lines em {
+  color: #241a10;
+}
+
+.relatives-card-kicker,
+.relative-label,
+.detail strong,
+.family-group-copy h3,
+.family-group-kicker,
+.candle-print-kicker {
+  color: #5c3d17;
+}
+
+.relative-pill {
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(128, 88, 30, .14);
+}
+
+.close-story {
+  z-index: 2;
+  color: #1f170f;
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 8px 24px rgba(40, 28, 13, .12);
+}
+
+@media (max-width: 900px) {
+  .story-panel {
+    width: min(94vw, 34rem);
+    border-radius: 1.25rem;
+  }
+
+  .story-grid-head {
+    grid-template-columns: 1fr;
+    gap: .9rem;
+  }
+
+  .story-photo,
+  .story-copy {
+    grid-column: 1;
+  }
+
+  .story-photo {
+    width: min(72vw, 15.5rem);
+    justify-self: center;
+    max-height: 36vh;
+  }
+
+  .story-copy h2,
+  #story-title {
+    text-align: center;
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+
+  .story-meta,
+  .story-actions {
+    justify-content: center;
+  }
+
+  .story-description p {
+    font-size: .93rem;
+    line-height: 1.65;
+    padding: .82rem .88rem;
+  }
+}
+
+
+/* ==========================================================
+   V36 interaction polish: hover intent + transition sync
+   ========================================================== */
+
+/* Slow, organic entrance/exit for the timeline itself. */
+.person-node {
+  transition:
+    opacity 0.8s ease,
+    transform 0.9s cubic-bezier(0.2, 0.9, 0.25, 1),
+    filter 0.8s ease;
+  will-change: opacity, transform, filter;
+}
+
+/* Snappy response once focus/hover mode is active, separate from entry/exit fade timing. */
+.memory-stage.is-focus-mode .person-node {
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.3s ease;
+}
+
+/* Faster internal hover details. */
+.portrait-frame,
+.person-name,
+.portrait-frame img {
+  transition:
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.3s ease,
+    opacity 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Leaving nodes should still fade gently, not use the snappy focus-mode timing. */
+.person-node.is-leaving {
+  transition:
+    opacity 0.72s ease,
+    transform 0.78s cubic-bezier(.55,.055,.675,.19),
+    filter 0.72s ease;
+}
+
+/* Hover focus remains responsive without a strobe effect because JS now waits for hover intent. */
+.memory-stage.is-focus-mode .person-node.is-dimmed {
+  transition:
+    opacity 0.28s ease,
+    transform 0.34s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.28s ease;
+}
+
+.memory-stage.is-focus-mode .person-node.is-focused,
+.memory-stage.is-focus-mode .person-node.is-related {
+  transition:
+    opacity 0.28s ease,
+    transform 0.34s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.28s ease;
+}
+
+
+/* ==========================================================
+   V37 bulletproof transition + ghost fix + punchier hover
+   ========================================================== */
+
+/* Base is faster so un-hover no longer drags for nearly a second. */
+.person-node {
+  transition:
+    opacity 0.5s ease,
+    transform 0.55s cubic-bezier(0.2, 0.9, 0.25, 1),
+    filter 0.5s ease;
+  will-change: opacity, transform, filter;
+}
+
+/* Slow majestic fade is now reserved only for real timeline entry. */
+.person-node.is-entering {
+  transition:
+    opacity 0.8s ease,
+    transform 0.9s cubic-bezier(0.2, 0.9, 0.25, 1),
+    filter 0.8s ease;
+}
+
+/* Focus/hover stays snappy. */
+.memory-stage.is-focus-mode .person-node {
+  transition:
+    opacity 0.28s ease,
+    transform 0.34s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.28s ease;
+}
+
+/* Leaving matches the 800ms awaitTransition fallback; no invisible ghost cards. */
+.person-node.is-leaving {
+  pointer-events: none;
+  transition:
+    opacity 0.72s ease,
+    transform 0.76s cubic-bezier(.55,.055,.675,.19),
+    filter 0.72s ease;
+}
+
+/* Internal hover details stay crisp and responsive. */
+.portrait-frame,
+.person-name,
+.portrait-frame img {
+  transition:
+    transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.28s ease,
+    opacity 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+
+/* ==========================================================
+   V38 popup redesign + richer story text
+   Design: warm editorial memorial card with labeled story sections.
+   ========================================================== */
+
+.story-overlay {
+  padding: clamp(.8rem, 2.2vw, 1.6rem);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(218, 174, 88, .18), transparent 23rem),
+    rgba(3, 9, 16, .82);
+  backdrop-filter: blur(10px);
+}
+
+.story-panel {
+  width: min(74rem, 95vw);
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 1.8rem;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,249,236,.98) 38%, rgba(239,229,207,.97));
+  color: #1f170f;
+  border: 1px solid rgba(166, 119, 44, .28);
+  box-shadow:
+    0 34px 95px rgba(0,0,0,.52),
+    inset 0 1px 0 rgba(255,255,255,.76);
+}
+
+.story-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(178, 126, 38, .22), transparent 12rem),
+    radial-gradient(circle at 100% 0%, rgba(255, 226, 155, .22), transparent 16rem);
+  opacity: .9;
+}
+
+.story-grid-head {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+  gap: clamp(1.1rem, 2.5vw, 2rem);
+  padding: clamp(1.15rem, 2.3vw, 1.85rem);
+  align-items: start;
+}
+
+.story-photo {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.78), rgba(240,222,181,.62));
+  border: 1px solid rgba(143, 99, 31, .18);
+  box-shadow:
+    0 20px 42px rgba(36, 23, 10, .18),
+    inset 0 1px 0 rgba(255,255,255,.74);
+  padding: .55rem;
+}
+
+.story-photo img,
+.story-photo .portrait-placeholder {
+  border-radius: 1.05rem;
+}
+
+.story-copy {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.story-copy h2,
+#story-title {
+  color: #17100a;
+  font-size: clamp(2.35rem, 5.8vw, 4.9rem);
+  line-height: .98;
+  margin: .05rem 0 .55rem;
+  letter-spacing: -.055em;
+}
+
+.story-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: .15rem 0 1rem;
+}
+
+.story-meta span {
+  color: #543713;
+  background: rgba(136, 91, 27, .10);
+  border: 1px solid rgba(136, 91, 27, .17);
+  border-radius: 999px;
+  padding: .42rem .7rem;
+  font-weight: 720;
+}
+
+.story-description {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .72rem;
+  margin: .2rem 0 0;
+}
+
+.story-description p {
+  position: relative;
+  margin: 0;
+  padding: .92rem 1rem .95rem;
+  border-radius: 1.05rem;
+  line-height: 1.74;
+  font-size: clamp(.98rem, 1.04vw, 1.07rem);
+  color: #241a10;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,249,236,.68));
+  border: 1px solid rgba(132, 94, 35, .14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.75),
+    0 10px 26px rgba(58, 38, 13, .055);
+  text-shadow: none;
+}
+
+.story-paragraph {
+  display: grid;
+  gap: .38rem;
+}
+
+.story-paragraph-label {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  color: #6b4619;
+  background: rgba(190, 138, 45, .14);
+  border: 1px solid rgba(190, 138, 45, .18);
+  border-radius: 999px;
+  padding: .18rem .58rem;
+  font-size: .78rem;
+  font-weight: 850;
+  letter-spacing: .02em;
+}
+
+.story-paragraph-text {
+  color: #241a10;
+  font-weight: 520;
+}
+
+.story-paragraph-1 {
+  border-inline-start: 4px solid rgba(176, 126, 45, .50);
+}
+
+.story-paragraph-2 {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.74), rgba(254,244,221,.72));
+}
+
+.story-paragraph-3 {
+  background:
+    linear-gradient(180deg, rgba(255,252,246,.86), rgba(242,229,205,.78));
+  border-inline-start: 4px solid rgba(111, 78, 31, .44);
+}
+
+.story-actions {
+  margin-top: 1rem;
+}
+
+.story-actions button,
+.candle-print-button {
+  color: #241a10;
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(232,215,179,.88));
+  border: 1px solid rgba(123, 83, 25, .18);
+  box-shadow: 0 8px 20px rgba(64,42,16,.08), inset 0 1px 0 rgba(255,255,255,.75);
+}
+
+/* Lower sections become calmer secondary panels */
+.candle-print-card,
+.family-group-card,
+.relatives-card,
+.details-grid {
+  position: relative;
+  z-index: 1;
+  margin-inline: clamp(1.15rem, 2.3vw, 1.85rem);
+}
+
+.close-story {
+  z-index: 3;
+  color: #241a10;
+  background: rgba(255,255,255,.88);
+  border: 1px solid rgba(123, 83, 25, .16);
+  box-shadow: 0 12px 26px rgba(35,24,12,.15);
+}
+
+@media (max-width: 900px) {
+  .story-panel {
+    width: min(94vw, 36rem);
+    border-radius: 1.35rem;
+  }
+
+  .story-grid-head {
+    grid-template-columns: 1fr;
+    gap: .95rem;
+    padding: 1rem;
+  }
+
+  .story-photo,
+  .story-copy {
+    grid-column: 1;
+  }
+
+  .story-photo {
+    grid-row: 1;
+    width: min(70vw, 14.5rem);
+    justify-self: center;
+  }
+
+  .story-copy {
+    grid-row: 2;
+  }
+
+  .story-copy h2,
+  #story-title {
+    text-align: center;
+    font-size: clamp(2.1rem, 12vw, 3.25rem);
+  }
+
+  .story-meta,
+  .story-actions {
+    justify-content: center;
+  }
+
+  .story-description p {
+    font-size: .94rem;
+    line-height: 1.67;
+    padding: .82rem .86rem;
+  }
+
+  .candle-print-card,
+  .family-group-card,
+  .relatives-card,
+  .details-grid {
+    margin-inline: 1rem;
+  }
+}
+
+
+/* ==========================================================
+   V39: larger desktop portraits + clearly visible popup redesign
+   ========================================================== */
+
+/* Desktop timeline portraits were too small; enlarge only desktop/tablet web mode. */
+@media (min-width: 901px) {
+  .timeline-layer .person-node {
+    width: clamp(8.4rem, 8.1vw, 10.2rem);
+  }
+
+  .timeline-layer .portrait-frame {
+    width: clamp(6.75rem, 6.4vw, 8.1rem);
+    padding: .34rem;
+  }
+
+  .timeline-layer .portrait-frame::before {
+    inset: .48rem;
+  }
+
+  .timeline-layer .person-name {
+    max-width: clamp(7.9rem, 8.4vw, 9.6rem);
+    padding: .45rem .70rem .42rem;
+    font-size: clamp(.78rem, .88vw, .98rem);
+    line-height: 1.08;
+    border-radius: .72rem;
+  }
+
+  .timeline-layer .person-node.is-focused .portrait-frame,
+  .timeline-layer .person-node.is-related .portrait-frame {
+    width: clamp(7.05rem, 6.65vw, 8.35rem);
+  }
+}
+
+/* Keep mobile exactly controlled; do not enlarge there. */
+@media (max-width: 900px) {
+  .timeline-layer .portrait-frame {
+    max-width: 28vw;
+  }
+}
+
+/* New popup is intentionally different from previous versions: dark edge, warm page, large portrait. */
+.story-overlay-v39 {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: clamp(.75rem, 2vw, 1.45rem);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(226, 181, 91, .19), transparent 22rem),
+    radial-gradient(circle at 78% 80%, rgba(81, 120, 150, .14), transparent 24rem),
+    rgba(1, 8, 15, .84);
+  backdrop-filter: blur(12px) saturate(1.08);
+}
+
+.story-panel-v39 {
+  position: relative;
+  width: min(76rem, 94vw);
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 2rem;
+  color: #1c140b;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.97), rgba(255,250,238,.99) 43%, rgba(236,224,201,.99));
+  border: 1px solid rgba(182, 132, 48, .30);
+  box-shadow:
+    0 38px 105px rgba(0,0,0,.58),
+    inset 0 1px 0 rgba(255,255,255,.80);
+}
+
+.story-panel-v39::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(186, 132, 43, .18), transparent 13rem),
+    radial-gradient(circle at 100% 0%, rgba(255, 224, 144, .23), transparent 17rem),
+    repeating-linear-gradient(0deg, rgba(88,64,29,.035) 0 1px, transparent 1px 7px);
+}
+
+.close-story-v39 {
+  position: sticky;
+  top: 1rem;
+  margin-inline-start: auto;
+  margin-inline-end: 1rem;
+  z-index: 8;
+  color: #21170d;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(132, 92, 31, .18);
+  box-shadow: 0 12px 28px rgba(30,20,10,.16);
+}
+
+.story-hero-v39 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
+  gap: clamp(1.15rem, 2.6vw, 2.4rem);
+  align-items: center;
+  padding: clamp(1rem, 2.4vw, 2rem) clamp(1rem, 2.6vw, 2.2rem) 1rem;
+  direction: ltr;
+}
+
+.story-photo-v39 {
+  grid-column: 1;
+  width: min(20rem, 27vw);
+  max-width: 20rem;
+  aspect-ratio: 1;
+  justify-self: center;
+  border-radius: 1.55rem;
+  overflow: hidden;
+  padding: .65rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.86), rgba(241,224,184,.70));
+  border: 1px solid rgba(151, 103, 32, .22);
+  box-shadow:
+    0 24px 54px rgba(46, 29, 12, .20),
+    inset 0 1px 0 rgba(255,255,255,.82);
+}
+
+.story-photo-v39 img,
+.story-photo-v39 .portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 1.05rem;
+  filter: grayscale(1) contrast(1.08) brightness(1.05);
+}
+
+.story-heading-v39 {
+  grid-column: 2;
+  direction: rtl;
+  min-width: 0;
+}
+
+.story-kicker-v39 {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: .55rem;
+  padding: .28rem .72rem;
+  border-radius: 999px;
+  color: #6b4515;
+  background: rgba(191, 139, 45, .14);
+  border: 1px solid rgba(191, 139, 45, .18);
+  font-weight: 850;
+  font-size: .83rem;
+}
+
+.story-heading-v39 h2,
+.story-panel-v39 #story-title {
+  color: #181008;
+  font-size: clamp(3rem, 6.2vw, 5.7rem);
+  line-height: .96;
+  letter-spacing: -.06em;
+  margin: 0 0 .65rem;
+  text-shadow: none;
+}
+
+.story-meta-v39 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-bottom: .85rem;
+}
+
+.story-meta-v39 span {
+  color: #4e3311;
+  background: rgba(119, 80, 24, .10);
+  border: 1px solid rgba(119, 80, 24, .17);
+  border-radius: 999px;
+  padding: .44rem .72rem;
+  font-weight: 800;
+}
+
+.story-lead-v39 {
+  max-width: 45rem;
+  color: #57402a;
+  font-size: clamp(1rem, 1.05vw, 1.12rem);
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+
+.story-actions-v39,
+.story-actions-v39 button,
+.primary-candle-button-v39 {
+  width: fit-content;
+}
+
+.primary-candle-button-v39 {
+  color: #21170d;
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(232,214,176,.90));
+  border: 1px solid rgba(124, 84, 25, .20);
+  box-shadow: 0 9px 22px rgba(64,42,16,.10), inset 0 1px 0 rgba(255,255,255,.80);
+}
+
+.story-body-v39 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 22rem);
+  gap: clamp(.9rem, 2vw, 1.35rem);
+  padding: 0 clamp(1rem, 2.6vw, 2.2rem) clamp(1.1rem, 2.5vw, 2rem);
+}
+
+.story-main-v39 {
+  min-width: 0;
+}
+
+.story-side-v39 {
+  display: grid;
+  align-content: start;
+  gap: .85rem;
+}
+
+.story-description-v39 {
+  display: grid;
+  gap: .78rem;
+}
+
+.story-description-v39 p,
+.story-description-v39 .story-paragraph {
+  margin: 0;
+  padding: 1rem 1.05rem;
+  border-radius: 1.08rem;
+  color: #241a10;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,249,236,.70));
+  border: 1px solid rgba(132, 94, 35, .14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.78),
+    0 10px 26px rgba(58, 38, 13, .06);
+  text-shadow: none;
+}
+
+.story-description-v39 .story-paragraph-label {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: .38rem;
+  color: #6b4619;
+  background: rgba(190, 138, 45, .15);
+  border: 1px solid rgba(190, 138, 45, .18);
+  border-radius: 999px;
+  padding: .20rem .62rem;
+  font-size: .80rem;
+  font-weight: 900;
+}
+
+.story-description-v39 .story-paragraph-text {
+  display: block;
+  color: #241a10;
+  font-size: clamp(1rem, 1.04vw, 1.08rem);
+  line-height: 1.72;
+  font-weight: 520;
+}
+
+.story-description-v39 .story-paragraph-1 {
+  border-inline-start: 4px solid rgba(176, 126, 45, .54);
+}
+
+.story-description-v39 .story-paragraph-3 {
+  border-inline-start: 4px solid rgba(91, 64, 29, .44);
+  background:
+    linear-gradient(180deg, rgba(255,252,246,.92), rgba(240,229,207,.78));
+}
+
+/* Side panels inside the new popup */
+.story-side-v39 .relatives-card,
+.story-side-v39 .details-grid {
+  margin: 0;
+}
+
+.story-side-v39 .relatives-card,
+.story-side-v39 .detail {
+  background: rgba(255,255,255,.68);
+}
+
+.story-panel-v39 > .family-group-card,
+.story-panel-v39 > .candle-print-card {
+  position: relative;
+  z-index: 1;
+  margin: 0 clamp(1rem, 2.6vw, 2.2rem) clamp(1rem, 2.3vw, 1.7rem);
+}
+
+/* Mobile popup layout */
+@media (max-width: 900px) {
+  .story-panel-v39 {
+    width: min(94vw, 37rem);
+    max-height: 91vh;
+    border-radius: 1.35rem;
+  }
+
+  .story-hero-v39 {
+    grid-template-columns: 1fr;
+    direction: rtl;
+    gap: .95rem;
+    padding: 1rem;
+  }
+
+  .story-photo-v39,
+  .story-heading-v39 {
+    grid-column: 1;
+  }
+
+  .story-photo-v39 {
+    width: min(72vw, 16rem);
+  }
+
+  .story-heading-v39 h2,
+  .story-panel-v39 #story-title {
+    text-align: center;
+    font-size: clamp(2.2rem, 12vw, 3.45rem);
+  }
+
+  .story-kicker-v39,
+  .story-actions-v39 {
+    margin-inline: auto;
+  }
+
+  .story-meta-v39 {
+    justify-content: center;
+  }
+
+  .story-lead-v39 {
+    text-align: center;
+    font-size: .94rem;
+  }
+
+  .story-body-v39 {
+    grid-template-columns: 1fr;
+    padding: 0 1rem 1rem;
+  }
+
+  .story-side-v39 {
+    order: 2;
+  }
+
+  .story-description-v39 .story-paragraph-text {
+    font-size: .94rem;
+    line-height: 1.65;
+  }
+
+  .story-panel-v39 > .family-group-card,
+  .story-panel-v39 > .candle-print-card {
+    margin-inline: 1rem;
+  }
+}
+
+/* Landscape desktop with not much height: keep popup usable. */
+@media (min-width: 901px) and (max-height: 760px) {
+  .story-photo-v39 {
+    width: min(16.5rem, 23vw);
+  }
+
+  .story-heading-v39 h2,
+  .story-panel-v39 #story-title {
+    font-size: clamp(2.8rem, 5.2vw, 4.7rem);
+  }
+
+  .story-description-v39 .story-paragraph-text {
+    font-size: .98rem;
+    line-height: 1.62;
+  }
+}
+
+
+/* ==========================================================
+   V40: bigger WEB / desktop portraits only
+   ========================================================== */
+
+/* Large desktop: make the portrait medallions clearly larger. */
+@media (min-width: 1201px) {
+  .timeline-layer .person-node {
+    width: clamp(10.2rem, 9.2vw, 12.4rem);
+  }
+
+  .timeline-layer .portrait-frame {
+    width: clamp(8.35rem, 7.35vw, 9.9rem);
+    padding: .40rem;
+  }
+
+  .timeline-layer .portrait-frame::before {
+    inset: .55rem;
+  }
+
+  .timeline-layer .person-name {
+    max-width: clamp(8.8rem, 9.2vw, 10.7rem);
+    padding: .50rem .78rem .46rem;
+    font-size: clamp(.86rem, .95vw, 1.08rem);
+    line-height: 1.08;
+    border-radius: .78rem;
+  }
+}
+
+/* Laptop / smaller desktop: bigger than before, but safer against overlap. */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .timeline-layer .person-node {
+    width: clamp(8.9rem, 10.3vw, 10.5rem);
+  }
+
+  .timeline-layer .portrait-frame {
+    width: clamp(7.25rem, 8.1vw, 8.4rem);
+    padding: .36rem;
+  }
+
+  .timeline-layer .portrait-frame::before {
+    inset: .50rem;
+  }
+
+  .timeline-layer .person-name {
+    max-width: clamp(7.8rem, 9vw, 9.2rem);
+    padding: .46rem .70rem .42rem;
+    font-size: clamp(.78rem, .95vw, .98rem);
+    line-height: 1.08;
+  }
+}
+
+/* Give the enlarged desktop nodes a bit more visual priority above the woven line. */
+@media (min-width: 901px) {
+  .timeline-layer .person-node {
+    z-index: 35;
+  }
+
+  .timeline-layer .person-node.is-bottom {
+    z-index: 34;
+  }
+
+  .timeline-layer .person-node.is-focused,
+  .timeline-layer .person-node.is-related {
+    z-index: 60;
+  }
+}
+
+/* Mobile remains intentionally unchanged. */
+@media (max-width: 900px) {
+  .timeline-layer .person-node {
+    width: var(--node-w);
+  }
+
+  .timeline-layer .portrait-frame {
+    width: var(--photo-w);
+  }
+}
+
+
+/* ==========================================================
+   V41: balanced web portraits, no side cut
+   ========================================================== */
+
+/* V40 was a little too large; this keeps the improved presence but pulls
+   the medallions back so edge portraits such as Ophir are not cropped. */
+@media (min-width: 1201px) {
+  .timeline-layer .person-node {
+    width: clamp(9.1rem, 8.05vw, 10.85rem);
+  }
+
+  .timeline-layer .portrait-frame {
+    width: clamp(7.25rem, 6.45vw, 8.55rem);
+    padding: .36rem;
+  }
+
+  .timeline-layer .portrait-frame::before {
+    inset: .50rem;
+  }
+
+  .timeline-layer .person-name {
+    max-width: clamp(8.1rem, 8.05vw, 9.7rem);
+    padding: .46rem .72rem .42rem;
+    font-size: clamp(.80rem, .86vw, .99rem);
+    line-height: 1.08;
+    border-radius: .75rem;
+  }
+}
+
+/* Laptop / smaller desktop: also step down slightly to prevent overlap. */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .timeline-layer .person-node {
+    width: clamp(8.35rem, 9.25vw, 9.75rem);
+  }
+
+  .timeline-layer .portrait-frame {
+    width: clamp(6.75rem, 7.45vw, 7.85rem);
+    padding: .34rem;
+  }
+
+  .timeline-layer .portrait-frame::before {
+    inset: .48rem;
+  }
+
+  .timeline-layer .person-name {
+    max-width: clamp(7.35rem, 8.25vw, 8.55rem);
+    padding: .43rem .66rem .40rem;
+    font-size: clamp(.76rem, .88vw, .94rem);
+    line-height: 1.08;
+  }
+}
+
+/* Edge safety: first/last desktop slots are just a touch smaller so they do not crop at the sides. */
+@media (min-width: 901px) {
+  .timeline-layer .person-node[data-slot-index="0"] .portrait-frame,
+  .timeline-layer .person-node[data-slot-index="7"] .portrait-frame {
+    width: calc(clamp(7.25rem, 6.45vw, 8.55rem) * .94);
+  }
+
+  .timeline-layer .person-node[data-slot-index="0"] .person-name,
+  .timeline-layer .person-node[data-slot-index="7"] .person-name {
+    transform: scale(.96);
+    transform-origin: top center;
+  }
+}
+
+/* Mobile remains unchanged. */
+@media (max-width: 900px) {
+  .timeline-layer .person-node {
+    width: var(--node-w);
+  }
+
+  .timeline-layer .portrait-frame {
+    width: var(--photo-w);
+  }
+}
+
+/* ==========================================================
+   V42 polish: accessibility, modal lock, calmer timing support
+   ========================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+button,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.noscript-message {
+  position: fixed;
+  z-index: 10000;
+  inset-inline: 1rem;
+  bottom: 1rem;
+  max-width: 42rem;
+  margin-inline: auto;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(180, 232, 255, .28);
+  border-radius: 1rem;
+  background: rgba(5, 16, 29, .92);
+  color: #effbff;
+  text-align: center;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, .35);
+}
+
+.ghost-btn:focus-visible,
+.search-box:focus-within,
+.close-story:focus-visible,
+.primary-candle-button-v39:focus-visible,
+.candle-print-button:focus-visible,
+.person-button:focus-visible .portrait-frame {
+  outline: 2px solid rgba(221, 248, 255, .92);
+  outline-offset: 4px;
+}
+
+.story-is-open,
+body.story-is-open {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.story-overlay {
+  animation: storyOverlayIn .22s ease-out both;
+}
+
+.story-panel,
+.story-panel-v39 {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
+  animation: storyPanelIn .32s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.story-panel::-webkit-scrollbar {
+  width: .7rem;
+}
+
+.story-panel::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(91, 68, 32, .28);
+  border: .18rem solid rgba(255, 250, 239, .88);
+}
+
+@keyframes storyOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes storyPanelIn {
+  from { opacity: 0; transform: translateY(1rem) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (min-width: 901px) {
+  .top-bar {
+    padding-top: max(1rem, calc(env(safe-area-inset-top) + .65rem));
+  }
+
+  .ghost-btn,
+  .search-box {
+    background: rgba(5, 18, 32, .64);
+    border-color: rgba(172, 233, 255, .20);
+  }
+
+  .person-button:hover .person-name,
+  .person-button:focus-visible .person-name {
+    color: #ffffff;
+    border-color: rgba(218, 247, 255, .34);
+    box-shadow: 0 14px 28px rgba(0, 5, 12, .25), 0 0 22px rgba(126, 220, 255, .10);
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .top-bar {
+    padding-top: max(.7rem, calc(env(safe-area-inset-top) + .45rem));
+  }
+
+  .controls {
+    padding: .36rem;
+    border: 1px solid rgba(172, 233, 255, .16);
+    border-radius: 1.05rem;
+    background: rgba(5, 16, 29, .72);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 18px 45px rgba(0, 4, 12, .35);
+  }
+
+  .ghost-btn {
+    min-height: 2.62rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .search-box {
+    min-height: 2.55rem;
+    background: rgba(5, 16, 29, .72);
+    border-color: rgba(172, 233, 255, .18);
+    box-shadow: 0 14px 36px rgba(0, 4, 12, .24);
+  }
+
+  .story-overlay {
+    padding: max(.6rem, env(safe-area-inset-top)) .65rem max(.75rem, env(safe-area-inset-bottom));
+  }
+
+  .story-panel-v39 {
+    width: min(96vw, 38rem);
+    max-height: min(92svh, 50rem);
+  }
+
+  .story-photo-v39 {
+    width: min(66vw, 15rem);
+  }
+}
+
+@media (max-width: 360px) and (orientation: portrait) {
+  .story-heading-v39 h2,
+  .story-panel-v39 #story-title {
+    font-size: clamp(1.95rem, 11vw, 2.75rem);
+  }
+
+  .story-description-v39 .story-paragraph-text {
+    font-size: .9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-overlay,
+  .story-panel,
+  .story-panel-v39 {
+    animation: none;
+  }
+}
+
+
+/* ==========================================================
+   V43 final: screenshot layout + equal-cycle fade support
+   ========================================================== */
+@media (min-width: 901px) {
+  .top-bar {
+    top: auto;
+    bottom: clamp(.85rem, 2.25vh, 1.3rem);
+    padding: 0 clamp(1.35rem, 3.2vw, 2.2rem);
+    background: transparent;
+    align-items: flex-end;
+  }
+
+  .top-bar .controls {
+    order: 1;
+    margin-inline-start: auto;
+  }
+
+  .top-bar .search-box {
+    order: 2;
+    margin-inline-end: auto;
+    width: min(25rem, 33vw);
+  }
+
+  .hero-title.hero-poem {
+    top: clamp(1.05rem, 2.35vh, 1.65rem);
+  }
+
+  .heartbeat-svg {
+    top: 62.5%;
+  }
+
+  .person-node[data-slot-index="0"] { right: 16%; left: auto; top: 48.5%; }
+  .person-node[data-slot-index="1"] { right: 28%; left: auto; top: 73.5%; }
+  .person-node[data-slot-index="2"] { right: 40%; left: auto; top: 48.5%; }
+  .person-node[data-slot-index="3"] { right: 52%; left: auto; top: 73.5%; }
+  .person-node[data-slot-index="4"] { right: 64%; left: auto; top: 48.5%; }
+  .person-node[data-slot-index="5"] { right: 76%; left: auto; top: 73.5%; }
+  .person-node[data-slot-index="6"] { right: 88%; left: auto; top: 48.5%; }
+  .person-node[data-slot-index="7"] { right: 8%; left: auto; top: 73.5%; }
+}
+
+.person-node {
+  transition:
+    opacity .98s ease,
+    transform 1.18s cubic-bezier(.16,.92,.22,1),
+    filter .98s ease;
+}
+
+.person-node.is-leaving {
+  transition:
+    opacity .92s ease,
+    transform .92s cubic-bezier(.2,.72,.28,1),
+    filter .92s ease;
+}
+
+
+/* ==========================================================
+   V9 final cleanup: no generic modal copy + safer responsive stage
+   ========================================================== */
+.story-lead-v39,
+.relatives-card-header p {
+  display: none;
+}
+
+.story-actions-v39 {
+  margin-top: .55rem;
+}
+
+.story-description-v39 p:empty,
+.story-description-v39 .story-paragraph:empty {
+  display: none;
+}
+
+/* Keep the rotating portraits clear of the poem and bottom controls. */
+@media (min-width: 901px) {
+  .timeline-stage {
+    min-height: 100svh;
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"],
+  .person-node[data-slot-index="6"] {
+    top: clamp(18rem, 48.5vh, calc(100svh - 18.5rem));
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"],
+  .person-node[data-slot-index="7"] {
+    top: clamp(26rem, 72vh, calc(100svh - 8.2rem));
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .timeline-stage {
+    min-height: 100svh;
+    padding-block: 8.2rem 9.8rem;
+  }
+
+  .hero-title.hero-poem {
+    top: max(.8rem, env(safe-area-inset-top));
+  }
+
+  .heartbeat-svg {
+    top: 60.5svh;
+    height: 9.2rem;
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] {
+    top: clamp(14.2rem, 49.8svh, calc(100svh - 18.4rem));
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] {
+    top: clamp(22.4rem, 68.6svh, calc(100svh - 10.6rem));
+  }
+
+  .top-bar {
+    padding-bottom: max(.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) and (max-height: 740px) {
+  .hero-poem .poem-panel {
+    padding: .68rem .72rem .72rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .84rem;
+    line-height: 1.22;
+  }
+
+  .person-node {
+    --photo-w: calc(var(--photo-w) * .92);
+    --node-w: calc(var(--node-w) * .92);
+  }
+
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] {
+    top: clamp(12.8rem, 48svh, calc(100svh - 17rem));
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] {
+    top: clamp(19.8rem, 66svh, calc(100svh - 9.5rem));
+  }
+}
+
+/* V9.1 mobile controls hard-fix: keep search + buttons at the bottom only. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .top-bar {
+    position: fixed;
+    inset-inline: 0;
+    top: auto;
+    bottom: 0;
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    justify-content: flex-end;
+    gap: .48rem;
+    padding: .55rem .7rem max(.75rem, env(safe-area-inset-bottom));
+    background: linear-gradient(0deg, rgba(4,14,25,.94), rgba(4,14,25,.68), transparent);
+    pointer-events: none;
+  }
+
+  .top-bar > * {
+    pointer-events: auto;
+  }
+
+  .top-bar .controls,
+  .top-bar .search-box,
+  .controls,
+  .search-box {
+    position: static;
+    inset: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    transform: none;
+  }
+
+  .top-bar .controls,
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .42rem;
+  }
+
+  .top-bar .search-box,
+  .search-box {
+    display: flex;
+  }
+}
+
+/* ==========================================================
+   V10: family links + narrative relatives section
+   ========================================================== */
+.relatives-card-list .relatives-list {
+  display: grid;
+  gap: .55rem;
+}
+
+.relatives-card-list .relative-line {
+  margin: 0;
+  padding: .74rem .82rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(144, 223, 255, .13);
+  background: rgba(255, 255, 255, .045);
+  color: rgba(235, 250, 255, .93);
+  font-weight: 650;
+  line-height: 1.75;
+}
+
+.inline-person-link {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(160, 232, 255, .62);
+  box-shadow: inset 0 -0.22em 0 rgba(107, 220, 255, .13);
+  border-radius: .18rem;
+  padding-inline: .05rem;
+  transition: color .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.inline-person-link:hover,
+.inline-person-link:focus-visible {
+  color: #dff8ff;
+  border-bottom-color: rgba(255, 255, 255, .9);
+  box-shadow: inset 0 -0.42em 0 rgba(107, 220, 255, .24), 0 0 18px rgba(108, 220, 255, .13);
+  outline: none;
+}
+
+.family-group-members a.family-group-member-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-description-v39 .inline-person-link {
+  font-weight: 800;
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .relatives-card-list .relative-line {
+    padding: .66rem .72rem;
+    font-size: .94rem;
+    line-height: 1.68;
+  }
+}
+
+/* V10 responsive safety: keep portraits below the poem and above bottom controls. */
+@media (min-width: 901px) {
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"],
+  .person-node[data-slot-index="6"] {
+    top: clamp(17.3rem, 47.8vh, calc(100svh - 19rem));
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"],
+  .person-node[data-slot-index="7"] {
+    top: clamp(25rem, 70.8vh, calc(100svh - 8.9rem));
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  .person-node[data-slot-index="0"],
+  .person-node[data-slot-index="2"],
+  .person-node[data-slot-index="4"] {
+    top: clamp(13.4rem, 48.6svh, calc(100svh - 18.8rem));
+  }
+
+  .person-node[data-slot-index="1"],
+  .person-node[data-slot-index="3"],
+  .person-node[data-slot-index="5"] {
+    top: clamp(20.8rem, 66.2svh, calc(100svh - 11.4rem));
+  }
+}
+
+
+/* ==========================================================
+   V10.1: requested modal cleanup + exact family linking fixes
+   ========================================================== */
+.story-actions-v39,
+.primary-candle-button-v39,
+.candle-print-card,
+.candle-print-button,
+.candle-label-preview {
+  display: none;
+}
+
+.relatives-card-header,
+.relatives-card-kicker {
+  display: none;
+}
+
+.story-panel-v39::before {
+  z-index: 0;
+}
+
+.story-panel-v39 > *,
+.story-hero-v39,
+.story-body-v39,
+.story-main-v39,
+.story-side-v39,
+.story-description-v39,
+.story-heading-v39 {
+  position: relative;
+  z-index: 2;
+}
+
+.story-body-v39 {
+  direction: ltr;
+  grid-template-columns: minmax(17rem, 23rem) minmax(0, 1fr);
+  align-items: start;
+}
+
+.story-side-v39 {
+  grid-column: 1;
+  direction: rtl;
+}
+
+.story-main-v39 {
+  grid-column: 2;
+  direction: rtl;
+  min-width: 0;
+  overflow: visible;
+}
+
+.story-description-v39 {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.story-description-v39 p,
+.story-description-v39 .story-paragraph {
+  display: block;
+  width: 100%;
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
+  text-align: right;
+  direction: rtl;
+  unicode-bidi: plaintext;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  color: #241a10;
+}
+
+.story-description-v39 .story-paragraph-label {
+  display: none;
+}
+
+.story-description-v39 .story-paragraph-text {
+  display: inline;
+}
+
+.story-panel-v39 .inline-person-link {
+  color: #174c64;
+  font-weight: 850;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(23, 76, 100, .44);
+  box-shadow: inset 0 -0.20em 0 rgba(85, 185, 215, .13);
+}
+
+.story-panel-v39 .inline-person-link:hover,
+.story-panel-v39 .inline-person-link:focus-visible {
+  color: #0d2f40;
+  border-bottom-color: rgba(13, 47, 64, .72);
+  box-shadow: inset 0 -0.42em 0 rgba(85, 185, 215, .23), 0 0 18px rgba(85, 185, 215, .15);
+}
+
+.story-side-v39 .relatives-card,
+.story-side-v39 .details-grid,
+.story-panel-v39 > .family-group-card {
+  position: relative;
+  z-index: 2;
+}
+
+.relatives-card-list .relatives-list {
+  gap: .48rem;
+}
+
+.relatives-card-list .relative-line {
+  background: rgba(255,255,255,.74);
+  color: #241a10;
+  border-color: rgba(132, 94, 35, .13);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.74), 0 8px 20px rgba(58, 38, 13, .045);
+}
+
+@media (max-width: 900px) {
+  .story-body-v39 {
+    display: grid;
+    grid-template-columns: 1fr;
+    direction: rtl;
+  }
+
+  .story-main-v39,
+  .story-side-v39 {
+    grid-column: 1;
+  }
+
+  .story-main-v39 { order: 1; }
+  .story-side-v39 { order: 2; }
+}
+
+/* V10.1 final polish: keep names readable in one natural heading line when space allows. */
+.story-heading-v39 h2,
+.story-panel-v39 #story-title {
+  font-size: clamp(2.55rem, 4.8vw, 4.7rem);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@media (max-width: 900px) {
+  .story-heading-v39 h2,
+  .story-panel-v39 #story-title {
+    font-size: clamp(2.15rem, 10vw, 3.25rem);
+    letter-spacing: -.025em;
+  }
+}
+
+/* ==========================================================
+   V10.2: compact popup, no empty areas, no hidden text
+   ========================================================== */
+.story-overlay-v39 {
+  align-items: center;
+  justify-items: center;
+  padding: clamp(.55rem, 1.7vw, 1.1rem);
+}
+
+.story-panel-v39 {
+  width: min(68rem, 92vw);
+  max-height: 88svh;
+  height: auto;
+  overflow: auto;
+  border-radius: 1.65rem;
+}
+
+.close-story-v39 {
+  top: .72rem;
+  margin-inline-end: .72rem;
+  margin-bottom: -.25rem;
+}
+
+.story-hero-v39 {
+  grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
+  gap: clamp(.8rem, 1.8vw, 1.35rem);
+  align-items: center;
+  padding: .55rem clamp(.9rem, 2vw, 1.45rem) .35rem;
+}
+
+.story-photo-v39 {
+  width: clamp(9.2rem, 14vw, 13.2rem);
+  max-width: 13.2rem;
+  padding: .42rem;
+  border-radius: 1.15rem;
+}
+
+.story-photo-v39 img,
+.story-photo-v39 .portrait-placeholder {
+  border-radius: .82rem;
+}
+
+.story-heading-v39 h2,
+.story-panel-v39 #story-title {
+  font-size: clamp(2.15rem, 3.8vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: .38rem;
+}
+
+.story-meta-v39 {
+  gap: .35rem;
+  margin-bottom: .15rem;
+}
+
+.story-meta-v39 span {
+  padding: .31rem .58rem;
+  font-size: .88rem;
+}
+
+.story-body-v39 {
+  grid-template-columns: minmax(14rem, 19rem) minmax(0, 1fr);
+  gap: clamp(.65rem, 1.4vw, 1rem);
+  padding: .35rem clamp(.9rem, 2vw, 1.45rem) .75rem;
+  align-items: start;
+}
+
+.story-description-v39 {
+  gap: .48rem;
+}
+
+.story-description-v39 p,
+.story-description-v39 .story-paragraph {
+  padding: .72rem .88rem;
+  border-radius: .92rem;
+  line-height: 1.58;
+  overflow-wrap: break-word;
+}
+
+.story-description-v39 .story-paragraph-text,
+.story-description-v39 .story-paragraph {
+  font-size: clamp(.94rem, .98vw, 1.02rem);
+  line-height: 1.58;
+}
+
+.story-side-v39 {
+  gap: .55rem;
+}
+
+.relatives-card-list .relatives-list {
+  gap: .34rem;
+}
+
+.relatives-card-list .relative-line {
+  padding: .50rem .66rem;
+  border-radius: .82rem;
+  line-height: 1.45;
+  font-size: .94rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .42rem;
+}
+
+.detail {
+  min-width: 0;
+  padding: .62rem .55rem;
+  border-radius: .82rem;
+}
+
+.detail strong,
+.detail span {
+  overflow-wrap: break-word;
+}
+
+.story-panel-v39 > .family-group-card {
+  max-width: 50rem;
+  margin: .1rem auto .85rem;
+}
+
+.family-group-card {
+  grid-template-columns: minmax(9.5rem, 13.5rem) minmax(0, 1fr);
+  gap: .85rem;
+  align-items: center;
+  padding: .82rem;
+  border-radius: 1rem;
+}
+
+.family-group-image-wrap {
+  min-height: 9.6rem;
+  aspect-ratio: 1.1 / 1;
+}
+
+.family-group-copy {
+  gap: .42rem;
+  align-content: center;
+}
+
+.family-group-kicker {
+  padding: .22rem .55rem;
+  font-size: .78rem;
+}
+
+.family-group-copy h3 {
+  font-size: clamp(1.35rem, 2.3vw, 2rem);
+  line-height: 1.05;
+}
+
+.family-group-copy p {
+  margin: 0;
+  font-size: .98rem;
+  line-height: 1.5;
+}
+
+.family-group-members {
+  gap: .35rem;
+  margin-top: .1rem;
+}
+
+.family-group-members a.family-group-member-link,
+.family-group-members span {
+  padding: .28rem .52rem;
+  font-size: .88rem;
+}
+
+@media (min-width: 901px) and (max-height: 760px) {
+  .story-panel-v39 {
+    max-height: 86svh;
+  }
+
+  .story-hero-v39 {
+    grid-template-columns: minmax(8rem, 11rem) minmax(0, 1fr);
+    padding-top: .35rem;
+  }
+
+  .story-photo-v39 {
+    width: clamp(8rem, 11vw, 10.6rem);
+  }
+
+  .story-heading-v39 h2,
+  .story-panel-v39 #story-title {
+    font-size: clamp(1.95rem, 3.3vw, 3.25rem);
+  }
+
+  .story-body-v39 {
+    padding-top: .1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .story-overlay-v39 {
+    padding: .55rem;
+  }
+
+  .story-panel-v39 {
+    width: 94vw;
+    max-height: 88svh;
+    border-radius: 1.15rem;
+  }
+
+  .story-hero-v39 {
+    padding: .7rem .75rem .25rem;
+    gap: .55rem;
+  }
+
+  .story-photo-v39 {
+    width: min(50vw, 11rem);
+  }
+
+  .story-heading-v39 h2,
+  .story-panel-v39 #story-title {
+    font-size: clamp(1.85rem, 8.4vw, 2.9rem);
+    margin-bottom: .28rem;
+  }
+
+  .story-meta-v39 {
+    justify-content: center;
+  }
+
+  .story-body-v39 {
+    padding: .35rem .75rem .75rem;
+    gap: .55rem;
+  }
+
+  .story-main-v39 { order: 1; }
+  .story-side-v39 { order: 2; }
+
+  .details-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .detail {
+    padding: .52rem .4rem;
+  }
+
+  .detail strong,
+  .detail span {
+    font-size: .82rem;
+    line-height: 1.35;
+  }
+
+  .family-group-card {
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
+
+  .family-group-image-wrap {
+    min-height: 10rem;
+  }
+}
+
+/* ==========================================================
+   V10.3: precise family links + tighter story popup spacing
+   ========================================================== */
+.story-panel-v39 {
+  width: min(60rem, 92vw);
+  max-height: 84svh;
+  scroll-padding-top: 0;
+}
+
+.story-panel-v39:not(:has(.family-group-card)) {
+  width: min(54rem, 92vw);
+}
+
+.story-hero-v39 {
+  grid-template-columns: minmax(8.5rem, 12rem) minmax(0, 1fr);
+  padding: .38rem clamp(.75rem, 1.6vw, 1.1rem) .18rem;
+  gap: clamp(.65rem, 1.3vw, 1rem);
+}
+
+.story-photo-v39 {
+  width: clamp(7.8rem, 11.5vw, 11.2rem);
+  max-width: 11.2rem;
+}
+
+.story-body-v39 {
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+  gap: clamp(.5rem, 1.1vw, .8rem);
+  padding: .18rem clamp(.75rem, 1.6vw, 1.1rem) .55rem;
+}
+
+.story-description-v39,
+.story-side-v39,
+.relatives-card-list .relatives-list {
+  gap: .30rem;
+}
+
+.story-description-v39 p,
+.story-description-v39 .story-paragraph {
+  padding: .60rem .76rem;
+  line-height: 1.52;
+}
+
+.relatives-card-list .relative-line {
+  padding: .42rem .58rem;
+  line-height: 1.38;
+}
+
+.details-grid {
+  gap: .32rem;
+}
+
+.detail {
+  padding: .48rem .42rem;
+}
+
+.story-panel-v39 > .family-group-card {
+  max-width: 42rem;
+  margin: .05rem auto .62rem;
+}
+
+.family-group-card {
+  grid-template-columns: minmax(8.4rem, 11rem) minmax(0, 1fr);
+  gap: .65rem;
+  padding: .65rem;
+}
+
+.family-group-image-wrap {
+  min-height: 7.8rem;
+}
+
+.family-group-copy p {
+  line-height: 1.42;
+}
+
+/* Family links are intentionally limited to the family-photo card only. */
+.story-description-v39 .inline-person-link,
+.relatives-card-list .inline-person-link {
+  color: inherit;
+  font-weight: inherit;
+  border-bottom: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+@media (min-width: 901px) and (max-height: 760px) {
+  .story-panel-v39 { max-height: 82svh; }
+  .story-photo-v39 { width: clamp(7.1rem, 9.5vw, 9rem); }
+  .story-heading-v39 h2,
+  .story-panel-v39 #story-title { font-size: clamp(1.75rem, 3vw, 2.8rem); }
+  .story-meta-v39 span { padding: .25rem .48rem; font-size: .80rem; }
+}
+
+@media (max-width: 900px) {
+  .story-panel-v39,
+  .story-panel-v39:not(:has(.family-group-card)) {
+    width: 94vw;
+    max-height: 86svh;
+  }
+
+  .story-hero-v39 {
+    padding: .56rem .62rem .2rem;
+  }
+
+  .story-photo-v39 {
+    width: min(42vw, 9.6rem);
+  }
+
+  .story-body-v39 {
+    padding: .24rem .62rem .62rem;
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+
+/* ==========================================================
+   V10.6: compact modal cleanup + divorced-spouse clarification
+   Build: v10-6-compact-20260623-1325
+   - no huge empty areas in story cards without a family image
+   - right description stays full-width and readable
+   - side details are compact and never split into tiny columns
+   ========================================================== */
+.story-overlay-v39 {
+  overflow: hidden;
+  align-items: center;
+  justify-items: center;
+}
+
+.story-panel-v39 {
+  overflow: auto;
+  max-height: min(88svh, 44rem);
+  scroll-padding-top: 0;
+}
+
+.story-panel-v39.story-panel-no-family {
+  width: min(48rem, 92vw);
+}
+
+.story-panel-v39.story-panel-has-family {
+  width: min(58rem, 92vw);
+}
+
+.story-panel-no-family .story-hero-v39 {
+  grid-template-columns: minmax(7.4rem, 10.5rem) minmax(0, 1fr);
+  align-items: center;
+  padding: .32rem clamp(.72rem, 1.5vw, 1rem) .12rem;
+}
+
+.story-panel-no-family .story-photo-v39 {
+  width: clamp(7.2rem, 10.5vw, 10rem);
+  max-width: 10rem;
+}
+
+.story-panel-no-family .story-heading-v39 h2,
+.story-panel-no-family #story-title {
+  font-size: clamp(2rem, 3.4vw, 3.45rem);
+  margin-bottom: .28rem;
+}
+
+.story-panel-no-family .story-body-v39 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .48rem;
+  padding: .16rem clamp(.72rem, 1.5vw, 1rem) .72rem;
+  direction: rtl;
+}
+
+.story-panel-no-family .story-main-v39,
+.story-panel-no-family .story-side-v39 {
+  grid-column: 1;
+  width: 100%;
+}
+
+.story-panel-no-family .story-main-v39 { order: 1; }
+.story-panel-no-family .story-side-v39 {
+  order: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .42rem;
+}
+
+.story-panel-no-family .story-description-v39 p,
+.story-panel-no-family .story-description-v39 .story-paragraph {
+  padding: .66rem .82rem;
+  line-height: 1.55;
+}
+
+.story-panel-no-family .relatives-card-list,
+.story-panel-no-family .details-grid {
+  width: 100%;
+}
+
+.story-panel-no-family .relatives-card-list .relatives-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: .34rem;
+}
+
+.story-panel-no-family .relatives-card-list .relative-line {
+  margin: 0;
+  min-height: 0;
+  padding: .48rem .62rem;
+  line-height: 1.42;
+}
+
+.story-panel-no-family .story-side-v39 .details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .38rem;
+  padding: 0;
+}
+
+.story-panel-no-family .story-side-v39 .detail {
+  min-height: 0;
+  padding: .48rem .46rem;
+  text-align: center;
+}
+
+.story-panel-no-family .story-side-v39 .detail strong,
+.story-panel-no-family .story-side-v39 .detail span {
+  font-size: .86rem;
+  line-height: 1.34;
+  overflow-wrap: anywhere;
+}
+
+.story-panel-no-family .story-side-v39 .detail span {
+  display: block;
+}
+
+@media (min-width: 901px) and (max-height: 760px) {
+  .story-panel-v39 {
+    max-height: min(86svh, 39rem);
+  }
+  .story-panel-v39.story-panel-no-family {
+    width: min(46rem, 90vw);
+  }
+  .story-panel-no-family .story-hero-v39 {
+    grid-template-columns: minmax(6.8rem, 8.8rem) minmax(0, 1fr);
+  }
+  .story-panel-no-family .story-photo-v39 {
+    width: clamp(6.6rem, 8.2vw, 8.4rem);
+  }
+  .story-panel-no-family .story-heading-v39 h2,
+  .story-panel-no-family #story-title {
+    font-size: clamp(1.78rem, 2.9vw, 2.75rem);
+  }
+  .story-panel-no-family .story-side-v39 .details-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .story-panel-v39.story-panel-no-family,
+  .story-panel-v39.story-panel-has-family {
+    width: 94vw;
+    max-height: 88svh;
+  }
+
+  .story-panel-no-family .story-hero-v39,
+  .story-panel-has-family .story-hero-v39 {
+    grid-template-columns: 1fr;
+    direction: rtl;
+  }
+
+  .story-panel-no-family .story-photo-v39,
+  .story-panel-has-family .story-photo-v39 {
+    width: min(43vw, 9rem);
+  }
+
+  .story-panel-no-family .story-body-v39,
+  .story-panel-has-family .story-body-v39 {
+    grid-template-columns: 1fr;
+    direction: rtl;
+  }
+
+  .story-panel-no-family .relatives-card-list .relatives-list {
+    grid-template-columns: 1fr;
+  }
+
+  .story-panel-no-family .story-side-v39 .details-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .story-panel-no-family .story-side-v39 .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* V11 — רקמה אנושית: warm woven canvas, color portraits, no heartbeat divider */
+:root {
+  --bg: #e9decc;
+  --bg-2: #d8c8ae;
+  --ink: #342b22;
+  --ink-soft: #5f5042;
+  --muted: #806f5b;
+  --line: #9a6b4d;
+  --line-core: #fbf4e8;
+  --panel: rgba(255, 250, 241, .74);
+  --panel-2: rgba(250, 241, 226, .66);
+  --border: rgba(113, 82, 53, .18);
+  --border-soft: rgba(113, 82, 53, .10);
+  --shadow: 0 28px 80px rgba(61, 43, 25, .20);
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #e9decc;
+}
+
+body {
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 250, 239, .76), transparent 22rem),
+    radial-gradient(circle at 78% 82%, rgba(184, 142, 95, .20), transparent 32rem),
+    linear-gradient(135deg, #f2eadc 0%, #e5d6bf 46%, #d5c3a6 100%);
+}
+
+.memory-stage {
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.22), transparent 12%, rgba(95,69,43,.07) 52%, transparent 82%),
+    repeating-linear-gradient(0deg, rgba(97, 70, 42, .038) 0 1px, transparent 1px 11px),
+    repeating-linear-gradient(90deg, rgba(97, 70, 42, .032) 0 1px, transparent 1px 13px);
+}
+
+.mist {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 249, .50), transparent 25rem),
+    radial-gradient(circle at 28% 73%, rgba(183, 125, 73, .14), transparent 34rem),
+    radial-gradient(circle at 78% 30%, rgba(116, 97, 70, .12), transparent 30rem);
+  filter: blur(22px);
+  animation: mist-breathe 12s ease-in-out infinite;
+}
+
+.grain {
+  opacity: .32;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(76, 53, 32, .045) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .10) 0 1px, transparent 1px 9px),
+    radial-gradient(circle at 20% 30%, rgba(73, 47, 22, .07), transparent .08rem);
+  background-size: auto, auto, 3.8rem 3.8rem;
+  mix-blend-mode: multiply;
+}
+
+.top-bar {
+  background: linear-gradient(180deg, rgba(239, 230, 214, .96), rgba(239, 230, 214, .78) 58%, rgba(239, 230, 214, 0));
+}
+
+.controls,
+.search-box,
+.ghost-btn {
+  background: rgba(255, 250, 242, .62);
+  border-color: rgba(104, 75, 45, .16);
+  color: #443527;
+  box-shadow: 0 14px 38px rgba(91, 63, 32, .10);
+}
+
+.ghost-btn:hover,
+.ghost-btn:focus-visible,
+.search-box:focus-within {
+  border-color: rgba(132, 91, 52, .34);
+  background: rgba(255, 252, 246, .84);
+  box-shadow: 0 16px 42px rgba(96, 67, 35, .16);
+}
+
+.search-box input {
+  color: #342b22;
+}
+
+.search-box input::placeholder {
+  color: rgba(72, 54, 36, .56);
+}
+
+.hero-title {
+  top: clamp(4.8rem, 6.2vh, 5.4rem);
+  color: var(--ink);
+}
+
+.hero-poem .poem-panel {
+  width: min(35rem, 84vw);
+  padding: .86rem 1.18rem;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 247, .82), rgba(248, 237, 219, .66)),
+    repeating-linear-gradient(90deg, rgba(108, 78, 49, .035) 0 1px, transparent 1px 9px);
+  border: 1px solid rgba(116, 83, 48, .16);
+  box-shadow: 0 18px 44px rgba(79, 54, 26, .13);
+  backdrop-filter: blur(7px);
+}
+
+.hero-poem .poem-panel p {
+  color: #463728;
+  text-shadow: none;
+  font-weight: 480;
+}
+
+.timeline-stage {
+  position: relative;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.heartbeat-svg {
+  display: none;
+}
+
+.fabric-field,
+.timeline-stage::before,
+.timeline-stage::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fabric-field {
+  z-index: 1;
+  opacity: .82;
+  background:
+    radial-gradient(ellipse at 50% 57%, rgba(255, 250, 240, .34), transparent 36rem),
+    repeating-linear-gradient(105deg, rgba(113, 78, 43, .052) 0 1px, transparent 1px 17px),
+    repeating-linear-gradient(15deg, rgba(255, 255, 255, .14) 0 1px, transparent 1px 19px);
+  mask-image: radial-gradient(ellipse at 50% 58%, #000 0 74%, transparent 96%);
+}
+
+.timeline-stage::before {
+  content: "";
+  z-index: 2;
+  inset: 18vh 5vw 8vh;
+  border-radius: 42% 58% 44% 56% / 48% 46% 54% 52%;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 235, .38), transparent 48%, rgba(130, 90, 52, .08)),
+    repeating-linear-gradient(90deg, rgba(90, 62, 35, .035) 0 2px, transparent 2px 14px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .16) 0 1px, transparent 1px 12px);
+  box-shadow:
+    inset 0 0 0 1px rgba(124, 91, 55, .06),
+    inset 0 0 70px rgba(111, 76, 43, .075);
+  transform: rotate(-1.3deg);
+}
+
+.timeline-stage::after {
+  content: "";
+  z-index: 2;
+  inset: auto 8vw 4.8vh 8vw;
+  height: 12vh;
+  background: linear-gradient(0deg, rgba(112, 76, 40, .10), transparent);
+  filter: blur(16px);
+  opacity: .40;
+}
+
+.timeline-layer {
+  z-index: 8;
+}
+
+.person-node {
+  width: var(--node-w, 8.2rem);
+  filter: blur(4px) saturate(.98);
+}
+
+.person-node.is-visible {
+  filter: blur(0) saturate(1);
+}
+
+.person-node.is-leaving {
+  filter: blur(4px) saturate(.85);
+}
+
+.person-node::before,
+.person-node::after {
+  display: none;
+}
+
+.person-button {
+  position: relative;
+  gap: .58rem;
+  padding: .44rem .46rem .5rem;
+  border-radius: 1.45rem;
+  background:
+    linear-gradient(145deg, rgba(255, 252, 245, .74), rgba(238, 222, 199, .58)),
+    repeating-linear-gradient(90deg, rgba(119, 87, 55, .040) 0 1px, transparent 1px 7px);
+  border: 1px solid rgba(112, 79, 45, .16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.32),
+    0 16px 34px rgba(81, 57, 30, .13);
+  overflow: hidden;
+}
+
+.person-button::before {
+  content: "";
+  position: absolute;
+  inset: .42rem;
+  border: 1px dashed rgba(121, 86, 50, .18);
+  border-radius: 1.12rem;
+  pointer-events: none;
+}
+
+.person-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 0 36%, rgba(255,255,255,.18) 45%, transparent 58% 100%);
+  transform: translateX(42%);
+  opacity: 0;
+  transition: opacity .28s ease, transform .45s ease;
+  pointer-events: none;
+}
+
+.person-button:hover::after,
+.person-button:focus-visible::after {
+  opacity: .78;
+  transform: translateX(-42%);
+}
+
+.portrait-frame {
+  width: var(--photo-w, 6.25rem);
+  aspect-ratio: 1;
+  border-radius: 1.05rem;
+  padding: .22rem;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.82), rgba(223, 200, 169, .64));
+  border: 1px solid rgba(122, 83, 46, .22);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.54),
+    0 9px 24px rgba(77, 50, 25, .18);
+}
+
+.portrait-frame img,
+.story-photo img,
+.story-photo-v39 img,
+.family-group-photo img,
+.story-family-photo img,
+.family-photo img {
+  filter: none;
+  object-position: center 16%;
+}
+
+.person-node.is-leaving .portrait-frame img {
+  filter: blur(2px) saturate(.88);
+}
+
+.person-name {
+  position: relative;
+  z-index: 1;
+  max-width: 10.8rem;
+  padding: .38rem .78rem .42rem;
+  border-radius: .9rem;
+  background:
+    linear-gradient(135deg, rgba(143, 90, 60, .15), rgba(255, 249, 240, .75)),
+    repeating-linear-gradient(0deg, rgba(105, 73, 44, .04) 0 1px, transparent 1px 6px);
+  border: 1px solid rgba(128, 88, 52, .18);
+  color: #5a3825;
+  font-weight: 800;
+  line-height: 1.08;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.person-name::after {
+  content: "";
+  position: absolute;
+  inset-inline: .65rem;
+  bottom: .25rem;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(148, 87, 51, .40), transparent);
+}
+
+.person-button:hover .portrait-frame,
+.person-button:focus-visible .portrait-frame {
+  transform: translateY(-2px);
+  border-color: rgba(132, 88, 48, .38);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.58),
+    0 12px 30px rgba(77, 50, 25, .22);
+}
+
+.person-button:hover .portrait-frame img,
+.person-button:focus-visible .portrait-frame img {
+  filter: none;
+}
+
+.person-node.is-focus .person-button,
+.person-node.has-related-focus .person-button {
+  border-color: rgba(121, 70, 38, .36);
+  background:
+    linear-gradient(145deg, rgba(255, 252, 245, .88), rgba(229, 203, 171, .66)),
+    repeating-linear-gradient(90deg, rgba(119, 87, 55, .05) 0 1px, transparent 1px 7px);
+}
+
+.story-overlay {
+  background: rgba(63, 46, 28, .34);
+  backdrop-filter: blur(14px);
+}
+
+.story-panel,
+.story-panel-v39 {
+  background: rgba(255, 251, 244, .97);
+  color: #352a20;
+  box-shadow: 0 30px 90px rgba(70, 48, 25, .28);
+}
+
+.story-photo,
+.story-photo-v39 {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.76), rgba(229, 211, 184, .58));
+  border: 1px solid rgba(118, 83, 49, .16);
+}
+
+.story-copy p,
+.detail span,
+.story-description-v39 p,
+.story-description-v39 .story-paragraph,
+.story-info-list-v39,
+.relative-line {
+  color: #5f4c3c;
+}
+
+.detail,
+.story-info-card-v39,
+.relatives-card-list,
+.story-description-v39 p,
+.story-description-v39 .story-paragraph {
+  background: rgba(246, 236, 221, .62);
+  border-color: rgba(118, 83, 49, .12);
+}
+
+.close-story,
+.story-actions button,
+.candle-action {
+  background: rgba(255, 250, 242, .86);
+  color: #3d2e22;
+  border-color: rgba(118, 83, 49, .16);
+}
+
+.empty-state {
+  color: #6f5e4c;
+}
+
+.empty-state h2 {
+  color: #453425;
+}
+
+@media (max-width: 900px) {
+  .top-bar {
+    padding: .72rem .82rem 1.5rem;
+  }
+
+  .hero-title {
+    top: 7.05rem;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 25rem);
+    padding: .68rem .86rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .81rem;
+    line-height: 1.26;
+  }
+
+  .timeline-stage::before {
+    inset: 22vh 3vw 7vh;
+    border-radius: 2rem;
+    transform: none;
+  }
+
+  .person-button {
+    padding: .34rem .34rem .4rem;
+    border-radius: 1.08rem;
+  }
+
+  .person-button::before {
+    inset: .32rem;
+    border-radius: .84rem;
+  }
+
+  .portrait-frame {
+    width: var(--photo-w, 4.8rem);
+    border-radius: .84rem;
+  }
+
+  .person-name {
+    max-width: 7.6rem;
+    font-size: .70rem;
+    padding: .28rem .5rem .32rem;
+    border-radius: .72rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-title {
+    top: 6.9rem;
+  }
+
+  .hero-poem .poem-panel p {
+    font-size: .76rem;
+  }
+}
