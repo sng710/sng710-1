@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=v17-soft-fabric-big-people-20260624-2010" />
+  <link rel="stylesheet" href="styles.css?v=v18-soft-fabric-safe-bottom-20260624-2055" />
 </head>
 
 <body>
@@ -62,15 +62,24 @@
     <div class="noscript-message">האתר דורש JavaScript כדי להציג את רקמת הזיכרון והחיפוש.</div>
   </noscript>
   <script>
-    window.MEMORIAL_BUILD_VERSION = "v17-soft-fabric-big-people-20260624-2010";
+    window.MEMORIAL_BUILD_VERSION = "v18-soft-fabric-safe-bottom-20260624-2055";
 
-    // This prevents a common Chrome-extension async-listener warning from cluttering the console.
-    // It does not hide real site errors.
+    // This quiets a common Chrome-extension async-listener warning.
+    // The warning is usually emitted by an extension content script, not by this site.
     window.addEventListener("unhandledrejection", function(event) {
-      var message = String((event.reason && (event.reason.message || event.reason)) || "");
+      var reason = event && event.reason;
+      var message = String((reason && (reason.message || reason.stack || reason)) || "");
       if (message.indexOf("A listener indicated an asynchronous response") !== -1 &&
           message.indexOf("message channel closed before a response was received") !== -1) {
         event.preventDefault();
+      }
+    });
+    window.addEventListener("error", function(event) {
+      var message = String((event && event.message) || "");
+      if (message.indexOf("A listener indicated an asynchronous response") !== -1 &&
+          message.indexOf("message channel closed before a response was received") !== -1) {
+        event.preventDefault();
+        return false;
       }
     });
     try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (_) {}
@@ -95,7 +104,7 @@
       }).catch(function() {});
     }
   </script>
-  <script src="data.js?v=v17-soft-fabric-big-people-20260624-2010"></script>
-  <script src="app.js?v=v17-soft-fabric-big-people-20260624-2010"></script>
+  <script src="data.js?v=v18-soft-fabric-safe-bottom-20260624-2055"></script>
+  <script src="app.js?v=v18-soft-fabric-safe-bottom-20260624-2055"></script>
 </body>
 </html>
