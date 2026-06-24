@@ -9,25 +9,26 @@ const CANDLE_KEY = "memorial-final-candles-v1";
 const PHOTO_OVERRIDES = {};
 
 const DESKTOP_POINTS = [
-  // V11: woven, organic placement. No heartbeat divider line.
-  { x: 12, y: 47, side: "top", size: .82 },
-  { x: 25, y: 63, side: "bottom", size: .78 },
-  { x: 38, y: 43, side: "top", size: .84 },
-  { x: 51, y: 69, side: "bottom", size: .78 },
-  { x: 64, y: 48, side: "top", size: .82 },
-  { x: 77, y: 62, side: "bottom", size: .78 },
-  { x: 90, y: 41, side: "top", size: .80 },
-  { x: 8,  y: 70, side: "bottom", size: .76 },
+  // V13: warm loom grid. No heartbeat divider, no overlapping cards.
+  // x is measured from the right edge so the visual order reads naturally RTL.
+  { x: 18, y: 44, side: "top", size: .82 },
+  { x: 38, y: 44, side: "top", size: .82 },
+  { x: 58, y: 44, side: "top", size: .82 },
+  { x: 78, y: 44, side: "top", size: .82 },
+  { x: 18, y: 66, side: "bottom", size: .80 },
+  { x: 38, y: 66, side: "bottom", size: .80 },
+  { x: 58, y: 66, side: "bottom", size: .80 },
+  { x: 78, y: 66, side: "bottom", size: .80 },
 ];
 
 const MOBILE_POINTS = [
-  // V11: soft woven grid for mobile, with no central divider.
-  { x: 20, y: 42, side: "top", size: .62 },
-  { x: 50, y: 52, side: "bottom", size: .60 },
-  { x: 80, y: 42, side: "top", size: .62 },
-  { x: 20, y: 67, side: "bottom", size: .58 },
-  { x: 50, y: 76, side: "top", size: .58 },
-  { x: 80, y: 67, side: "bottom", size: .58 },
+  // V13: clear warm-loom mobile grid with room for names and controls.
+  { x: 28, y: 39, side: "top", size: .62 },
+  { x: 72, y: 39, side: "top", size: .62 },
+  { x: 28, y: 55, side: "bottom", size: .60 },
+  { x: 72, y: 55, side: "bottom", size: .60 },
+  { x: 28, y: 71, side: "top", size: .58 },
+  { x: 72, y: 71, side: "top", size: .58 },
 ];
 
 const state = {
@@ -1381,8 +1382,13 @@ function renderPersonNode(person, index) {
   const scale = point.size || .9;
 
   const node = el("article", {
-    class: `person-node ${isTop ? "is-top" : "is-bottom"}`,
-    dataset: { personId: person.id, slotIndex: String(index) },
+    class: `person-node ${isTop ? "is-top" : "is-bottom"} ${person.familyGroupId ? "has-family-group" : ""}`,
+    dataset: {
+      personId: person.id,
+      slotIndex: String(index),
+      familyGroupId: person.familyGroupId || "",
+      familyGroupTitle: person.familyGroupTitle || ""
+    },
     style: {
       right: `${point.x}%`,
       left: "auto",
@@ -1455,7 +1461,8 @@ function renderPersonNode(person, index) {
     ),
     el("span", { class: "person-name" },
       ...displayNameParts(person.name).map((part) => el("span", { text: part }))
-    )
+    ),
+    el("span", { class: "story-chip", text: "לסיפור" })
   );
 
   node.append(button);
@@ -2405,3 +2412,69 @@ async function init() {
 }
 
 init();
+
+/* V14: Design switcher — shows both requested designs in one version.
+   Default: the last shared Warm Loom design. Alternate: the previous attached woven-grid design. */
+(function initMemorialDesignSwitcher() {
+  const STORAGE_KEY = "memorial-design-mode-v14";
+  const VALID_MODES = new Set(["warm", "previous"]);
+
+  function resolveInitialMode() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const fromUrl = params.get("design");
+      if (VALID_MODES.has(fromUrl)) return fromUrl;
+    } catch (_) {}
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (VALID_MODES.has(saved)) return saved;
+    } catch (_) {}
+
+    return "warm";
+  }
+
+  function setPressedState(mode) {
+    document.querySelectorAll(".design-btn[data-design]").forEach((button) => {
+      const isActive = button.dataset.design === mode;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+  }
+
+  function applyDesign(mode, { persist = true } = {}) {
+    const nextMode = VALID_MODES.has(mode) ? mode : "warm";
+    document.body.classList.toggle("theme-warm", nextMode === "warm");
+    document.body.classList.toggle("theme-previous", nextMode === "previous");
+    document.body.dataset.design = nextMode;
+    setPressedState(nextMode);
+
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.setAttribute("content", nextMode === "previous" ? "#eadfce" : "#F9F5F0");
+
+    if (persist) {
+      try { localStorage.setItem(STORAGE_KEY, nextMode); } catch (_) {}
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set("design", nextMode);
+        history.replaceState(history.state || {}, "", url);
+      } catch (_) {}
+    }
+
+    try { window.dispatchEvent(new Event("resize")); } catch (_) {}
+  }
+
+  function bindSwitcher() {
+    document.querySelectorAll(".design-btn[data-design]").forEach((button) => {
+      button.addEventListener("click", () => applyDesign(button.dataset.design));
+    });
+    applyDesign(resolveInitialMode(), { persist: false });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindSwitcher, { once: true });
+  } else {
+    bindSwitcher();
+  }
+})();
+

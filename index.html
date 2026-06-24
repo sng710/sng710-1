@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="רקמה אנושית אחת חיה — אתר הנצחה אישי עם שמות, תמונות וסיפורי חיים על רקע אריג עדין." />
-  <meta name="theme-color" content="#e7dcc9" />
+  <meta name="description" content="רקמה אנושית אחת חיה — אתר הנצחה אישי עם שמות, תמונות וסיפורי חיים בממשק הנצחה עם בחירה בין עיצוב אריג חם לעיצוב אריג קודם, תמונות עגולות ונגישות." />
+  <meta name="theme-color" content="#F9F5F0" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -13,10 +13,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=v11-woven-color-20260624-1300" />
+  <link rel="stylesheet" href="styles.css?v=v14-two-designs-round-20260624-1325" />
 </head>
 
-<body>
+<body class="theme-warm">
   <a class="skip-link" href="#memory-stage">דילוג לרקמת הזיכרון</a>
   <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
@@ -31,6 +31,11 @@
           <span class="icon" aria-hidden="true">Ⅱ</span>השהיה
         </button>
         <button id="next-btn" class="ghost-btn" type="button" aria-label="השם הבא">הבא →</button>
+      </div>
+
+      <div class="design-switch" role="group" aria-label="בחירת עיצוב">
+        <button class="design-btn is-active" type="button" data-design="warm" aria-pressed="true">אריג חם</button>
+        <button class="design-btn" type="button" data-design="previous" aria-pressed="false">עיצוב קודם</button>
       </div>
 
       <label class="search-box">
@@ -64,7 +69,7 @@
     <div class="noscript-message">האתר דורש JavaScript כדי להציג את רקמת הזיכרון והחיפוש.</div>
   </noscript>
   <script>
-    window.MEMORIAL_BUILD_VERSION = "v11-woven-color-20260624-1300";
+    window.MEMORIAL_BUILD_VERSION = "v14-two-designs-round-20260624-1325";
     try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (_) {}
 
     // Helps when an older PWA/service-worker version was opened in the same browser.
@@ -87,7 +92,7 @@
       }).catch(function() {});
     }
   </script>
-  <script src="data.js?v=v11-woven-color-20260624-1300"></script>
-  <script src="app.js?v=v11-woven-color-20260624-1300"></script>
+  <script src="data.js?v=v14-two-designs-round-20260624-1325"></script>
+  <script src="app.js?v=v14-two-designs-round-20260624-1325"></script>
 </body>
 </html>
