@@ -7361,7 +7361,7 @@ body {
 }
 
 
-/* v14-grid-no-overlap-contain-20260624-1835
+/* v15-photo-like-screenshot-20260624-1908
    Final layout fix:
    1) Cards are placed in a real grid, not absolute top/bottom slots, so they cannot sit one on top of another.
    2) Each person preview is one soft rounded/frosted frame containing BOTH image + name.
@@ -7652,5 +7652,458 @@ body {
 
   .portrait-frame {
     width: 4.35rem !important;
+  }
+}
+
+
+/* v15-photo-like-screenshot-20260624-1908
+   Visual update requested from screenshot:
+   - Keep the fixed no-overlap grid from v14.
+   - Change each preview to the screenshot-style portrait: dark glowing rounded frame + separate dark name tag.
+   - Keep images zoomed out with object-fit: contain so the full preview is visible.
+*/
+
+.timeline-layer {
+  inset-block-start: clamp(13.2rem, 26vh, 18rem) !important;
+  inset-block-end: clamp(5.8rem, 11vh, 7.3rem) !important;
+  grid-template-columns: repeat(4, minmax(7rem, 1fr)) !important;
+  gap: clamp(1.05rem, 2.5vh, 1.8rem) clamp(1.35rem, 4.4vw, 5.2rem) !important;
+}
+
+.person-node {
+  width: clamp(7.25rem, 8.6vw, 8.85rem) !important;
+}
+
+.person-button {
+  min-height: auto !important;
+  padding: 0 !important;
+  gap: .62rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: visible !important;
+}
+
+.person-button::before,
+.person-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+.portrait-frame,
+.timeline-layer .portrait-frame {
+  width: clamp(6.05rem, 7.1vw, 7.15rem) !important;
+  aspect-ratio: .82 / 1 !important;
+  padding: .24rem !important;
+  border-radius: 2rem !important;
+  border: 2px solid rgba(210, 235, 245, .52) !important;
+  background:
+    linear-gradient(180deg, rgba(235, 246, 251, .26), rgba(6, 25, 39, .82)),
+    rgba(8, 27, 42, .76) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.22),
+    inset 0 1px 9px rgba(255,255,255,.18),
+    0 0 0 .16rem rgba(90, 165, 190, .17),
+    0 0 19px rgba(112, 210, 240, .26),
+    0 18px 34px rgba(10, 29, 41, .20) !important;
+  overflow: hidden !important;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease !important;
+}
+
+.portrait-frame img,
+.timeline-layer .portrait-frame img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  border-radius: 1.68rem !important;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,.88), rgba(229, 236, 238, .72) 40%, rgba(9, 29, 43, .20) 100%) !important;
+  filter: grayscale(100%) contrast(1.08) brightness(1.04) !important;
+}
+
+.portrait-placeholder,
+.timeline-layer .portrait-placeholder {
+  border-radius: 1.68rem !important;
+  color: rgba(238, 249, 255, .92) !important;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.75), transparent 24%),
+    linear-gradient(180deg, rgba(63, 93, 112, .88), rgba(12, 38, 56, .94)) !important;
+}
+
+.person-name,
+.timeline-layer .person-name {
+  width: auto !important;
+  min-width: 3.9rem !important;
+  max-width: 6.5rem !important;
+  min-height: auto !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  padding: .45rem .62rem .42rem !important;
+  margin: 0 !important;
+  border-radius: .72rem !important;
+  background: rgba(4, 20, 34, .86) !important;
+  border: 1px solid rgba(125, 203, 232, .20) !important;
+  color: #eef9ff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 8px 20px rgba(5, 18, 32, .22) !important;
+  font-weight: 850 !important;
+  font-size: clamp(.76rem, .86vw, .94rem) !important;
+  line-height: 1.08 !important;
+  text-align: center !important;
+  text-shadow: 0 1px 8px rgba(170, 225, 245, .12) !important;
+}
+
+.person-name span,
+.timeline-layer .person-name span {
+  display: block !important;
+  white-space: normal !important;
+}
+
+.person-button:hover,
+.person-button:focus-visible {
+  transform: translateY(-3px) scale(1.015) !important;
+  box-shadow: none !important;
+}
+
+.person-button:hover .portrait-frame,
+.person-button:focus-visible .portrait-frame {
+  transform: translateY(-1px) !important;
+  border-color: rgba(227, 246, 255, .72) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.28),
+    inset 0 1px 10px rgba(255,255,255,.22),
+    0 0 0 .18rem rgba(90, 165, 190, .22),
+    0 0 26px rgba(112, 210, 240, .34),
+    0 20px 38px rgba(10, 29, 41, .24) !important;
+}
+
+.person-button:hover .person-name,
+.person-button:focus-visible .person-name {
+  background: rgba(5, 23, 39, .92) !important;
+  border-color: rgba(155, 222, 245, .28) !important;
+}
+
+.memory-stage.is-focus-mode .person-node.is-focused .portrait-frame,
+.memory-stage.is-focus-mode .person-node.is-related .portrait-frame,
+.memory-stage.is-focus-locked .person-node.is-focused .portrait-frame,
+.memory-stage.is-focus-locked .person-node.is-related .portrait-frame {
+  border-color: rgba(227, 246, 255, .78) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.30),
+    0 0 0 .18rem rgba(90, 165, 190, .24),
+    0 0 30px rgba(112, 210, 240, .40),
+    0 22px 42px rgba(10, 29, 41, .26) !important;
+}
+
+@media (max-width: 980px) {
+  .timeline-layer {
+    inset-block-start: clamp(13rem, 24vh, 16.6rem) !important;
+    grid-template-columns: repeat(3, minmax(5.9rem, 1fr)) !important;
+    gap: 1.05rem .95rem !important;
+  }
+
+  .person-node {
+    width: clamp(6.6rem, 16vw, 7.45rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(5.25rem, 12.5vw, 5.95rem) !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    max-width: 5.65rem !important;
+    font-size: .72rem !important;
+    padding: .38rem .5rem .35rem !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .timeline-stage {
+    min-height: 43rem !important;
+  }
+
+  .timeline-layer {
+    margin: 12.8rem auto 8rem !important;
+    width: min(100% - 1rem, 25rem) !important;
+    grid-template-columns: repeat(2, minmax(6.4rem, 1fr)) !important;
+    gap: 1.05rem .8rem !important;
+  }
+
+  .person-node {
+    width: min(7.25rem, 100%) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: 5.55rem !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    max-width: 5.85rem !important;
+    font-size: .70rem !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .timeline-layer {
+    width: min(100% - .7rem, 21rem) !important;
+    gap: .9rem .58rem !important;
+  }
+
+  .person-node {
+    width: 6.8rem !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: 5.1rem !important;
+  }
+}
+
+
+/* v16-centered-main-people-20260624-1930
+   Make the people cards the visual center of the page:
+   - tighter, centered desktop grid instead of spreading cards to the page edges
+   - larger portraits and name tags
+   - compact poem so the people become the main focus
+   - full image previews with object-fit: contain and no grayscale filter
+*/
+.hero-title {
+  top: clamp(1.8rem, 4vh, 2.65rem) !important;
+  z-index: 90 !important;
+}
+
+.hero-poem .poem-panel {
+  width: min(31rem, 78vw) !important;
+  padding: .66rem 1.2rem .7rem !important;
+  border-radius: 2.6rem !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.55), rgba(247,242,234,.72)) !important;
+  border: 1px solid rgba(255,255,255,.72) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.86),
+    0 14px 32px rgba(95,73,60,.09) !important;
+}
+
+.hero-poem .poem-panel p {
+  font-size: clamp(.78rem, .9vw, .95rem) !important;
+  line-height: 1.25 !important;
+  gap: .03rem !important;
+}
+
+.timeline-layer {
+  position: absolute !important;
+  inset-block-start: clamp(13.9rem, 29vh, 16.8rem) !important;
+  inset-block-end: clamp(5.1rem, 10vh, 6.6rem) !important;
+  inset-inline: auto !important;
+  left: 50% !important;
+  right: auto !important;
+  width: min(70rem, calc(100vw - 5rem)) !important;
+  transform: translateX(-50%) !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(9rem, 1fr)) !important;
+  grid-auto-rows: max-content !important;
+  justify-items: center !important;
+  align-content: center !important;
+  justify-content: center !important;
+  gap: clamp(.95rem, 2.2vh, 1.45rem) clamp(1.25rem, 3.2vw, 2.9rem) !important;
+  pointer-events: none !important;
+}
+
+.person-node {
+  width: clamp(9.25rem, 10.6vw, 10.9rem) !important;
+  max-width: 100% !important;
+}
+
+.person-button {
+  width: 100% !important;
+  min-height: auto !important;
+  padding: 0 !important;
+  gap: .62rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: visible !important;
+}
+
+.portrait-frame,
+.timeline-layer .portrait-frame {
+  width: clamp(7.75rem, 8.8vw, 9.15rem) !important;
+  aspect-ratio: .82 / 1 !important;
+  padding: .27rem !important;
+  border-radius: 2.35rem !important;
+  border: 2px solid rgba(255,255,255,.74) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.76), rgba(237,230,218,.96)) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.86),
+    inset 0 1px 10px rgba(255,255,255,.42),
+    0 0 0 .16rem rgba(211, 199, 183, .32),
+    0 17px 34px rgba(95, 73, 60, .14) !important;
+  overflow: hidden !important;
+}
+
+.portrait-frame img,
+.timeline-layer .portrait-frame img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  border-radius: 2.05rem !important;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.94), rgba(239,232,220,.78) 46%, rgba(223,213,196,.44) 100%) !important;
+  filter: none !important;
+}
+
+.portrait-placeholder,
+.timeline-layer .portrait-placeholder {
+  border-radius: 2.05rem !important;
+  background: linear-gradient(180deg, #f8f3eb, #e8ddcd) !important;
+  color: #7a6052 !important;
+}
+
+.person-name,
+.timeline-layer .person-name {
+  width: auto !important;
+  min-width: 5.25rem !important;
+  max-width: 8rem !important;
+  padding: .48rem .75rem .45rem !important;
+  margin: 0 !important;
+  border-radius: .9rem !important;
+  background: linear-gradient(180deg, rgba(232,223,209,.98), rgba(218,207,189,.95)) !important;
+  border: 1px solid rgba(192,177,158,.85) !important;
+  color: #44352e !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.62),
+    0 9px 20px rgba(95,73,60,.12) !important;
+  font-weight: 850 !important;
+  font-size: clamp(.86rem, .98vw, 1.05rem) !important;
+  line-height: 1.07 !important;
+  text-align: center !important;
+  text-shadow: none !important;
+}
+
+.person-name span,
+.timeline-layer .person-name span {
+  display: block !important;
+  white-space: normal !important;
+}
+
+.person-button:hover,
+.person-button:focus-visible {
+  transform: translateY(-4px) scale(1.018) !important;
+}
+
+.person-button:hover .portrait-frame,
+.person-button:focus-visible .portrait-frame {
+  border-color: rgba(255,255,255,.94) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.92),
+    inset 0 1px 12px rgba(255,255,255,.48),
+    0 0 0 .18rem rgba(211, 199, 183, .38),
+    0 22px 42px rgba(95, 73, 60, .17) !important;
+}
+
+@media (max-width: 1180px) {
+  .timeline-layer {
+    width: min(64rem, calc(100vw - 2rem)) !important;
+    grid-template-columns: repeat(4, minmax(7.8rem, 1fr)) !important;
+    gap: 1rem 1.2rem !important;
+  }
+
+  .person-node {
+    width: clamp(8rem, 12vw, 9.2rem) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: clamp(6.65rem, 10vw, 7.55rem) !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    max-width: 7rem !important;
+    font-size: clamp(.78rem, 1.05vw, .94rem) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .timeline-layer {
+    inset-block-start: clamp(12.6rem, 25vh, 15.4rem) !important;
+    width: min(42rem, calc(100vw - 1.2rem)) !important;
+    grid-template-columns: repeat(3, minmax(7.1rem, 1fr)) !important;
+    gap: 1rem .9rem !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-title {
+    top: 6.4rem !important;
+  }
+
+  .hero-poem .poem-panel {
+    width: min(92vw, 24rem) !important;
+    padding: .68rem .92rem !important;
+  }
+
+  .timeline-stage {
+    min-height: 45rem !important;
+    height: auto !important;
+  }
+
+  .timeline-layer {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    margin: 12.6rem auto 7.4rem !important;
+    width: min(100% - 1rem, 28rem) !important;
+    grid-template-columns: repeat(2, minmax(7.4rem, 1fr)) !important;
+    gap: 1rem .8rem !important;
+  }
+
+  .person-node {
+    width: min(8.6rem, 100%) !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: min(7.1rem, 100%) !important;
+  }
+
+  .person-name,
+  .timeline-layer .person-name {
+    min-width: 5.1rem !important;
+    max-width: 7.1rem !important;
+    font-size: .76rem !important;
+    padding: .4rem .45rem .36rem !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .timeline-layer {
+    width: min(100% - .7rem, 22.5rem) !important;
+    gap: .9rem .58rem !important;
+  }
+
+  .person-node {
+    width: 7.6rem !important;
+  }
+
+  .portrait-frame,
+  .timeline-layer .portrait-frame {
+    width: 6.25rem !important;
   }
 }
