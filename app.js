@@ -2413,10 +2413,10 @@ async function init() {
 
 init();
 
-/* V14: Design switcher — shows both requested designs in one version.
+/* V15: Design switcher — shows both requested designs in one version.
    Default: the last shared Warm Loom design. Alternate: the previous attached woven-grid design. */
 (function initMemorialDesignSwitcher() {
-  const STORAGE_KEY = "memorial-design-mode-v14";
+  const STORAGE_KEY = "memorial-design-mode-v15";
   const VALID_MODES = new Set(["warm", "previous"]);
 
   function resolveInitialMode() {

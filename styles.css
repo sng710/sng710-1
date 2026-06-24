@@ -8406,3 +8406,183 @@ body.theme-previous .story-panel-v39 {
   }
 }
 
+
+
+/* ==========================================================
+   V15: visible design selector + truly round portrait frames
+   ========================================================== */
+.design-dock {
+  position: fixed !important;
+  z-index: 10000 !important;
+  top: clamp(.75rem, 1.7vh, 1.15rem) !important;
+  left: clamp(.75rem, 1.8vw, 1.4rem) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: .55rem !important;
+  padding: .42rem .48rem .42rem .72rem !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(111, 82, 71, .18) !important;
+  background: rgba(249, 245, 240, .88) !important;
+  color: #4A3E3D !important;
+  box-shadow: 0 14px 36px rgba(83, 55, 35, .14) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.08) !important;
+  backdrop-filter: blur(18px) saturate(1.08) !important;
+  pointer-events: auto !important;
+}
+
+.design-dock-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  padding-inline: .25rem .1rem !important;
+  color: rgba(74, 62, 61, .74) !important;
+  font-weight: 850 !important;
+  font-size: .88rem !important;
+}
+
+.design-dock .design-switch {
+  display: inline-flex !important;
+  width: auto !important;
+  min-width: 0 !important;
+  justify-content: center !important;
+  gap: .25rem !important;
+  padding: .24rem !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, .56) !important;
+  border: 1px solid rgba(111, 82, 71, .10) !important;
+  box-shadow: none !important;
+}
+
+.design-dock .design-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 2.05rem !important;
+  padding: .48rem .82rem !important;
+  border-radius: 999px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: rgba(74, 62, 61, .72) !important;
+  font-weight: 900 !important;
+  font-size: .86rem !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+}
+
+.design-dock .design-btn:hover,
+.design-dock .design-btn:focus-visible {
+  color: #4A3E3D !important;
+  background: rgba(255,255,255,.76) !important;
+  transform: translateY(-1px) !important;
+}
+
+.design-dock .design-btn.is-active {
+  color: #4A3E3D !important;
+  background: rgba(255,255,255,.96) !important;
+  border-color: rgba(111,82,71,.18) !important;
+  box-shadow: 0 8px 18px rgba(91, 63, 42, .12) !important;
+}
+
+body.theme-previous .design-dock {
+  background: rgba(236, 244, 248, .90) !important;
+  border-color: rgba(55, 102, 128, .16) !important;
+  color: #213b4d !important;
+  box-shadow: 0 14px 36px rgba(18, 52, 72, .14) !important;
+}
+
+body.theme-previous .design-dock-title,
+body.theme-previous .design-dock .design-btn {
+  color: rgba(33, 59, 77, .76) !important;
+}
+
+body.theme-previous .design-dock .design-switch {
+  background: rgba(255,255,255,.56) !important;
+  border-color: rgba(55,102,128,.11) !important;
+}
+
+body.theme-previous .design-dock .design-btn.is-active {
+  color: #1d3546 !important;
+  border-color: rgba(55,102,128,.18) !important;
+}
+
+/* Force the actual photo frames to be perfect circles in both designs,
+   overriding old oval/cameo/square rules from earlier versions. */
+.timeline-layer .portrait-frame,
+.person-node .portrait-frame,
+.portrait-frame {
+  width: var(--photo-w, 7rem) !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.timeline-layer .portrait-frame::before,
+.timeline-layer .portrait-frame::after,
+.person-node .portrait-frame::before,
+.person-node .portrait-frame::after,
+.portrait-frame::before,
+.portrait-frame::after,
+.timeline-layer .portrait-frame img,
+.person-node .portrait-frame img,
+.portrait-frame img,
+.portrait-placeholder {
+  border-radius: 50% !important;
+}
+
+.timeline-layer .portrait-frame img,
+.person-node .portrait-frame img,
+.portrait-frame img,
+.portrait-placeholder {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 18% !important;
+}
+
+.story-photo,
+.story-photo-v39 {
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.story-photo img,
+.story-photo-v39 img {
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center 18% !important;
+}
+
+@media (max-width: 900px) {
+  .design-dock {
+    inset-inline: .65rem !important;
+    left: .65rem !important;
+    right: .65rem !important;
+    top: .55rem !important;
+    justify-content: center !important;
+    padding: .38rem !important;
+    gap: .38rem !important;
+  }
+
+  .design-dock-title {
+    font-size: .76rem !important;
+  }
+
+  .design-dock .design-switch {
+    flex: 1 !important;
+    max-width: 20rem !important;
+  }
+
+  .design-dock .design-btn {
+    flex: 1 !important;
+    min-height: 1.95rem !important;
+    padding: .42rem .48rem !important;
+    font-size: .78rem !important;
+  }
+
+  .hero-title.hero-poem {
+    top: clamp(4.6rem, 8.6vh, 5.4rem) !important;
+  }
+}
